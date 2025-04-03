@@ -1,0 +1,9 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongConsumer
+metadata:
+  name: fleet-manager-api-user
+  annotations:
+    kubernetes.io/ingress.class: kong
+username: fleet-manager-api-user
+credentials:
+  - api-jwt-key

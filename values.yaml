@@ -1,0 +1,16 @@
+fleetmanager:
+  domain: 
+  ui:
+    image: platformatorylabs/fleet-manager-ui:v0.0.1-main-9142c20
+  api:
+    image: platformatorylabs/fleet-manager-api:v0.0.1-main-60506be
+  orchestrator:
+    image: platformatorylabs/fleet-manager-temporal-worker:v0.0.1-main-60506be
+  auth0:
+    domain: 
+    audience: 
+    apiAudience: 
+    appClientId: 
+    clientId: 
+    clientSecret: 
+    rsaPublicKey: 

@@ -1,0 +1,128 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fleet-manager
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: fleet-manager
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: fleet-manager
+    spec:
+      initContainers:
+        - env:
+          - name: POSTGRES_DB
+            value: fleetmanager
+          - name: POSTGRES_USER
+            value: fleetmanager
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: fleet-manager
+                key: postgres-password
+                optional: false
+          - name: POSTGRES_HOST
+            value: fm-postgresql
+          - name: POSTGRES_PORT
+            value: "5432"
+          - name: AUTH0_DOMAIN
+            value: {{ .Values.fleetmanager.auth0.domain }}
+          - name: AUTH0_AUDIENCE
+            value: {{ .Values.fleetmanager.auth0.audience }}
+          - name: AUTH0_APPLICATION_CLIENT_ID
+            value: {{ .Values.fleetmanager.auth0.appClientId }}
+          - name: AUTH0_CLIENT_ID
+            value: {{ .Values.fleetmanager.auth0.clientId }}
+          - name: AUTH0_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: fleet-manager
+                key: auth0-client-secret
+                optional: false
+          - name: AUTH0_API_AUDIENCE
+            value: {{ .Values.fleetmanager.auth0.apiAudience }}
+          - name: MINIO_ENDPOINT
+            value: fm-minio:9000
+          - name: MINIO_PUBLIC_ENDPOINT
+            value: fm-minio:9000
+          - name: MINIO_BUCKET_NAME
+            value: fleet-manager-agent
+          - name: MINIO_ACCESS_KEY
+            value: fleetmanager-config-user
+          - name: MINIO_SECRET_KEY
+            valueFrom:
+              secretKeyRef:
+                name: fleet-manager
+                key: MINIO_SECRET_KEY
+                optional: false
+          - name: MINIO_SECURE
+            value: "False"
+          - name: CONFIG_STORAGE_BUCKET_NAME
+            value: ws-fleet-manager-configuration
+          - name: TEMPORAL_SERVER
+            value: fm-temporal-frontend:7233
+          image: {{ .Values.fleetmanager.api.image }}
+          command: ['python', 'manage.py', 'migrate']
+          name: fleet-manager-migrations
+      containers:
+        - env:
+          - name: POSTGRES_DB
+            value: fleetmanager
+          - name: POSTGRES_USER
+            value: fleetmanager
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: fleet-manager
+                key: postgres-password
+                optional: false
+          - name: POSTGRES_HOST
+            value: fm-postgresql
+          - name: POSTGRES_PORT
+            value: "5432"
+          - name: AUTH0_DOMAIN
+            value: {{ .Values.fleetmanager.auth0.domain }}
+          - name: AUTH0_AUDIENCE
+            value: {{ .Values.fleetmanager.auth0.audience }}
+          - name: AUTH0_APPLICATION_CLIENT_ID
+            value: {{ .Values.fleetmanager.auth0.appClientId }}
+          - name: AUTH0_CLIENT_ID
+            value: {{ .Values.fleetmanager.auth0.clientId }}
+          - name: AUTH0_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: fleet-manager
+                key: auth0-client-secret
+                optional: false
+          - name: AUTH0_API_AUDIENCE
+            value: {{ .Values.fleetmanager.auth0.apiAudience }}
+          - name: MINIO_ENDPOINT
+            value: fm-minio:9000
+          - name: MINIO_PUBLIC_ENDPOINT
+            value: fm-minio:9000
+          - name: MINIO_BUCKET_NAME
+            value: fleet-manager-agent
+          - name: MINIO_ACCESS_KEY
+            value: fleetmanager-config-user
+          - name: MINIO_SECRET_KEY
+            valueFrom:
+              secretKeyRef:
+                name: fleet-manager
+                key: MINIO_SECRET_KEY
+                optional: false
+          - name: MINIO_SECURE
+            value: "False"
+          - name: CONFIG_STORAGE_BUCKET_NAME
+            value: ws-fleet-manager-configuration
+          - name: TEMPORAL_SERVER
+            value: fm-temporal-frontend:7233
+          image: {{ .Values.fleetmanager.api.image }}
+          name: fleet-manager
+          ports:
+            - containerPort: 8000
+            - containerPort: 4444
+          resources: {}
+      restartPolicy: Always

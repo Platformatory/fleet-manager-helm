@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fleet-manager-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: fleet-manager-ui
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: fleet-manager-ui
+    spec:
+      containers:
+        - env:
+          - name: REACT_APP_AUTH0_DOMAIN
+            value: {{ .Values.fleetmanager.auth0.domain }}
+          - name: REACT_APP_AUTH0_AUDIENCE
+            value: {{ .Values.fleetmanager.auth0.audience }}
+          - name: REACT_APP_AUTH0_CLIENT_ID
+            value: {{ .Values.fleetmanager.auth0.appClientId }}
+          - name: AUTH0_CLIENT_ID
+            value: {{ .Values.fleetmanager.auth0.clientId }}
+          - name: REACT_APP_API_URL
+            value: http://fleet-manager:8000
+          - name: REACT_APP_LOKI_WS_URL
+            value: wss://{{ include "fleetmanager.ws-loki.domain" . }}
+          - name: REACT_APP_LOKI_HTTP_URL
+            value: https://{{ include "fleetmanager.loki.domain" . }}
+          image: {{ .Values.fleetmanager.ui.image }}
+          name: fleet-manager
+          ports:
+            - containerPort: 80
+          resources: {}
+      restartPolicy: Always

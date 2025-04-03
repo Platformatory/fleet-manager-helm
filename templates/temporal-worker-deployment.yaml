@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fleet-manager-temporal-worker
+  labels:
+    app: fleet-manager-temporal-worker
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fleet-manager-temporal-worker
+  template:
+    metadata:
+      labels:
+        app: fleet-manager-temporal-worker
+    spec:
+      containers:
+        - name: fleet-manager-temporal-worker
+          image: {{ .Values.fleetmanager.orchestrator.image }}
+          env:
+            - name: TEMPORAL_ADDRESS
+              value: fm-temporal-frontend:7233
+            - name: LOKI_URL
+              value: http://fm-loki-gateway/loki/api/v1/push
+            - name: FLEETMANAGER_URL
+              value: http://fleet-manager:8000
+            - name: CONFIG_MINIO_URL
+              value: http://fm-minio:9000
+            - name: CONFIG_S3_ACCESS_KEY
+              value: fleetmanager-config-user
+            - name: CONFIG_S3_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: temporal-worker
+                  key: CONFIG_S3_SECRET_KEY
+                  optional: false
+            - name: TF_STATE_MINIO_URL
+              value: http://fm-minio:9000
+            - name: TF_STATE_S3_ACCESS_KEY
+              value: fleetmanager-state-user
+            - name: TF_STATE_S3_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: temporal-worker
+                  key: TF_STATE_S3_SECRET_KEY
+                  optional: false
+            - name: TF_STATE_S3_BUCKET
+              value: ws-fleet-manager-tf-state
+            - name: OLLAMA_URL
+              value: http://ollama:11434/v1
+            - name: OLLAMA_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: temporal-worker
+                  key: OLLAMA_API_KEY
+                  optional: false
+            - name: OLLAMA_MODEL
+              value: llama3.2

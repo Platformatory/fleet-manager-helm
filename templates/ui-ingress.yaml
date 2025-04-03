@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fleet-manager-ui
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    # kubernetes.io/ingress.class: kong
+spec:
+  ingressClassName: kong
+  tls:
+  - secretName: {{ include "fleetmanager.ui.domain" | replace "." "-" }}
+    hosts:
+    - {{ include "fleetmanager.ui.domain" }}
+  rules:
+    - host: {{ include "fleetmanager.ui.domain" }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: fleet-manager-ui
+                port:
+                  number: 80
+            pathType: ImplementationSpecific

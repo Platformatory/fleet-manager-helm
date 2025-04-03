@@ -1,0 +1,10 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: cors
+config: 
+  origins:
+  - http://{{ include "fleetmanager.ui.domain" . }}
+  - https://{{ include "fleetmanager.ui.domain" . }}
+  max_age: 3600
+plugin: cors

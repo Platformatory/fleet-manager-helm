@@ -1,0 +1,51 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: loki-ws
+  annotations:
+    konghq.com/read-timeout: 3600
+    konghq.com/write-timeout: 3600
+    konghq.com/headers.Connection: "upgrade"
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    # kubernetes.io/ingress.class: kong
+spec:
+  ingressClassName: kong
+  tls:
+  - secretName: {{ include "fleetmanager.ws-loki.domain" | replace "." "-" }}
+    hosts:
+    - {{ include "fleetmanager.ws-loki.domain" }}
+  rules:
+    - host: {{ include "fleetmanager.ws-loki.domain" }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: fm-loki-gateway
+                port:
+                  number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: loki-http
+  annotations:
+    konghq.com/plugins: cors
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  ingressClassName: kong
+  tls:
+  - secretName: {{ include "fleetmanager.loki.domain" | replace "." "-" }}
+    hosts:
+    - {{ include "fleetmanager.loki.domain" }}
+  rules:
+    - host: {{ include "fleetmanager.loki.domain" }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: fm-loki-gateway
+                port:
+                  number: 80
+            pathType: ImplementationSpecific
