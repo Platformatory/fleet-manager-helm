@@ -9,11 +9,11 @@ metadata:
 spec:
   ingressClassName: kong
   tls:
-  - secretName: {{ include "fleetmanager.api.domain" | replace "." "-" }}
+  - secretName: {{ include "fleetmanager.api.domain" . | replace "." "-" }}
     hosts:
-    - {{ include "fleetmanager.api.domain" }}
+    - {{ include "fleetmanager.api.domain" . }}
   rules:
-    - host: {{ include "fleetmanager.api.domain" }}
+    - host: {{ include "fleetmanager.api.domain" . }}
       http:
         paths:
           - backend:

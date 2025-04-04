@@ -11,11 +11,11 @@ metadata:
 spec:
   ingressClassName: kong
   tls:
-  - secretName: {{ include "fleetmanager.ws-loki.domain" | replace "." "-" }}
+  - secretName: {{ include "fleetmanager.ws-loki.domain" . | replace "." "-" }}
     hosts:
-    - {{ include "fleetmanager.ws-loki.domain" }}
+    - {{ include "fleetmanager.ws-loki.domain" . }}
   rules:
-    - host: {{ include "fleetmanager.ws-loki.domain" }}
+    - host: {{ include "fleetmanager.ws-loki.domain" . }}
       http:
         paths:
           - path: /
@@ -36,11 +36,11 @@ metadata:
 spec:
   ingressClassName: kong
   tls:
-  - secretName: {{ include "fleetmanager.loki.domain" | replace "." "-" }}
+  - secretName: {{ include "fleetmanager.loki.domain" . | replace "." "-" }}
     hosts:
-    - {{ include "fleetmanager.loki.domain" }}
+    - {{ include "fleetmanager.loki.domain" . }}
   rules:
-    - host: {{ include "fleetmanager.loki.domain" }}
+    - host: {{ include "fleetmanager.loki.domain" . }}
       http:
         paths:
           - backend:
