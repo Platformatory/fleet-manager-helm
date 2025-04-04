@@ -3,8 +3,8 @@ kind: Ingress
 metadata:
   name: loki-ws
   annotations:
-    konghq.com/read-timeout: 3600
-    konghq.com/write-timeout: 3600
+    konghq.com/read-timeout: "3600"
+    konghq.com/write-timeout: "3600"
     konghq.com/headers.Connection: "upgrade"
     cert-manager.io/cluster-issuer: letsencrypt-prod
     # kubernetes.io/ingress.class: kong
