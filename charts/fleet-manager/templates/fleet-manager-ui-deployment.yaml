@@ -23,7 +23,7 @@ spec:
           - name: AUTH0_CLIENT_ID
             value: {{ .Values.fleetmanager.auth0.clientId }}
           - name: REACT_APP_API_URL
-            value: http://fleet-manager:8000
+            value: https://{{ include "fleetmanager.api.domain" . }}
           - name: REACT_APP_LOKI_WS_URL
             value: wss://{{ include "fleetmanager.ws-loki.domain" . }}
           - name: REACT_APP_LOKI_HTTP_URL
