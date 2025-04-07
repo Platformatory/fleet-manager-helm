@@ -17,7 +17,7 @@ spec:
           - name: REACT_APP_AUTH0_DOMAIN
             value: {{ .Values.fleetmanager.auth0.domain }}
           - name: REACT_APP_AUTH0_AUDIENCE
-            value: {{ .Values.fleetmanager.auth0.audience }}
+            value: {{ .Values.fleetmanager.auth0.uiAudience }}
           - name: REACT_APP_AUTH0_CLIENT_ID
             value: {{ .Values.fleetmanager.auth0.appClientId }}
           - name: AUTH0_CLIENT_ID
