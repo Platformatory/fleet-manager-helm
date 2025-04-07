@@ -56,3 +56,45 @@ spec:
                   optional: false
             - name: OLLAMA_MODEL
               value: llama3.2
+            - name: FLEETMANAGER_KUBECONFIG_PATH
+              value: /opt/config/fleet-manager-kubeconfig.yaml
+            - name: FLEETMANAGER_KUBERNETES_AWS_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: temporal-worker
+                  key: FLEETMANAGER_KUBERNETES_AWS_ACCESS_KEY
+                  optional: true
+            - name: FLEETMANAGER_KUBERNETES_AWS_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: temporal-worker
+                  key: FLEETMANAGER_KUBERNETES_AWS_SECRET_KEY
+                  optional: true
+            - name: FLEETMANAGER_KUBERNETES_AWS_REGION
+              valueFrom:
+                secretKeyRef:
+                  name: temporal-worker
+                  key: FLEETMANAGER_KUBERNETES_AWS_REGION
+                  optional: true
+            - name: GRAFANA_URL
+              value: https://{{ include "fleetmanager.grafana.domain" . }}
+            - name: GRAFANA_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: grafana-credentials
+                  key: GF_SECURITY_ADMIN_USER
+                  optional: false
+            - name: GRAFANA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: grafana-credentials
+                  key: GF_SECURITY_ADMIN_PASSWORD
+                  optional: false
+          volumeMounts:
+          - mountPath: "/opt/config"
+            name: fleet-manager-kubeconfig
+            readOnly: true
+      volumes:
+        - name: fleet-manager-kubeconfig
+          secret:
+            secretName: fleet-manager-kubeconfig

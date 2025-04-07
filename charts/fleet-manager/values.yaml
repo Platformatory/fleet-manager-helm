@@ -6,6 +6,11 @@ fleetmanager:
     image: platformatorylabs/fleet-manager-api:v0.0.1-main-d9d166b
   orchestrator:
     image: platformatorylabs/fleet-manager-temporal-worker:v0.0.1-main-d9d166b
+  kubeconfig:
+    aws:
+      accessKey: ""
+      secretKey: ""
+      region: ""
   auth0:
     domain: 
     audience: 

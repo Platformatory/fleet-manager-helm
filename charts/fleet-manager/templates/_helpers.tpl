@@ -18,3 +18,8 @@
 {{- define "fleetmanager.ws-loki.domain" -}}
 {{- printf "ws-loki.%s" .Values.fleetmanager.domain -}}
 {{- end -}}
+
+
+{{- define "fleetmanager.grafana.domain" -}}
+{{- printf "grafana.%s" .Values.fleetmanager.domain -}}
+{{- end -}}
