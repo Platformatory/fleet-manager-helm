@@ -21,5 +21,5 @@
 
 
 {{- define "fleetmanager.grafana.domain" -}}
-{{- printf "grafana.%s" .Values.fleetmanager.domain -}}
+{{- printf "grafana.app.%s" .Values.fleetmanager.domain -}}
 {{- end -}}
