@@ -71,4 +71,15 @@ entries:
     urls:
     - https://github.com/Platformatory/fleet-manager-helm/releases/download/fleet-manager-0.1.0/fleet-manager-0.1.0.tgz
     version: 0.1.0
-generated: "2025-04-07T19:05:32.019678169Z"
+  fleet-manager-cfk:
+  - apiVersion: v2
+    appVersion: 0.0.0
+    created: "2025-04-09T18:08:41.335380199Z"
+    description: A Helm chart for Kubernetes
+    digest: 7e8cac71976fc6a73a72823247c502efc5249865bb5f32824f1bd3915d15cb55
+    name: fleet-manager-cfk
+    type: application
+    urls:
+    - https://github.com/Platformatory/fleet-manager-helm/releases/download/fleet-manager-cfk-0.1.0/fleet-manager-cfk-0.1.0.tgz
+    version: 0.1.0
+generated: "2025-04-09T18:08:41.335405747Z"
