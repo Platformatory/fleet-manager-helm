@@ -1,0 +1,20 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaRestClass
+metadata:
+  name: default
+spec:
+  kafkaClusterRef:
+    name: kafka
+    namespace: {{ .Release.Namespace }}
+  kafkaRest:
+    endpoint: https://kafka.{{ .Release.Namespace }}.svc.cluster.local:8090
+    authentication:
+      type: oauth
+      oauth:
+        secretRef: oauth-jaas
+        configuration:
+          tokenEndpointUri: {{ .Values.oauth.tokenEndpoint }}
+          expectedIssuer: {{ .Values.oauth.issuer }}
+          jwksEndpointUri: {{ .Values.oauth.jwksEndpoint }}
+          subClaimName: {{ .Values.oauth.subClaim }}
+      sslClientAuthentication: false

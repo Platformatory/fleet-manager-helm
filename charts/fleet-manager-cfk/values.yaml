@@ -1,0 +1,35 @@
+certs:
+  ca:
+    cert:
+    key:
+  kafka:
+    cert:
+    key:
+  mds:
+    public:
+    keyPair:
+oauth:
+  clientId:
+  clientSecret: 
+  audience: 
+  issuer: 
+  jwksEndpoint:
+  authorizeEndpoint:
+  tokenEndpoint: 
+  scope:  
+  subClaim: sub
+  groupsClaim: group
+  refreshToken: true
+tenancy: Shared
+replicas: 3
+domain: 
+ingressClassName: 
+cfk:
+  initContainer:
+    version:
+  confluentPlatform:
+    version: 
+  license:
+  systemAdmin:
+    name:
+    type:

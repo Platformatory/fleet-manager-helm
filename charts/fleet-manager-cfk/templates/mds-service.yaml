@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mds-kafka
+spec:
+  ports:
+    - name: "9099"
+      port: 9099
+      targetPort: 9099
+  selector:
+    app: kafka
+    clusterId: {{ .Release.Namespace }}
+    confluent-platform: "true"
+    type: kafka

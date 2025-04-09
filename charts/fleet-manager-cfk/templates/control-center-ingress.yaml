@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: controlcenter
+spec:
+  ingressClassName: {{ .Values.ingressClassName }}
+  tls:
+  - secretName: tls-kafka-external
+    hosts:
+    - cc-{{ .Release.Namespace }}.{{ .Values.domain }}
+  rules:
+    - host: cc-{{ .Release.Namespace }}.{{ .Values.domain }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: controlcenter
+                port:
+                  number: 9021
+            pathType: ImplementationSpecific

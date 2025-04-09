@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mds
+spec:
+  ingressClassName: {{ .Values.ingressClassName }}
+  tls:
+  - secretName: tls-kafka-external
+    hosts:
+    - mds-{{ .Release.Namespace }}.{{ .Values.domain }}
+  rules:
+    - host: mds-{{ .Release.Namespace }}.{{ .Values.domain }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: mds-kafka
+                port:
+                  number: 9099
+            pathType: ImplementationSpecific
