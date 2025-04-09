@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: schema-registry
 spec:
-  ingressClassName: {{ .Values.ingressClassName }}
+  ingressClassName: {{ .Release.Namespace }}
   tls:
   - secretName: tls-kafka-external
     hosts:
