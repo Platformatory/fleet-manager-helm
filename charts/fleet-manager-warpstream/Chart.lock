@@ -1,0 +1,6 @@
+dependencies:
+- name: warpstream-agent
+  repository: https://warpstreamlabs.github.io/charts
+  version: 0.14.12
+digest: sha256:c32f81730267c737a0d6b8d3069a7761adcb5242e67b067f3e9128bcd4c41458
+generated: "2025-04-10T13:08:25.242720118+05:30"

@@ -1,0 +1,67 @@
+certs:
+  kafka:
+    cert:
+    key:
+s3:
+  access_key:
+  secret_access_key:
+warpstream:
+  config:
+    bucketURL: # "s3://{s3_bucket_name}?region={warpstream_region}"
+    apiKey: ""
+    region: ""
+    virtualClusterID: ""
+  deploymentKind: StatefulSet
+
+  fullnameOverride: ws
+
+  replicas: 3
+
+  statefulSetConfig:
+    clusterDomain: 
+
+  extraEnv:
+  - name: AWS_ACCESS_KEY_ID
+    valueFrom:
+      secretKeyRef:
+        name: warpstream-s3
+        key: AWS_ACCESS_KEY_ID
+        optional: false
+  - name: AWS_SECRET_ACCESS_KEY
+    valueFrom:
+      secretKeyRef:
+        name: warpstream-s3
+        key: AWS_SECRET_ACCESS_KEY
+        optional: false
+  - name: WARPSTREAM_REQUIRE_SASL_AUTHENTICATION
+    value: "true"
+  - name: WARPSTREAM_TLS_ENABLED
+    value: "true"
+  - name: WARPSTREAM_TLS_SERVER_CERT_FILE
+    value: /etc/kafka/ssl/tls.crt
+  - name: WARPSTREAM_TLS_SERVER_PRIVATE_KEY_FILE
+    value: /etc/kafka/ssl/tls.key
+  - name: WARPSTREAM_DISCOVERY_KAFKA_HOSTNAME_OVERRIDE
+    value: # {namespace}-$(MY_POD_NAME).{base_domain}
+  - name: WARPSTREAM_DISCOVERY_KAFKA_PORT_OVERRIDE
+    value: "443"
+
+  service:
+    perPod:
+      enabled: true
+
+  autoscaling:
+    enabled: false
+
+  serviceMonitor:
+    enabled: true
+
+  volumeMounts:
+  - mountPath: "/etc/kafka/ssl"
+    name: warpstream-ssl
+    readOnly: true
+
+  volumes:
+  - name: warpstream-ssl
+    secret:
+      secretName: warpstream-tls
