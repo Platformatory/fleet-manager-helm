@@ -1,0 +1,9 @@
+prometheusUid: 
+dashboardUids:
+  warpstreamAgentOverview:
+  logs:
+loki:
+  uid:
+  hostname:
+  username:
+  password:
