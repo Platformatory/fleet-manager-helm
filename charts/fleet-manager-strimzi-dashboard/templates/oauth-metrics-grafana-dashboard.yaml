@@ -1,0 +1,12 @@
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: {{ .Release.Namespace }}-strimzi-oauth-metrics-dashboard
+spec:
+  allowCrossNamespaceImport: true
+  instanceSelector:
+    matchLabels:
+      dashboards: "grafana"
+  uid: {{ .Values.dashboardUids.oauthOverview }}
+  json: >-
+    {{- tpl (.Files.Get "dashboards/strimzi-oauth-metrics-dashboard.json") . | nindent 4 }}

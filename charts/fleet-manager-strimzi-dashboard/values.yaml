@@ -1,0 +1,11 @@
+prometheusUid: 
+dashboardUids:
+  kafkaOverview:
+  kraftOverview:
+  oauthOverview:
+  logs:
+loki:
+  uid:
+  hostname:
+  username:
+  password:
