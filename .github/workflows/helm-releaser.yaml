@@ -24,11 +24,9 @@ jobs:
         with:
           version: v3.8.1
         
-      # - name: Install go
-      #   uses: actions/setup-go@v5
-
-      # - name: Generate helm chart
-      #   run: make helm
+      - name: Add Dependency Repos
+        run: |
+          helm repo add ollama https://warpstreamlabs.github.io/charts
 
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.4.0
