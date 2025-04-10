@@ -1,0 +1,12 @@
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: {{ .Release.Namespace }}-cfk-logs-dashboard
+spec:
+  allowCrossNamespaceImport: true
+  instanceSelector:
+    matchLabels:
+      dashboards: "grafana"
+  uid: {{ .Values.dashboardUids.cfkLogs }}
+  json: >-
+    {{- tpl (.Files.Get "dashboards/cfk-logs-dashboard.json") . | nindent 4 }}

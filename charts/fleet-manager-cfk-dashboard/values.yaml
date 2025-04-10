@@ -1,0 +1,12 @@
+prometheusUid: 
+dashboardUids:
+  cfkOverview: 
+  cfkKafkaOverview:
+  cfkKafkaTopicsOverview:
+  cfkLogs:
+  cfkSchemaRegistry:
+loki:
+  uid:
+  hostname:
+  username:
+  password:
