@@ -1,0 +1,12 @@
+certs:
+  kafka:
+    cert:
+    key:
+oauth:
+  clientId: 
+  issuer: 
+  jwksEndpoint:
+  subClaim: sub
+domain:
+kafkaVersion: 3.8.0
+replicas: 3

@@ -1,0 +1,54 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: Kafka
+metadata:
+  name: kafka-fm
+  annotations:
+    strimzi.io/node-pools: enabled
+    strimzi.io/kraft: enabled
+spec:
+  kafka:
+    version: {{ .Values.kafkaVersion }}
+    listeners:
+      - name: plain
+        port: 9092
+        type: internal
+        tls: false
+      - name: tls
+        port: 9093
+        type: internal
+        tls: true
+      - name: external
+        port: 9094
+        type: ingress
+        tls: true
+        authentication:
+          type: oauth
+          validIssuerUri: {{ .Values.oauth.issuer }}
+          jwksEndpointUri: {{ .Values.oauth.jwksEndpoint }}
+          userNameClaim: {{ .Values.oauth.subClaim }}
+          maxSecondsWithoutReauthentication: 3600
+          enableMetrics: true
+          checkAccessTokenType: false
+          disableTlsHostnameVerification: true
+        configuration:
+          brokerCertChainAndKey:
+            secretName: tls-kafka-external
+            certificate: tls.crt
+            key: tls.key
+          class: {{ .Release.Namespace }}
+          hostTemplate: {{ .Release.Namespace }}-b{nodeId}.{{ .Values.domain }}
+          bootstrap:
+            host: {{ .Release.Namespace }}-bootstrap.{{ .Values.domain }}
+    authorization:
+      type: simple
+      superUsers:
+        - {{ .Values.oauth.clientId }}
+    metricsConfig:
+      type: jmxPrometheusExporter
+      valueFrom:
+        configMapKeyRef:
+          name: kafka-metrics
+          key: kafka-metrics-config.yml
+  entityOperator:
+    topicOperator: {}
+    userOperator: {}
