@@ -141,4 +141,15 @@ entries:
     urls:
     - https://github.com/Platformatory/fleet-manager-helm/releases/download/fleet-manager-warpstream-0.1.0/fleet-manager-warpstream-0.1.0.tgz
     version: 0.1.0
-generated: "2025-04-10T17:00:37.432354702Z"
+  fleet-manager-warpstream-dashboard:
+  - apiVersion: v2
+    appVersion: 0.0.0
+    created: "2025-04-10T18:21:39.555896293Z"
+    description: A Helm chart for Kubernetes
+    digest: 769ee265e27162dd0a2f00e88d96c4851b86a70ad8faf56983adad9b753da1e2
+    name: fleet-manager-warpstream-dashboard
+    type: application
+    urls:
+    - https://github.com/Platformatory/fleet-manager-helm/releases/download/fleet-manager-warpstream-dashboard-0.1.0/fleet-manager-warpstream-dashboard-0.1.0.tgz
+    version: 0.1.0
+generated: "2025-04-10T18:21:39.555922101Z"
