@@ -1,0 +1,9 @@
+dashboardUids:
+  kubeStateMetrics:
+  nodeExporter:
+  strimziOperator:
+prometheus:
+  uid:
+  hostname:
+  username:
+  password:
