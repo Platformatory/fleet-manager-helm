@@ -7,6 +7,23 @@ metadata:
     strimzi.io/kraft: enabled
 spec:
   kafka:
+{{- if eq .Values.tenancy "isolated" }}
+    template:
+      pod:
+        tolerations:
+        - key: "cluster_name"
+          operator: "Equal"
+          value: "{{ .Release.Namespace }}"
+          effect: "NoSchedule"
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions: 
+                    - key: eks.amazonaws.com/nodegroup
+                      operator: In
+                      values: ["{{ .Release.Namespace }}"]
+{{- end }}
     version: {{ .Values.kafkaVersion }}
     listeners:
       - name: plain
