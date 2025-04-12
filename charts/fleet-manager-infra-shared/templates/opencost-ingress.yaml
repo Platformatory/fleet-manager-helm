@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: opencost
+  namespace: {{ .Values.opencost.namespace }}
+  annotations:
+    konghq.com/plugins: opencost-basic-auth
+spec:
+  ingressClassName: kong
+  tls:
+  - secretName: opencost-tls
+    hosts:
+    - {{ .Values.opencost.hostname }}
+  rules:
+    - host: {{ .Values.opencost.hostname }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: {{ .Values.opencost.service }}
+                port:
+                  number: 9003
+            pathType: ImplementationSpecific

@@ -1,0 +1,10 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongConsumer
+metadata:
+  name: basic-auth
+  namespace: {{ .Values.prometheus.namespace }}
+  annotations:
+    kubernetes.io/ingress.class: kong
+username: fleetmanager
+credentials:
+- basic-auth-creds

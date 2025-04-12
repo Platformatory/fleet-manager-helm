@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: loki-ingress
+  namespace: {{ .Values.prometheus.namespace }}
+  annotations:
+    konghq.com/plugins: monitoring-basic-auth
+spec:
+  ingressClassName: kong
+  tls:
+  - secretName: wildcard-tls
+    hosts:
+    - {{ .Values.loki.hostname }}
+  rules:
+    - host: {{ .Values.loki.hostname }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: {{ .Values.loki.service }}
+                port:
+                  number: 80
+            pathType: ImplementationSpecific

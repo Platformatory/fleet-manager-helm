@@ -1,0 +1,8 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: monitoring-basic-auth
+  namespace: {{ .Values.prometheus.namespace }}
+plugin: basic-auth
+config:
+  hide_credentials: true

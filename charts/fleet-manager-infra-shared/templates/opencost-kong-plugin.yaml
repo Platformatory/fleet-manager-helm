@@ -1,0 +1,8 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: opencost-basic-auth
+  namespace: {{ .Values.opencost.namespace }}
+plugin: basic-auth
+config:
+  hide_credentials: true

@@ -1,0 +1,20 @@
+certs:
+  cert:
+  key:
+opencost:
+  hostname: 
+  username: 
+  password: 
+  service: kafka-fleet-manager-opencost
+  namespace: opencost
+prometheus:
+  hostname: 
+  username: 
+  password: 
+  service: kafka-fleet-manager-promet-prometheus
+  namespace: monitoring
+loki:
+  hostname: 
+  service: kafka-fleet-manager-loki-gateway
+strimzi:
+  namespace: strimzi
