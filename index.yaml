@@ -74,6 +74,16 @@ entries:
   fleet-manager-cfk:
   - apiVersion: v2
     appVersion: 0.0.0
+    created: "2025-04-12T08:35:33.387249046Z"
+    description: A Helm chart for Kubernetes
+    digest: d945e251662c40b92eaf595132d2b09c352c8e8ab3f5fe4f750f277bfc94824b
+    name: fleet-manager-cfk
+    type: application
+    urls:
+    - https://github.com/Platformatory/fleet-manager-helm/releases/download/fleet-manager-cfk-0.1.2/fleet-manager-cfk-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: 0.0.0
     created: "2025-04-10T09:13:53.35647494Z"
     description: A Helm chart for Kubernetes
     digest: 600e8deba85cf04fe674995c60e30fb0f89a1370d6c613f441e8d4f25bbf34c6
@@ -103,6 +113,17 @@ entries:
     urls:
     - https://github.com/Platformatory/fleet-manager-helm/releases/download/fleet-manager-cfk-dashboard-0.1.0/fleet-manager-cfk-dashboard-0.1.0.tgz
     version: 0.1.0
+  fleet-manager-infra-dashboard:
+  - apiVersion: v2
+    appVersion: 0.0.0
+    created: "2025-04-12T08:35:33.550790672Z"
+    description: A Helm chart for Kubernetes
+    digest: 2ed658d2de6b92b736c08366d36b9e59b96029deb8d3aabffe4ddedc080ecdd8
+    name: fleet-manager-infra-dashboard
+    type: application
+    urls:
+    - https://github.com/Platformatory/fleet-manager-helm/releases/download/fleet-manager-infra-dashboard-0.1.0/fleet-manager-infra-dashboard-0.1.0.tgz
+    version: 0.1.0
   fleet-manager-infra-shared:
   - apiVersion: v2
     appVersion: 0.0.0
@@ -115,6 +136,16 @@ entries:
     - https://github.com/Platformatory/fleet-manager-helm/releases/download/fleet-manager-infra-shared-0.1.0/fleet-manager-infra-shared-0.1.0.tgz
     version: 0.1.0
   fleet-manager-strimzi:
+  - apiVersion: v2
+    appVersion: 0.0.0
+    created: "2025-04-12T08:35:33.750697784Z"
+    description: A Helm chart for Kubernetes
+    digest: 90b77e0266aaaf7dc6bae2601c2757b8b9a902659f1344095c737a9fc4e68c2d
+    name: fleet-manager-strimzi
+    type: application
+    urls:
+    - https://github.com/Platformatory/fleet-manager-helm/releases/download/fleet-manager-strimzi-0.2.1/fleet-manager-strimzi-0.2.1.tgz
+    version: 0.2.1
   - apiVersion: v2
     appVersion: 0.0.0
     created: "2025-04-11T09:35:52.125691577Z"
@@ -173,4 +204,4 @@ entries:
     urls:
     - https://github.com/Platformatory/fleet-manager-helm/releases/download/fleet-manager-warpstream-dashboard-0.1.0/fleet-manager-warpstream-dashboard-0.1.0.tgz
     version: 0.1.0
-generated: "2025-04-11T09:35:52.125721574Z"
+generated: "2025-04-12T08:35:33.750733841Z"
