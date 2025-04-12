@@ -1,5 +1,5 @@
 apiVersion: v2
-name: fleet-manager-infra-shared
+name: fleet-manager-infra-dashboard
 description: A Helm chart for Kubernetes
 
 type: application
