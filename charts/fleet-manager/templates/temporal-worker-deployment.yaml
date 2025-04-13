@@ -71,11 +71,9 @@ spec:
                   key: FLEETMANAGER_KUBERNETES_AWS_SECRET_KEY
                   optional: true
             - name: FLEETMANAGER_KUBERNETES_AWS_REGION
-              valueFrom:
-                secretKeyRef:
-                  name: temporal-worker
-                  key: FLEETMANAGER_KUBERNETES_AWS_REGION
-                  optional: true
+              value: {{ .Values.fleetmanager.kubeconfig.aws.region }}
+            - name: FLEETMANAGER_KUBERNETES_CLUSTER_NAME
+              value: {{ .Values.fleetmanager.kubeconfig.aws.clusterName }}
             - name: GRAFANA_URL
               value: https://{{ include "fleetmanager.grafana.domain" . }}
             - name: GRAFANA_USERNAME
