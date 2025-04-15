@@ -6,7 +6,7 @@ metadata:
   name: kafka-broker-rules
 spec:
   groups:
-  - name: kafka-brokers.rules
+  - name: {{ .Release.Namespace }}-kafka-brokers.rules
     labels:
       cluster: {{ .Release.Namespace }}
     rules:
