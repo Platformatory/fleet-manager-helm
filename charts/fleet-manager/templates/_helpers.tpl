@@ -11,6 +11,10 @@
 {{- printf "api.%s" .Values.fleetmanager.domain -}}
 {{- end -}}
 
+{{- define "fleetmanager.docs.domain" -}}
+{{- printf "docs.%s" .Values.fleetmanager.domain -}}
+{{- end -}}
+
 {{- define "fleetmanager.loki.domain" -}}
 {{- printf "loki.%s" .Values.fleetmanager.domain -}}
 {{- end -}}

@@ -1,0 +1,34 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fleet-manager-docs
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    konghq.com/methods: "GET"
+    # konghq.com/path: "/swagger/"
+    # konghq.com/strip-path: "true"
+    # kubernetes.io/ingress.class: kong
+spec:
+  ingressClassName: kong
+  tls:
+  - secretName: {{ include "fleetmanager.docs.domain" . | replace "." "-" }}
+    hosts:
+    - {{ include "fleetmanager.docs.domain" . }}
+  rules:
+    - host: {{ include "fleetmanager.docs.domain" . }}
+      http:
+        paths:
+          - path: /
+            backend:
+              service:
+                name: fleet-manager-docs
+                port:
+                  number: 8000
+            pathType: ImplementationSpecific
+          - path: /static
+            backend:
+              service:
+                name: fleet-manager
+                port:
+                  number: 8000
+            pathType: Prefix

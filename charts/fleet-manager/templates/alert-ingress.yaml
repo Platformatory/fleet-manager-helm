@@ -1,11 +1,11 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: fleet-manager-apis
+  name: fleet-manager-alert-api
   annotations:
-    konghq.com/plugins: auth0-jwt, cors
     cert-manager.io/cluster-issuer: letsencrypt-prod
-    konghq.com/regex-priority: "9"
+    konghq.com/methods: "POST"
+    konghq.com/regex-priority: "10"
     # kubernetes.io/ingress.class: kong
 spec:
   ingressClassName: kong
@@ -17,7 +17,8 @@ spec:
     - host: {{ include "fleetmanager.api.domain" . }}
       http:
         paths:
-          - backend:
+          - path: /organizations/(.*)/clusters/(.*)/alert/
+            backend:
               service:
                 name: fleet-manager
                 port:
