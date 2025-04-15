@@ -1,0 +1,66 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    release: kafka-fleet-manager-prometheus
+  name: kafka-broker-rules
+spec:
+  groups:
+  - name: kafka-brokers.rules
+    labels:
+      cluster: {{ .Release.Namespace }}
+    rules:
+    - alert: ActiveControllerCount != 1
+      expr: sum by (clusterId) (kafka_controller_kafkacontroller_activecontrollercount{namespace="{{ .Release.Namespace }}"}) != 1
+      for: 10s
+      labels:
+        severity: page
+        cluster: {{ .Release.Namespace }}
+      annotations:
+        summary: "Active controller count for clusterId {{`{{ $labels.clusterId }}`}}"
+        description: "Active controller count for clusterId {{`{{ $labels.clusterId }}`}} is {{`{{ $value }}`}}. "
+    - alert: OfflinePartitionCount > 0
+      expr: sum by(clusterId) (kafka_controller_kafkacontroller_offlinepartitionscount{namespace="{{ .Release.Namespace }}"}) > 0
+      for: 10s
+      labels:
+        severity: page
+        cluster: {{ .Release.Namespace }}
+      annotations:
+        summary: "Offline partitions for clusterId {{`{{ $labels.clusterId }}`}}"
+        description: "Offline partitions count for clusterId {{`{{ $labels.clusterId }}`}} is {{`{{ $value }}`}}. "
+    - alert: UncleanLeaderElectionsPerSec > 0
+      expr: sum by(clusterId) (kafka_controller_controllerstats_uncleanleaderelectionspersec{namespace="{{ .Release.Namespace }}"}) > 0
+      for: 1m
+      labels:
+        severity: page
+        cluster: {{ .Release.Namespace }}
+      annotations:
+        summary: "UncleanLeaderElectionsPerSec for clusterId {{`{{ $labels.clusterId }}`}}"
+        description: "UncleanLeaderElectionsPerSec for clusterId {{`{{ $labels.clusterId }}`}} is {{`{{ $value }}`}}. "
+    - alert: UnderReplicatedPartitions > 0
+      expr: sum by(clusterId) (kafka_server_replicamanager_underreplicatedpartitions{namespace="{{ .Release.Namespace }}"}) > 0
+      for: 1m
+      labels:
+        severity: page
+        cluster: {{ .Release.Namespace }}
+      annotations:
+        summary: "UnderReplicatedPartitions for clusterId {{`{{ $labels.clusterId }}`}}"
+        description: "UnderReplicatedPartitions for clusterId {{`{{ $labels.clusterId }}`}} is {{`{{ $value }}`}}. "
+    - alert: UnderMinIsrPartitionCount > 0
+      expr: sum by (clusterId) (kafka_cluster_partition_underminisr{namespace="{{ .Release.Namespace }}"}) > 0
+      for: 1m
+      labels:
+        severity: page
+        cluster: {{ .Release.Namespace }}
+      annotations:
+        summary: "UnderMinIsrPartitionCount for clusterId {{`{{ $labels.clusterId }}`}}"
+        description: "UnderMinIsrPartitionCount for clusterId {{`{{ $labels.clusterId }}`}} is {{`{{ $value }}`}}. "
+    - alert: Broker IO Activity < 40%
+      expr: sum by (clusterId) (kafka_server_kafkarequesthandlerpool_controlplanerequesthandleravgidlepercent{namespace="{{ .Release.Namespace }}"}) < 0.4
+      for: 1m
+      labels:
+        severity: page
+        cluster: {{ .Release.Namespace }}
+      annotations:
+        summary: "Broker IO Activity < 40% for clusterId {{`{{ $labels.clusterId }}`}}"
+        description: "Broker IO Activity for clusterId {{`{{ $labels.clusterId }}`}} and broker {{`{{ $labels.instance }}`}} is {{`{{ $value }}`}}. "
