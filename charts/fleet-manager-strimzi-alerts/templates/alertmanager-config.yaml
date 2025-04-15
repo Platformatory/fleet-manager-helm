@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: {{ .Values.alertmanagerConfig.name }}
+  labels:
+    alertmanagerConfig: {{ .Values.alertmanagerConfig.name }}
+spec:
+  route:
+    receiver: "webhook"
+    receiver: 'webhook'
+    matchers:
+    - name: cluster
+      value: {{ .Release.Namespace }}
+      matchType: "="
+  receivers:
+    - name: "webhook"
+      webhookConfigs:
+        - url: {{ .Values.alertmanagerConfig.webhookUrl | quote }}
