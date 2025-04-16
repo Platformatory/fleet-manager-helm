@@ -24,7 +24,7 @@ spec:
                       operator: In
                       values: ["{{ .Release.Namespace }}"]
 {{- end }}
-    version: {{ .Values.kafkaVersion }}
+    version: {{ .Values.kafka.version }}
     listeners:
       - name: plain
         port: 9092

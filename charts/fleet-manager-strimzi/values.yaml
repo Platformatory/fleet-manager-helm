@@ -9,5 +9,9 @@ oauth:
   subClaim: sub
 tenancy: Shared
 domain:
-kafkaVersion: 3.8.0
+kafka:
+  version: 3.8.0
+  diskSize: 100Gi
+kraft:
+  diskSize: 50Gi
 replicas: 3
