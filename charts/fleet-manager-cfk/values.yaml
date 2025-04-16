@@ -33,6 +33,11 @@ cfk:
       diskSize: 50Gi
     kafka:
       diskSize: 100Gi
+      listeners:
+        internal:
+          enabled: true
+        external:
+          enabled: true
     controlCenter:
       diskSize: 30Gi
   license:

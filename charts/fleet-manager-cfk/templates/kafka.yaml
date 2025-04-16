@@ -60,6 +60,7 @@ spec:
           - "DEFAULT"
       tls:
         enabled: true
+{{- if .Values.cfk.confluentPlatform.kafka.listeners.external.enabled }}
     external:
       authentication:
         type: oauth
@@ -78,6 +79,19 @@ spec:
           brokerPrefix: {{ .Release.Namespace }}-b
           port: 443
           domain: {{ .Values.domain }}
+{{- end }}
+{{- if .Values.cfk.confluentPlatform.kafka.listeners.internal.enabled }}
+    custom:
+    - name: custominternal
+      port: 9093
+      authentication:
+        type: oauth
+        oauthSettings:
+          audience: {{ .Values.oauth.audience }}
+          expectedIssuer: {{ .Values.oauth.issuer }}
+          jwksEndpointUri: {{ .Values.oauth.jwksEndpoint }}
+          subClaimName: {{ .Values.oauth.subClaim }}
+{{- end }}
   metricReporter:
     enabled: true
     authentication:
