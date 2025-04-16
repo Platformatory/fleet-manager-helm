@@ -23,7 +23,7 @@ spec:
                   operator: In
                   values: ["{{ .Release.Namespace }}"]
 {{- end }}
-  dataVolumeCapacity: 10Gi
+  dataVolumeCapacity: {{ .Values.cfk.confluentPlatform.kraft.diskSize }}
   image:
     application: confluentinc/cp-server:{{ .Values.cfk.confluentPlatform.version }}
     init: confluentinc/confluent-init-container:{{ .Values.cfk.initContainer.version }}

@@ -29,6 +29,12 @@ cfk:
     version:
   confluentPlatform:
     version: 
+    kraft:
+      diskSize: 50Gi
+    kafka:
+      diskSize: 100Gi
+    controlCenter:
+      diskSize: 30Gi
   license:
   systemAdmin:
     name:
