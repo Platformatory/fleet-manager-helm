@@ -26,14 +26,26 @@ spec:
 {{- end }}
     version: {{ .Values.kafka.version }}
     listeners:
+{{- if .Values.kafka.listeners.internal.enabled }}
       - name: plain
         port: 9092
         type: internal
         tls: false
+        authentication:
+          type: oauth
+          validIssuerUri: {{ .Values.oauth.issuer }}
+          jwksEndpointUri: {{ .Values.oauth.jwksEndpoint }}
+          userNameClaim: {{ .Values.oauth.subClaim }}
+          maxSecondsWithoutReauthentication: 3600
+          enableMetrics: true
+          checkAccessTokenType: false
+          disableTlsHostnameVerification: true
+{{- end }}
       - name: tls
         port: 9093
         type: internal
         tls: true
+{{- if .Values.kafka.listeners.external.enabled }}
       - name: external
         port: 9094
         type: ingress
@@ -56,6 +68,7 @@ spec:
           hostTemplate: {{ .Release.Namespace }}-b{nodeId}.{{ .Values.domain }}
           bootstrap:
             host: {{ .Release.Namespace }}-bootstrap.{{ .Values.domain }}
+{{- end }}
     authorization:
       type: simple
       superUsers:

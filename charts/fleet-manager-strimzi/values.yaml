@@ -12,6 +12,11 @@ domain:
 kafka:
   version: 3.8.0
   diskSize: 100Gi
+  listeners:
+    external: 
+      enabled: true
+    internal: 
+      enabled: true
 kraft:
   diskSize: 50Gi
 replicas: 3
