@@ -14,7 +14,7 @@ spec:
       expr: sum by (clusterId) (kafka_controller_kafkacontroller_activecontrollercount{namespace="{{ .Release.Namespace }}"}) != 1
       for: 10s
       labels:
-        severity: page
+        severity: major
         cluster: {{ .Release.Namespace }}
       annotations:
         summary: "Active controller count for clusterId {{`{{ $labels.clusterId }}`}}"
@@ -23,7 +23,7 @@ spec:
       expr: sum by(clusterId) (kafka_controller_kafkacontroller_offlinepartitionscount{namespace="{{ .Release.Namespace }}"}) > 0
       for: 10s
       labels:
-        severity: page
+        severity: major
         cluster: {{ .Release.Namespace }}
       annotations:
         summary: "Offline partitions for clusterId {{`{{ $labels.clusterId }}`}}"
@@ -32,7 +32,7 @@ spec:
       expr: sum by(clusterId) (kafka_controller_controllerstats_uncleanleaderelectionspersec{namespace="{{ .Release.Namespace }}"}) > 0
       for: 1m
       labels:
-        severity: page
+        severity: major
         cluster: {{ .Release.Namespace }}
       annotations:
         summary: "UncleanLeaderElectionsPerSec for clusterId {{`{{ $labels.clusterId }}`}}"
@@ -41,7 +41,7 @@ spec:
       expr: sum by(clusterId) (kafka_server_replicamanager_underreplicatedpartitions{namespace="{{ .Release.Namespace }}"}) > 0
       for: 1m
       labels:
-        severity: page
+        severity: major
         cluster: {{ .Release.Namespace }}
       annotations:
         summary: "UnderReplicatedPartitions for clusterId {{`{{ $labels.clusterId }}`}}"
@@ -50,7 +50,7 @@ spec:
       expr: sum by (clusterId) (kafka_cluster_partition_underminisr{namespace="{{ .Release.Namespace }}"}) > 0
       for: 1m
       labels:
-        severity: page
+        severity: major
         cluster: {{ .Release.Namespace }}
       annotations:
         summary: "UnderMinIsrPartitionCount for clusterId {{`{{ $labels.clusterId }}`}}"
@@ -59,7 +59,7 @@ spec:
       expr: sum by (clusterId) (kafka_server_kafkarequesthandlerpool_controlplanerequesthandleravgidlepercent{namespace="{{ .Release.Namespace }}"}) < 0.4
       for: 1m
       labels:
-        severity: page
+        severity: major
         cluster: {{ .Release.Namespace }}
       annotations:
         summary: "Broker IO Activity < 40% for clusterId {{`{{ $labels.clusterId }}`}}"
