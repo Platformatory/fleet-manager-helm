@@ -44,3 +44,10 @@ cfk:
   systemAdmin:
     name:
     type:
+  tieredStorage:
+    provider: S3
+    bucketName: 
+    aws:
+      accessKey:
+      secretKey:
+      region:
