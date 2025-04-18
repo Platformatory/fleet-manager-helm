@@ -17,7 +17,7 @@ spec:
     - host: {{ include "fleetmanager.api.domain" . }}
       http:
         paths:
-          - path: /organizations/(.*)/clusters/(.*)/alert/
+          - path: /~/organizations/(.*)/clusters/(.*)/alert/
             backend:
               service:
                 name: fleet-manager
