@@ -53,11 +53,18 @@ spec:
       - confluent.tier.enable=true
       - confluent.tier.cleaner.feature.enable=true
       - confluent.tier.cleaner.enable=true
-      - confluent.tier.backend=S3
+      - confluent.tier.backend={{ .Values.cfk.tieredStorage.provider }}
       - confluent.tier.s3.bucket={{ .Values.cfk.tieredStorage.bucketName }}
       - confluent.tier.s3.prefix=confluent-tiered-storage-dir/
       - confluent.tier.s3.region={{ .Values.cfk.tieredStorage.aws.region }}
       - confluent.tier.s3.cred.file.path=/mnt/tieredStorage/tieredStorageCreds.txt
+{{- if .Values.cfk.tieredStorage.endpoint }}
+      - confluent.tier.s3.aws.endpoint.override={{ .Values.cfk.tieredStorage.endpoint }}
+{{- end }}
+{{- if eq .Values.cfk.tieredStorage.cloud "oci" }}
+      - confluent.tier.s3.ssl.endpoint.identification.algorithm=""
+      - confluent.tier.s3.force.path.style.access=true
+{{- end }}
     log4j:
       - log4j.rootLogger=INFO, stdout, stderr
       - log4j.appender.stdout.Threshold = TRACE
