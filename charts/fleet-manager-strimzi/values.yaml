@@ -17,6 +17,15 @@ kafka:
       enabled: true
     internal: 
       enabled: true
+  tieredStorage:
+    provider: S3
+    cloud: aws
+    bucketName: 
+    endpoint: 
+    aws:
+      accessKey:
+      secretKey:
+      region:
 kraft:
   diskSize: 50Gi
 replicas: 3

@@ -7,8 +7,9 @@ metadata:
     strimzi.io/kraft: enabled
 spec:
   kafka:
-{{- if eq .Values.tenancy "Isolated" }}
+    image: platformatorylabs/strimzi-kafka-tiered-storage:latest-kafka-{{ .Values.kafka.version }}
     template:
+{{- if eq .Values.tenancy "Isolated" }}
       pod:
         tolerations:
         - key: "cluster_name"
@@ -23,6 +24,22 @@ spec:
                     - key: eks.amazonaws.com/nodegroup
                       operator: In
                       values: ["{{ .Release.Namespace }}"]
+{{- end }}
+{{- if eq .Values.kafka.tieredStorage.provider "S3" }}
+      kafkaContainer:
+        env:
+        - name: AWS_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: strimzi-tiered-storage-creds
+              key: AWS_ACCESS_KEY_ID
+              optional: false
+        - name: AWS_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: strimzi-tiered-storage-creds
+              key: AWS_SECRET_ACCESS_KEY
+              optional: false
 {{- end }}
     version: {{ .Values.kafka.version }}
     listeners:
@@ -93,6 +110,37 @@ spec:
         log4j.appender.stderr.Target: "System.err"
         log4j.appender.stderr.layout: "org.apache.log4j.PatternLayout"
         log4j.appender.stderr.layout.ConversionPattern: "[%d] %p %m (%c)%n"
+    tieredStorage:
+      type: custom
+      remoteStorageManager:
+        className: io.aiven.kafka.tieredstorage.storage.s3.S3Storage
+        classPath: "/opt/kafka/libs/tiered-storage-s3/core/*:/opt/kafka/libs/tiered-storage-s3/s3/*"
+        config:
+          fetch.chunk.cache.retention.ms: "600000"
+          fetch.chunk.cache.prefetch.max.size: "16777216"
+          custom.metadata.fields.include: REMOTE_SIZE
+          fetch.chunk.cache.class: io.aiven.kafka.tieredstorage.fetch.cache.DiskChunkCache
+          chunk.size: "4194304"
+          fetch.chunk.cache.path: /home/kafka/kafka-tiered-storage-cache
+          key.prefix: {{ include "tieredStorage.keyPrefix" . }}
+          fetch.chunk.cache.size: "1073741824"
+          storage.backend.class: io.aiven.kafka.tieredstorage.storage.s3.S3Storage
+          storage.s3.bucket.name: {{ include "tieredStorage.bucketName" . }}
+          storage.s3.region: {{ .Values.kafka.tieredStorage.aws.region }}
+          storage.aws.credentials.provider.class: "software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider"
+{{- if .Values.kafka.tieredStorage.endpoint }}
+          storage.s3.endpoint.url: {{ .Values.kafka.tieredStorage.endpoint }}
+{{- end }}
+{{- if eq .Values.kafka.tieredStorage.cloud "oci" }}
+          storage.aws.certificate.check.enabled: "false"
+          storage.s3.path.style.enabled: "true"
+{{- end }}
+    config:
+      remote.log.storage.manager.class.path: "/opt/kafka/libs/tiered-storage-s3/core/*:/opt/kafka/libs/tiered-storage-s3/s3/*"
+      rlmm.config.remote.log.metadata.topic.replication.factor: "1"
+      remote.log.metadata.manager.class.name: org.apache.kafka.server.log.remote.metadata.storage.TopicBasedRemoteLogMetadataManager
+      remote.log.storage.manager.class.name: io.aiven.kafka.tieredstorage.RemoteStorageManager
+      remote.log.manager.task.interval.ms: "5000"
   entityOperator:
     topicOperator: {}
     userOperator: {}
