@@ -259,6 +259,16 @@ entries:
   fleet-manager-strimzi:
   - apiVersion: v2
     appVersion: 0.0.0
+    created: "2025-04-20T15:21:50.327501416Z"
+    description: A Helm chart for Kubernetes
+    digest: ee5a6ab2c8e79e608cfa9cecd8d2e256b140a1c416f7634cb9fc7098db33cdab
+    name: fleet-manager-strimzi
+    type: application
+    urls:
+    - https://github.com/Platformatory/fleet-manager-helm/releases/download/fleet-manager-strimzi-0.4.0/fleet-manager-strimzi-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v2
+    appVersion: 0.0.0
     created: "2025-04-17T11:09:45.085303847Z"
     description: A Helm chart for Kubernetes
     digest: 39d82aa408407148e6124593f0fa2df277123d33414b98f950fba7715fd30c55
@@ -366,4 +376,4 @@ entries:
     urls:
     - https://github.com/Platformatory/fleet-manager-helm/releases/download/fleet-manager-warpstream-dashboard-0.1.0/fleet-manager-warpstream-dashboard-0.1.0.tgz
     version: 0.1.0
-generated: "2025-04-19T14:06:49.929945747Z"
+generated: "2025-04-20T15:21:50.327580805Z"
