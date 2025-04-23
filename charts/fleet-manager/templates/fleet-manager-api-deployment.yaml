@@ -64,6 +64,37 @@ spec:
             value: ws-fleet-manager-configuration
           - name: TEMPORAL_SERVER
             value: fm-temporal-frontend:7233
+          - name: ROOT_ORG_OAUTH_ISSUER
+            value: {{ .Values.fleetmanager.oidc.issuer }}
+          - name: ROOT_ORG_OAUTH_JWKS_URI
+            value: {{ .Values.fleetmanager.oidc.jwksUri }}
+          - name: ROOT_ORG_OAUTH_AUDIENCE
+            value: {{ .Values.fleetmanager.oidc.audience }}
+          - name: ROOT_ORG_OAUTH_SCOPE
+            value: {{ .Values.fleetmanager.oidc.scope }}
+          - name: ROOT_ORG_OAUTH_TOKEN_ENDPOINT
+            value: {{ .Values.fleetmanager.oidc.tokenEndpoint }}
+          - name: ROOT_ORG_OAUTH_GROUPS_CLAIM
+            value: {{ .Values.fleetmanager.oidc.groupsClaim }}
+          - name: ROOT_ORG_OAUTH_AUTHORIZE_ENDPOINT
+            value: {{ .Values.fleetmanager.oidc.authorizeEndpoint }}
+{{- if .Values.fleetmanager.oidc.refreshToken }}
+          - name: ROOT_ORG_OAUTH_REFRESH_TOKEN
+            value: "true"
+{{- else }}
+          - name: ROOT_ORG_OAUTH_REFRESH_TOKEN
+            value: "false"
+{{- end }}
+          - name: ROOT_ORG_OAUTH_CLIENT_ID
+            value: {{ .Values.fleetmanager.oidc.clientId }}
+          - name: ROOT_ORG_OAUTH_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: fleet-manager
+                key: oidc-client-secret
+                optional: false
+          - name: SUPER_USER_EMAILS
+            value: {{ .Values.fleetmanager.superUserEmails }}
           image: {{ .Values.fleetmanager.api.image }}
           command: ['python', 'manage.py', 'migrate']
           name: fleet-manager-migrations
@@ -119,6 +150,37 @@ spec:
             value: ws-fleet-manager-configuration
           - name: TEMPORAL_SERVER
             value: fm-temporal-frontend:7233
+          - name: ROOT_ORG_OAUTH_ISSUER
+            value: {{ .Values.fleetmanager.oidc.issuer }}
+          - name: ROOT_ORG_OAUTH_JWKS_URI
+            value: {{ .Values.fleetmanager.oidc.jwksUri }}
+          - name: ROOT_ORG_OAUTH_AUDIENCE
+            value: {{ .Values.fleetmanager.oidc.audience }}
+          - name: ROOT_ORG_OAUTH_SCOPE
+            value: {{ .Values.fleetmanager.oidc.scope }}
+          - name: ROOT_ORG_OAUTH_TOKEN_ENDPOINT
+            value: {{ .Values.fleetmanager.oidc.tokenEndpoint }}
+          - name: ROOT_ORG_OAUTH_GROUPS_CLAIM
+            value: {{ .Values.fleetmanager.oidc.groupsClaim }}
+          - name: ROOT_ORG_OAUTH_AUTHORIZE_ENDPOINT
+            value: {{ .Values.fleetmanager.oidc.authorizeEndpoint }}
+{{- if .Values.fleetmanager.oidc.refreshToken }}
+          - name: ROOT_ORG_OAUTH_REFRESH_TOKEN
+            value: "true"
+{{- else }}
+          - name: ROOT_ORG_OAUTH_REFRESH_TOKEN
+            value: "false"
+{{- end }}
+          - name: ROOT_ORG_OAUTH_CLIENT_ID
+            value: {{ .Values.fleetmanager.oidc.clientId }}
+          - name: ROOT_ORG_OAUTH_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: fleet-manager
+                key: oidc-client-secret
+                optional: false
+          - name: SUPER_USER_EMAILS
+            value: {{ .Values.fleetmanager.superUserEmails }}
           image: {{ .Values.fleetmanager.api.image }}
           name: fleet-manager
           ports:

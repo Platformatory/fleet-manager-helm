@@ -90,6 +90,16 @@ spec:
                   name: grafana-credentials
                   key: GF_SECURITY_ADMIN_PASSWORD
                   optional: false
+            - name: JWT_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: temporal-worker
+                  key: JWT_SECRET_KEY
+                  optional: false
+            - name: FLEET_MANAGER_DOMAIN
+              value: {{ .Values.fleetmanager.domain }}
+            - name: FLEET_MANAGER_NAMESPACE
+              value: {{ .Release.Namespace }}
           volumeMounts:
           - mountPath: "/opt/config"
             name: fleet-manager-kubeconfig

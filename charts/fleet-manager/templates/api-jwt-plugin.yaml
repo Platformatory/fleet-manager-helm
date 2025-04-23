@@ -1,7 +1,7 @@
 apiVersion: configuration.konghq.com/v1
 kind: KongPlugin
 metadata:
-  name: auth0-jwt
+  name: rootorg-jwt
 plugin: jwt
 config:
   claims_to_verify:

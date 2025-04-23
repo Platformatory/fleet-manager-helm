@@ -12,12 +12,25 @@ fleetmanager:
       secretKey: ""
       region: ""
       clusterName: ""
+  rootOrg: root
   auth0:
     domain: 
     audience: 
     apiAudience: 
-    uiAudience: 
     appClientId: 
     clientId: 
     clientSecret: 
     rsaPublicKey: 
+  oidc:
+    issuer:
+    jwksUri:
+    audience:
+    scope:
+    tokenEndpoint:
+    groupsClaim:
+    authorizeEndpoint:
+    refreshToken: false
+    clientId:
+    clientSecret:
+    rsaPublicKey:
+  superUserEmails:
