@@ -256,6 +256,16 @@ entries:
     urls:
     - https://github.com/Platformatory/fleet-manager-helm/releases/download/fleet-manager-infra-shared-0.1.0/fleet-manager-infra-shared-0.1.0.tgz
     version: 0.1.0
+  fleet-manager-org-ingress:
+  - apiVersion: v2
+    created: "2025-04-23T08:05:04.271365546Z"
+    description: A Helm chart for Kafka Fleet Manager Organization Ingress
+    digest: bb7abc6167ef1d4ca4b0287e97384a41e2ce5ece3f5492359d6bdbaf6c5a6af1
+    name: fleet-manager-org-ingress
+    type: application
+    urls:
+    - https://github.com/Platformatory/fleet-manager-helm/releases/download/fleet-manager-org-ingress-0.1.0/fleet-manager-org-ingress-0.1.0.tgz
+    version: 0.1.0
   fleet-manager-strimzi:
   - apiVersion: v2
     appVersion: 0.0.0
@@ -376,4 +386,4 @@ entries:
     urls:
     - https://github.com/Platformatory/fleet-manager-helm/releases/download/fleet-manager-warpstream-dashboard-0.1.0/fleet-manager-warpstream-dashboard-0.1.0.tgz
     version: 0.1.0
-generated: "2025-04-20T15:21:50.327580805Z"
+generated: "2025-04-23T08:05:04.271466895Z"
