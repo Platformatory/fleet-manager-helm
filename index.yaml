@@ -258,6 +258,15 @@ entries:
     version: 0.1.0
   fleet-manager-org-ingress:
   - apiVersion: v2
+    created: "2025-04-23T10:43:58.463735416Z"
+    description: A Helm chart for Kafka Fleet Manager Organization Ingress
+    digest: 8cab853f6136b92edcc2685863284d2bd9bb053c1d4412f391ef6ede3f2edebc
+    name: fleet-manager-org-ingress
+    type: application
+    urls:
+    - https://github.com/Platformatory/fleet-manager-helm/releases/download/fleet-manager-org-ingress-0.1.1/fleet-manager-org-ingress-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
     created: "2025-04-23T08:05:04.271365546Z"
     description: A Helm chart for Kafka Fleet Manager Organization Ingress
     digest: bb7abc6167ef1d4ca4b0287e97384a41e2ce5ece3f5492359d6bdbaf6c5a6af1
@@ -386,4 +395,4 @@ entries:
     urls:
     - https://github.com/Platformatory/fleet-manager-helm/releases/download/fleet-manager-warpstream-dashboard-0.1.0/fleet-manager-warpstream-dashboard-0.1.0.tgz
     version: 0.1.0
-generated: "2025-04-23T08:05:04.271466895Z"
+generated: "2025-04-23T10:43:58.463824182Z"
