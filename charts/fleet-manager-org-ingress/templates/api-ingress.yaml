@@ -17,7 +17,7 @@ spec:
     - host: {{ include "fleetmanager.api.domain" . }}
       http:
         paths:
-          - path: /organizations/{{ .Values.fleetmanager.org }}/me/
+          - path: /organizations/{{ .Values.fleetmanager.org }}/
             backend:
               service:
                 name: fleet-manager
