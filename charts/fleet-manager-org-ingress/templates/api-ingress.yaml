@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fleet-manager-{{ .Values.fleetmanager.org }}-apis
+  annotations:
+    konghq.com/plugins: {{ .Values.fleetmanager.org }}-jwt, cors
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    konghq.com/regex-priority: "9"
+    # kubernetes.io/ingress.class: kong
+spec:
+  ingressClassName: kong
+  tls:
+  - secretName: {{ include "fleetmanager.api.domain" . | replace "." "-" }}
+    hosts:
+    - {{ include "fleetmanager.api.domain" . }}
+  rules:
+    - host: {{ include "fleetmanager.api.domain" . }}
+      http:
+        paths:
+          - path: /organizations/{{ .Values.fleetmanager.org }}/me/
+            backend:
+              service:
+                name: fleet-manager
+                port:
+                  number: 8000
+            pathType: Prefix

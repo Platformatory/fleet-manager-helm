@@ -1,0 +1,8 @@
+apiVersion: v2
+name: fleet-manager
+description: A Helm chart for Kafka Fleet Manager Organization Ingress
+
+type: application
+
+version: 0.1.0
+

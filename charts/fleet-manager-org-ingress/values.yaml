@@ -1,0 +1,6 @@
+fleetmanager:
+  domain: 
+  org: 
+  oidc:
+    domain: 
+    rsaPublicKey: 
