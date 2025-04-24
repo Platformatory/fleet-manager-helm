@@ -53,6 +53,7 @@ spec:
       - confluent.tier.enable=true
       - confluent.tier.cleaner.feature.enable=true
       - confluent.tier.cleaner.enable=true
+      - confluent.tier.local.hotset.ms=7200000
       - confluent.tier.backend={{ .Values.cfk.tieredStorage.provider }}
       - confluent.tier.s3.bucket={{ .Values.cfk.tieredStorage.bucketName }}
       - confluent.tier.s3.prefix=confluent-tiered-storage-dir/
