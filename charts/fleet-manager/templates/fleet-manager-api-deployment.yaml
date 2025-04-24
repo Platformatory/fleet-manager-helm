@@ -96,7 +96,7 @@ spec:
           - name: SUPER_USER_EMAILS
             value: {{ .Values.fleetmanager.superUserEmails }}
           - name: FLEET_MANAGER_DOMAIN
-              value: {{ .Values.fleetmanager.domain }}
+            value: {{ .Values.fleetmanager.domain }}
           - name: ROOT_ORG_IDENTIFIER
             value: root
           image: {{ .Values.fleetmanager.api.image }}
@@ -186,7 +186,7 @@ spec:
           - name: SUPER_USER_EMAILS
             value: {{ .Values.fleetmanager.superUserEmails }}
           - name: FLEET_MANAGER_DOMAIN
-              value: {{ .Values.fleetmanager.domain }}
+            value: {{ .Values.fleetmanager.domain }}
           - name: ROOT_ORG_IDENTIFIER
             value: root
           image: {{ .Values.fleetmanager.api.image }}
