@@ -49,6 +49,8 @@ spec:
 {{- end }}
       - "confluent.cluster.link.enable=true"
       - "password.encoder.secret=secret"
+      - confluent.balancer.enable=true
+      - confluent.balancer.heal.uneven.load.trigger=ANY_UNEVEN_LOAD
       - confluent.tier.feature=true
       - confluent.tier.enable=true
       - confluent.tier.cleaner.feature.enable=true
