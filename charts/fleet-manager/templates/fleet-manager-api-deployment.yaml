@@ -95,6 +95,10 @@ spec:
                 optional: false
           - name: SUPER_USER_EMAILS
             value: {{ .Values.fleetmanager.superUserEmails }}
+          - name: FLEET_MANAGER_DOMAIN
+              value: {{ .Values.fleetmanager.domain }}
+          - name: ROOT_ORG_IDENTIFIER
+            value: root
           image: {{ .Values.fleetmanager.api.image }}
           command: ['python', 'manage.py', 'migrate']
           name: fleet-manager-migrations
@@ -181,6 +185,10 @@ spec:
                 optional: false
           - name: SUPER_USER_EMAILS
             value: {{ .Values.fleetmanager.superUserEmails }}
+          - name: FLEET_MANAGER_DOMAIN
+              value: {{ .Values.fleetmanager.domain }}
+          - name: ROOT_ORG_IDENTIFIER
+            value: root
           image: {{ .Values.fleetmanager.api.image }}
           name: fleet-manager
           ports:
