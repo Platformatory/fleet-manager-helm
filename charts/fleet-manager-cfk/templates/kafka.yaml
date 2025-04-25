@@ -54,7 +54,7 @@ spec:
       - num.replica.fetchers=2
       - replica.socket.receive.buffer.bytes=98304
       - socket.request.max.bytes=157286400
-{{- if eq .Values.tenancy "Dedicated" }}
+{{- else if eq .Values.tenancy "Dedicated" }}
       - num.network.threads=12
       - num.io.threads=24
       - num.recovery.threads.per.data.dir=4
