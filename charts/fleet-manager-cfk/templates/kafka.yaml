@@ -47,6 +47,21 @@ spec:
       - "event.logger.exporter.kafka.topic.replicas={{ .Values.replicas }}"
       - "offsets.topic.replication.factor={{ .Values.replicas }}"
 {{- end }}
+{{- if eq .Values.tenancy "Isolated" }}
+      - num.network.threads=6
+      - num.io.threads=12
+      - num.recovery.threads.per.data.dir=2
+      - num.replica.fetchers=2
+      - replica.socket.receive.buffer.bytes=98304
+      - socket.request.max.bytes=157286400
+{{- if eq .Values.tenancy "Dedicated" }}
+      - num.network.threads=8
+      - num.io.threads=16
+      - num.recovery.threads.per.data.dir=4
+      - num.replica.fetchers=4
+      - replica.socket.receive.buffer.bytes=131072
+      - socket.request.max.bytes=209715200
+{{- end }}
       - "confluent.cluster.link.enable=true"
       - "password.encoder.secret=secret"
       - confluent.balancer.enable=true
