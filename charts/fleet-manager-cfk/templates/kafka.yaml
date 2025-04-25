@@ -55,10 +55,10 @@ spec:
       - replica.socket.receive.buffer.bytes=98304
       - socket.request.max.bytes=157286400
 {{- if eq .Values.tenancy "Dedicated" }}
-      - num.network.threads=8
-      - num.io.threads=16
+      - num.network.threads=12
+      - num.io.threads=24
       - num.recovery.threads.per.data.dir=4
-      - num.replica.fetchers=4
+      - num.replica.fetchers=8
       - replica.socket.receive.buffer.bytes=131072
       - socket.request.max.bytes=209715200
 {{- end }}
