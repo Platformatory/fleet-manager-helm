@@ -99,6 +99,8 @@ spec:
             value: {{ .Values.fleetmanager.domain }}
           - name: ROOT_ORG_IDENTIFIER
             value: root
+          - name: FLEET_MANAGER_COOKIE_DOMAIN
+            value: .{{ .Values.fleetmanager.domain }}
           image: {{ .Values.fleetmanager.api.image }}
           command: ['python', 'manage.py', 'migrate']
           name: fleet-manager-migrations
@@ -189,6 +191,8 @@ spec:
             value: {{ .Values.fleetmanager.domain }}
           - name: ROOT_ORG_IDENTIFIER
             value: root
+          - name: FLEET_MANAGER_COOKIE_DOMAIN
+            value: .{{ .Values.fleetmanager.domain }}
           image: {{ .Values.fleetmanager.api.image }}
           name: fleet-manager
           ports:

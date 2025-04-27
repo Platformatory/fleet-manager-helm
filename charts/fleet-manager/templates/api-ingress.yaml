@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: fleet-manager-oidc-creds-api
+  name: fleet-manager-auth-handler-api
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
     konghq.com/methods: "GET"
@@ -28,9 +28,9 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: fleet-manager-rootorg-apis
+  name: fleet-manager-apis
   annotations:
-    konghq.com/plugins: rootorg-jwt, cors
+    konghq.com/plugins: fleetmanager-authz, cors
     cert-manager.io/cluster-issuer: letsencrypt-prod
     konghq.com/regex-priority: "9"
     # kubernetes.io/ingress.class: kong
@@ -44,7 +44,7 @@ spec:
     - host: {{ include "fleetmanager.api.domain" . }}
       http:
         paths:
-          - path: /organizations/{{ .Values.fleetmanager.rootOrg }}/
+          - path: /organizations/
             backend:
               service:
                 name: fleet-manager

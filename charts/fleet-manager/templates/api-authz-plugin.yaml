@@ -1,0 +1,24 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: fleetmanager-authz
+plugin: kong-authz-proxy
+config:
+  authz:
+    authz_listener_path: "/authz"
+    authz_listener_path_validate_consumer: false
+    encryption_key: "super-secret-key"
+    alg: "aes256"
+    salt: "fleet-salt"
+  grafana:
+    route: "grafana"
+    authz_token_source: "cookie"
+    authz_token_key: "fleet-manager-auth"
+    whitelist_path_patterns:
+      - "/api/public/dashboards/.+/panels/.+/query"
+      - "/api/external/readonly/.+"
+  backend:
+    route: "fleet-manager-apis"
+    jwks_cache_ttl: 300
+    token_source: "cookie"                       # "header" or "cookie"
+    token_pattern: "fleetmanager.org.{orgId}.token"  # Only needed for cookie mode
