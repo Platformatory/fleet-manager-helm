@@ -24,6 +24,8 @@ spec:
             value: wss://{{ include "fleetmanager.ws-loki.domain" . }}
           - name: REACT_APP_LOKI_HTTP_URL
             value: https://{{ include "fleetmanager.loki.domain" . }}
+          - name: REACT_APP_COOKIE_DOMAIN
+            value: .{{ .Values.fleetmanager.domain }}
           image: {{ .Values.fleetmanager.ui.image }}
           name: fleet-manager
           ports:
