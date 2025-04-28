@@ -3,6 +3,16 @@ entries:
   fleet-manager:
   - apiVersion: v2
     appVersion: 1.1.0
+    created: "2025-04-28T18:09:02.484667049Z"
+    description: A Helm chart for Kafka Fleet Manager
+    digest: 2e46a3cf4f5e1ddabda89d1507550cf27c50ab541cc0fd66cae6a27d91118619
+    name: fleet-manager
+    type: application
+    urls:
+    - https://github.com/Platformatory/fleet-manager-helm/releases/download/fleet-manager-0.4.1/fleet-manager-0.4.1.tgz
+    version: 0.4.1
+  - apiVersion: v2
+    appVersion: 1.1.0
     created: "2025-04-27T21:04:48.386696323Z"
     description: A Helm chart for Kafka Fleet Manager
     digest: af3184a1431fa6918ce4f994f07dc0b31237e56329ba7569548f7d53096b0cac
@@ -495,4 +505,4 @@ entries:
     urls:
     - https://github.com/Platformatory/fleet-manager-helm/releases/download/fleet-manager-warpstream-dashboard-0.1.0/fleet-manager-warpstream-dashboard-0.1.0.tgz
     version: 0.1.0
-generated: "2025-04-27T21:04:48.38692883Z"
+generated: "2025-04-28T18:09:02.484843026Z"
