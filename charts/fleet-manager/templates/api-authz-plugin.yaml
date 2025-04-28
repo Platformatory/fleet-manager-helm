@@ -19,6 +19,7 @@ config:
       - "/api/external/readonly/.+"
   backend:
     route: "kafka-fleet-manager.fleet-manager-apis.fleet-manager.api.fleet-manager.platformatory.io.8000"
+    oidc_credentials_url_prefix: http://fleet-manager.{{ .Release.Namespace }}.svc:8000
     jwks_cache_ttl: 300
     token_source: "cookie"                       # "header" or "cookie"
     token_pattern: "fleetmanager.org.{orgId}.token"  # Only needed for cookie mode
