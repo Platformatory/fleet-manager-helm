@@ -1,0 +1,99 @@
+{{- range .Values.producers }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: kafka-producer-perf-test-{{ .name }}
+spec:
+  completions: 1
+  parallelism: 1
+  template:
+    spec:
+      {{- if $.Values.tolerations }}
+      tolerations:
+        {{- toYaml $.Values.tolerations | nindent 8 }}
+      {{- end }}
+
+      {{- if $.Values.nodeAffinity }}
+      affinity:
+        nodeAffinity:
+          {{- toYaml $.Values.nodeAffinity | nindent 10 }}
+      {{- end }}
+      containers:
+      - name: producer
+        image: confluentinc/cp-kafka:latest
+        command: ["/bin/bash", "-c"]
+        args:
+          - |
+            set -e
+            cp /mnt/kafka/client.properties /tmp/combined-client.properties
+            {{- if .producerProperties }}
+            printf "\n%s\n" "{{ .producerProperties | nindent 12 | trim }}" >> /tmp/combined-client.properties
+            {{- end }}
+            kafka-topics --bootstrap-server {{ $.Values.bootstrapServer }} \
+              --command-config /tmp/combined-client.properties \
+              --create --if-not-exists \
+              --topic {{ $.Values.topic }} \
+              --replication-factor 1 --partitions 12 \
+              {{- if eq $.Values.clusterType "strimzi" }}
+              --config remote.storage.enable=true \
+              --config local.retention.ms=1000 \
+              {{- end }} \
+              && \
+            kafka-producer-perf-test \
+              --topic {{ $.Values.topic }} \
+              --num-records {{ .numRecords }} \
+              --record-size {{ .recordSize }} \
+              --throughput {{ .throughput }} \
+              --producer-props bootstrap.servers={{ $.Values.bootstrapServer }} \
+              --producer.config /tmp/combined-client.properties | tee /tmp/perf-test-output.txt
+            LAST_LINE=$(tail -n 1 /tmp/perf-test-output.txt)
+
+            RECORDS_SENT=$(echo "$LAST_LINE" | awk -F',' '{print $1}' | awk '{print $1}')
+            RECORDS_PER_SEC=$(echo "$LAST_LINE" | awk -F',' '{print $2}' | awk '{print $1}')
+            AVG_LATENCY_MS=$(echo "$LAST_LINE" | awk -F',' '{print $3}' | awk '{print $1}')
+            MAX_LATENCY_MS=$(echo "$LAST_LINE" | awk -F',' '{print $4}' | awk '{print $1}')
+            LATENCY_50TH_MS=$(echo "$LAST_LINE" | awk -F',' '{print $5}' | awk '{print $1}')
+            LATENCY_95TH_MS=$(echo "$LAST_LINE" | awk -F',' '{print $6}' | awk '{print $1}')
+            LATENCY_99TH_MS=$(echo "$LAST_LINE" | awk -F',' '{print $7}' | awk '{print $1}')
+            LATENCY_999TH_MS=$(echo "$LAST_LINE" | awk -F',' '{print $8}' | awk '{print $1}')
+
+            cat <<EOF > /tmp/producer-result.json
+            {
+              "organization": "{{ $.Values.organization }}",
+              "cluster": "{{ $.Values.cluster }}",
+              "type": "producer",
+              "name": "{{ .name }}",
+              "config": {
+                "numRecords": {{ .numRecords }},
+                "recordSize": {{ .recordSize }},
+                "throughputConfig": {{ .throughput }}
+              },
+              "results": {
+                "recordsSent": $RECORDS_SENT,
+                "recordsPerSec": $RECORDS_PER_SEC,
+                "avgLatencyMs": $AVG_LATENCY_MS,
+                "maxLatencyMs": $MAX_LATENCY_MS,
+                "latency50thMs": $LATENCY_50TH_MS,
+                "latency95thMs": $LATENCY_95TH_MS,
+                "latency99thMs": $LATENCY_99TH_MS,
+                "latency999thMs": $LATENCY_999TH_MS
+              }
+            }
+            EOF
+
+            cat /tmp/producer-result.json
+
+            {{- if $.Values.resultsUrl }}
+            curl -s -X POST -H "Content-Type: application/json" -d @/tmp/producer-result.json "{{ $.Values.resultsUrl }}"
+            {{- end }}
+        volumeMounts:
+        - name: client-config
+          mountPath: /mnt/kafka
+          readOnly: true
+      restartPolicy: Never
+      volumes:
+      - name: client-config
+        secret:
+          secretName: perf-test-kafka-client-properties
+---
+{{- end }}

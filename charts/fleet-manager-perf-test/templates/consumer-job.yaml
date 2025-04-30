@@ -1,0 +1,105 @@
+{{- range .Values.consumers }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: kafka-consumer-perf-test-{{ .name }}
+spec:
+  completions: 1
+  parallelism: 1
+  template:
+    spec:
+      {{- if $.Values.tolerations }}
+      tolerations:
+        {{- toYaml $.Values.tolerations | nindent 8 }}
+      {{- end }}
+
+      {{- if $.Values.nodeAffinity }}
+      affinity:
+        nodeAffinity:
+          {{- toYaml $.Values.nodeAffinity | nindent 10 }}
+      {{- end }}
+      containers:
+      - name: consumer
+        image: confluentinc/cp-kafka:latest
+        command: ["/bin/bash", "-c"]
+        args:
+          - |
+            set -e
+            cp /mnt/kafka/client.properties /tmp/combined-client.properties
+            {{- if .consumerProperties }}
+            printf "\n%s\n" "{{ .consumerProperties | nindent 12 | trim }}" >> /tmp/combined-client.properties
+            {{- end }}
+            sleep {{ .startDelayMs }} && \
+            kafka-consumer-perf-test \
+              --topic {{ $.Values.topic }} \
+              --group {{ .name }} \
+              --bootstrap-server {{ $.Values.bootstrapServer }} \
+              --messages {{ .numRecords }} \
+              --timeout {{ .timeoutMs }} \
+              --consumer.config /tmp/combined-client.properties | tee /tmp/consumer-perf-test-output.txt
+
+            LAST_LINE=$(grep -v "^WARNING" /tmp/consumer-perf-test-output.txt | tail -n 1)
+
+            START_TIME=$(echo "$LAST_LINE" | awk -F',' '{print $1}' | xargs)
+            END_TIME=$(echo "$LAST_LINE" | awk -F',' '{print $2}' | xargs)
+            DATA_CONSUMED_MB=$(echo "$LAST_LINE" | awk -F',' '{print $3}' | xargs)
+            MB_SEC=$(echo "$LAST_LINE" | awk -F',' '{print $4}' | xargs)
+            NUM_MSG_CONSUMED=$(echo "$LAST_LINE" | awk -F',' '{print $5}' | xargs)
+            MSG_SEC=$(echo "$LAST_LINE" | awk -F',' '{print $6}' | xargs)
+            REBALANCE_TIME_MS=$(echo "$LAST_LINE" | awk -F',' '{print $7}' | xargs)
+            FETCH_TIME_MS=$(echo "$LAST_LINE" | awk -F',' '{print $8}' | xargs)
+            FETCH_MB_SEC=$(echo "$LAST_LINE" | awk -F',' '{print $9}' | xargs)
+            FETCH_MSG_SEC=$(echo "$LAST_LINE" | awk -F',' '{print $10}' | xargs)
+
+            echo $START_TIME
+            echo $END_TIME
+            echo $DATA_CONSUMED_MB
+            echo $MB_SEC
+            echo $NUM_MSG_CONSUMED
+            echo $MSG_SEC
+            echo $REBALANCE_TIME_MS
+            echo $FETCH_TIME_MS
+            echo $FETCH_MB_SEC
+            echo $FETCH_MSG_SEC
+
+            cat <<EOF > /tmp/consumer-result.json
+            {
+              "organization": "{{ $.Values.organization }}",
+              "cluster": "{{ $.Values.cluster }}",
+              "type": "consumer",
+              "name": "{{ .name }}",
+              "config": {
+                "numRecords": {{ .numRecords }},
+                "timeoutMs": {{ .timeoutMs }}
+              },
+              "results": {
+                "startTime": "$START_TIME",
+                "endTime": "$END_TIME",
+                "dataConsumedMB": $DATA_CONSUMED_MB,
+                "mbPerSec": $MB_SEC,
+                "messagesConsumed": $NUM_MSG_CONSUMED,
+                "messagesPerSec": $MSG_SEC,
+                "rebalanceTimeMs": $REBALANCE_TIME_MS,
+                "fetchTimeMs": $FETCH_TIME_MS,
+                "fetchMBPerSec": $FETCH_MB_SEC,
+                "fetchMessagesPerSec": $FETCH_MSG_SEC
+              }
+            }
+            EOF
+
+            cat /tmp/consumer-result.json
+
+            {{- if $.Values.resultsUrl }}
+            curl -s -X POST -H "Content-Type: application/json" -d @/tmp/consumer-result.json "{{ $.Values.resultsUrl }}"
+            {{- end }}
+        volumeMounts:
+        - name: client-config
+          mountPath: /mnt/kafka
+          readOnly: true
+      restartPolicy: Never
+      volumes:
+      - name: client-config
+        secret:
+          secretName: perf-test-kafka-client-properties
+---
+{{- end }}

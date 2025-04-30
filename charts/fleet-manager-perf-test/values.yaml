@@ -1,0 +1,44 @@
+bootstrapServer: ""
+clusterType: "cfk"
+
+clientProperties: |-
+  security.protocol=PLAINTEXT
+
+topic: "perf-test-topic"
+
+resultsUrl: ""
+organization: ""
+cluster: ""
+
+producers: []
+  # - name: producer1
+  #   numRecords: 100000
+  #   recordSize: 100
+  #   throughput: 10000
+  #   producerProperties: |-
+  #     acks=1
+
+  # - name: producer2
+  #   numRecords: 500000
+  #   recordSize: 500
+  #   throughput: -1
+  #   producerProperties: |-
+  #     acks=all
+
+tolerations: []
+nodeAffinity: {}
+
+consumers: []
+  # - name: consumer-group1
+  #   numRecords: 1000000
+  #   timeoutMs: 60000
+  #   startDelayMs: 60
+  #   consumerProperties: |-
+  #     fetch.min.bytes=1
+
+  # - name: consumer-group2
+  #   numRecords: 2000000
+  #   timeoutMs: 120000
+  #   startDelayMs: 60
+  #   consumerProperties: |-
+  #     fetch.min.bytes=500
