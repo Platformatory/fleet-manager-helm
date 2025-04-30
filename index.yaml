@@ -415,6 +415,15 @@ entries:
     urls:
     - https://github.com/Platformatory/fleet-manager-helm/releases/download/fleet-manager-org-ingress-0.1.0/fleet-manager-org-ingress-0.1.0.tgz
     version: 0.1.0
+  fleet-manager-perf-test:
+  - apiVersion: v2
+    created: "2025-04-30T16:26:14.5563262Z"
+    description: Helm chart to run Kafka producer and consumer performance tests
+    digest: 104536448d1a99f8d37895add088b1469b64e41f2cac930f763e649a112a64bd
+    name: fleet-manager-perf-test
+    urls:
+    - https://github.com/Platformatory/fleet-manager-helm/releases/download/fleet-manager-perf-test-0.1.0/fleet-manager-perf-test-0.1.0.tgz
+    version: 0.1.0
   fleet-manager-strimzi:
   - apiVersion: v2
     appVersion: 0.0.0
@@ -535,4 +544,4 @@ entries:
     urls:
     - https://github.com/Platformatory/fleet-manager-helm/releases/download/fleet-manager-warpstream-dashboard-0.1.0/fleet-manager-warpstream-dashboard-0.1.0.tgz
     version: 0.1.0
-generated: "2025-04-28T19:38:26.904860431Z"
+generated: "2025-04-30T16:26:14.556519471Z"
