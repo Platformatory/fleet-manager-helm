@@ -7,8 +7,7 @@ clientProperties: |-
 topic: "perf-test-topic"
 
 resultsUrl: ""
-organization: ""
-cluster: ""
+benchmarkId: ""
 
 producers: []
   # - name: producer1
