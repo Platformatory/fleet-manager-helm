@@ -7,7 +7,7 @@ metadata:
     strimzi.io/kraft: enabled
 spec:
   kafka:
-    image: platformatorylabs/strimzi-kafka-tiered-storage:latest-kafka-{{ .Values.kafka.version }}
+    image: platformatorylabs/strimzi-kafka-tiered-storage:{{ .Values.strimzi.version }}-kafka-{{ .Values.kafka.version }}
     template:
 {{- if eq .Values.tenancy "Isolated" }}
       pod:
