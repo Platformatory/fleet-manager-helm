@@ -7,6 +7,7 @@ fleetmanager:
   orchestrator:
     image: platformatorylabs/fleet-manager-temporal-worker:v0.0.1-main-63501dc
   kubeconfig:
+    provider: static # Can be aws. If aws, the aws section needs to be set
     aws:
       accessKey: ""
       secretKey: ""

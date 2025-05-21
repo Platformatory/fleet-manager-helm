@@ -58,6 +58,8 @@ spec:
                   optional: false
             - name: OLLAMA_MODEL
               value: llama3.2
+            - name: FLEETMANAGER_KUBERNETES_PROVIDER
+              value: {{ .Values.fleetmanager.kubeconfig.provider }}
             - name: FLEETMANAGER_KUBECONFIG_PATH
               value: /opt/config/fleet-manager-kubeconfig.yaml
             - name: FLEETMANAGER_KUBERNETES_AWS_ACCESS_KEY
