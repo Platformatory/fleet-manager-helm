@@ -16,11 +16,11 @@
 {{- end -}}
 
 {{- define "fleetmanager.loki.domain" -}}
-{{- printf "logs.console.%s" .Values.fleetmanager.domain -}}
+{{- printf "logs.%s" .Values.fleetmanager.domain -}}
 {{- end -}}
 
 {{- define "fleetmanager.ws-loki.domain" -}}
-{{- printf "wslogs.console.%s" .Values.fleetmanager.domain -}}
+{{- printf "wslogs.%s" .Values.fleetmanager.domain -}}
 {{- end -}}
 
 
