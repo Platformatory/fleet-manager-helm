@@ -65,7 +65,7 @@ spec:
             cat <<EOF > /tmp/consumer-result.json
             {
               "cluster_benchmark": "{{ $.Values.benchmarkId }}",
-              "type": "consumer",
+              "type": "Consumer",
               "name": "{{ .name }}",
               "config": {
                 "numRecords": {{ .numRecords }},

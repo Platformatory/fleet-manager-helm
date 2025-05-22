@@ -60,7 +60,7 @@ spec:
             cat <<EOF > /tmp/producer-result.json
             {
               "cluster_benchmark": "{{ $.Values.benchmarkId }}",
-              "type": "producer",
+              "type": "Producer",
               "name": "{{ .name }}",
               "config": {
                 "numRecords": {{ .numRecords }},
