@@ -4,7 +4,7 @@
 {{- end -}}
 
 {{- define "fleetmanager.ui.domain" -}}
-{{- printf "app.%s" .Values.fleetmanager.domain -}}
+{{- printf "console.%s" .Values.fleetmanager.domain -}}
 {{- end -}}
 
 {{- define "fleetmanager.api.domain" -}}
@@ -16,14 +16,14 @@
 {{- end -}}
 
 {{- define "fleetmanager.loki.domain" -}}
-{{- printf "loki.%s" .Values.fleetmanager.domain -}}
+{{- printf "logs.console.%s" .Values.fleetmanager.domain -}}
 {{- end -}}
 
 {{- define "fleetmanager.ws-loki.domain" -}}
-{{- printf "ws-loki.%s" .Values.fleetmanager.domain -}}
+{{- printf "wslogs.console.%s" .Values.fleetmanager.domain -}}
 {{- end -}}
 
 
 {{- define "fleetmanager.grafana.domain" -}}
-{{- printf "grafana.app.%s" .Values.fleetmanager.domain -}}
+{{- printf "dashboard.console.%s" .Values.fleetmanager.domain -}}
 {{- end -}}
