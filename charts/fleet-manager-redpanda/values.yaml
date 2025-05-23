@@ -1,0 +1,52 @@
+certs:
+  kafka:
+    cert:
+    key:
+
+ingressClassName:
+
+redpanda:
+  tls:
+    enabled: true
+    certs:
+      external:
+        secretRef: 
+          name: redpanda-tls
+        caEnabled: false
+
+  external:
+    service:
+      enabled: false
+    domain: 
+    addresses:
+    - $PREFIX_TEMPLATE
+    prefixTemplate: # "{namespace}-rp-$POD_ORDINAL"
+  
+  statefulset:
+    replicas: 3
+
+  listeners:
+    kafka:
+      port: 9093
+      authenticationMethod: sasl
+      tls:
+        enabled: false
+      external:
+        default:
+          enabled: true
+          port: 9094
+          prefixTemplate: # "{namespace}-rp-$POD_ORDINAL"
+          advertisedPorts:
+          - 443
+          tls:
+            enabled: true
+            cert: external
+          authenticationMethod: sasl
+
+  auth:
+    sasl:
+      enabled: true
+      users:
+      - name: admin
+        password: change-me
+        mechanism: SCRAM-SHA-512
