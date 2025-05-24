@@ -1,0 +1,9 @@
+prometheusUid: 
+dashboardUids:
+  redpandaOverview:
+  logs:
+loki:
+  uid:
+  hostname:
+  username:
+  password:
