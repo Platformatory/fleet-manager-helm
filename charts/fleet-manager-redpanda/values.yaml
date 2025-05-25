@@ -5,7 +5,14 @@ certs:
 
 ingressClassName:
 
+tieredStorage:
+  aws:
+    accessKey:
+    secretKey:
+
 redpanda:
+  image:
+    tag: 
   tls:
     enabled: true
     certs:
@@ -21,6 +28,24 @@ redpanda:
     addresses:
     - $PREFIX_TEMPLATE
     prefixTemplate: # "{namespace}-rp-$POD_ORDINAL"
+
+  storage:
+    persistentVolume:
+      enabled: true
+      size: 50Gi
+    tiered:
+      credentialsSecretRef:
+        accessKey:
+          name: redpanda-tiered-storage-creds
+          key: access-key
+        secretKey:
+          name: redpanda-tiered-storage-creds
+          key: secret-key
+      config:
+        cloud_storage_enabled: true
+        cloud_storage_credentials_source: config_file
+        cloud_storage_region: 
+        cloud_storage_bucket: 
   
   statefulset:
     replicas: 3
@@ -50,3 +75,6 @@ redpanda:
       - name: admin
         password: change-me
         mechanism: SCRAM-SHA-512
+
+  monitoring:
+    enabled: true
