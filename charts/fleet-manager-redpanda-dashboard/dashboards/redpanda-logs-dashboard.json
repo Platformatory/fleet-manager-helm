@@ -20,7 +20,7 @@
         "graphTooltip": 0,
         "links": [],
         "panels": [
-        {
+          {
             "datasource": {
             "type": "loki",
             "uid": "{{ .Values.loki.uid }}"
@@ -49,14 +49,51 @@
                 "uid": "{{ .Values.loki.uid }}"
                 },
                 "editorMode": "builder",
-                "expr": "{namespace=\"{{ .Release.Namespace }}\", service_name=\"kafka\"} |= ``",
+                "expr": "{namespace=\"{{ .Release.Namespace }}\", service_name=\"redpanda\"} |= ``",
                 "queryType": "range",
                 "refId": "A"
             }
             ],
             "title": "Redpanda Logs",
             "type": "logs"
-        }
+          },
+          {
+            "datasource": {
+              "type": "loki",
+              "uid": "{{ .Values.loki.uid }}"
+            },
+            "gridPos": {
+              "h": 9,
+              "w": 24,
+              "x": 0,
+              "y": 9
+            },
+            "id": 2,
+            "options": {
+              "dedupStrategy": "none",
+              "enableLogDetails": true,
+              "prettifyLogMessage": false,
+              "showCommonLabels": false,
+              "showLabels": false,
+              "showTime": false,
+              "sortOrder": "Descending",
+              "wrapLogMessage": true
+            },
+            "targets": [
+              {
+                "datasource": {
+                  "type": "loki",
+                  "uid": "{{ .Values.loki.uid }}"
+                },
+                "editorMode": "builder",
+                "expr": "{namespace=\"{{ .Release.Namespace }}\", service_name=\"console\"} |= ``",
+                "queryType": "range",
+                "refId": "A"
+              }
+            ],
+            "title": "Console Logs",
+            "type": "logs"
+          }
         ],
         "schemaVersion": 39,
         "tags": [],
