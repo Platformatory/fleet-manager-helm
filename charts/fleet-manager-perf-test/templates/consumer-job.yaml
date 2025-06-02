@@ -2,7 +2,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: kafka-consumer-perf-test-{{ .name }}-{{ .Release.Name }}
+  name: kafka-consumer-perf-test-{{ .name }}-{{ $.Release.Name }}
 spec:
   completions: 1
   parallelism: 1
