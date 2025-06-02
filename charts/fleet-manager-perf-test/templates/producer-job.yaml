@@ -93,6 +93,6 @@ spec:
       volumes:
       - name: client-config
         secret:
-          secretName: perf-test-kafka-client-properties-{{ .Release.Name }}
+          secretName: perf-test-kafka-client-properties-{{ $.Release.Name }}
 ---
 {{- end }}
