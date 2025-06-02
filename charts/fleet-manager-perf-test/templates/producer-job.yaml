@@ -2,7 +2,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: kafka-producer-perf-test-{{ .name }}-{{ $.Release.Name }}
+  name: kafka-producer-perf-test-{{ .name }}-{{ $.Values.benchmarkId }}
 spec:
   completions: 1
   parallelism: 1
