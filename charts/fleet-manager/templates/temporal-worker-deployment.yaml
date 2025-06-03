@@ -24,8 +24,8 @@ spec:
               value: http://fm-loki-gateway/loki/api/v1/push
             - name: FLEETMANAGER_URL
               value: http://fleet-manager:8000
-            - name: FLEETMANAGER_EXTERNAL_URL
-              value: https://{{ include "fleetmanager.api.domain" . }}
+            - name: FLEET_MANAGER_CONFIG_PATH
+              value: /opt/fm-config/fleet-manager-config.yaml
             - name: CONFIG_MINIO_URL
               value: http://fm-minio:9000
             - name: CONFIG_S3_ACCESS_KEY
@@ -58,40 +58,6 @@ spec:
                   optional: false
             - name: OLLAMA_MODEL
               value: llama3.2
-            - name: FLEETMANAGER_KUBERNETES_PROVIDER
-              value: {{ .Values.fleetmanager.kubeconfig.provider }}
-            - name: FLEETMANAGER_KUBECONFIG_PATH
-              value: /opt/config/fleet-manager-kubeconfig.yaml
-            - name: FLEETMANAGER_KUBERNETES_AWS_ACCESS_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: temporal-worker
-                  key: FLEETMANAGER_KUBERNETES_AWS_ACCESS_KEY
-                  optional: true
-            - name: FLEETMANAGER_KUBERNETES_AWS_SECRET_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: temporal-worker
-                  key: FLEETMANAGER_KUBERNETES_AWS_SECRET_KEY
-                  optional: true
-            - name: FLEETMANAGER_KUBERNETES_AWS_REGION
-              value: {{ .Values.fleetmanager.kubeconfig.aws.region }}
-            - name: FLEETMANAGER_KUBERNETES_CLUSTER_NAME
-              value: {{ .Values.fleetmanager.kubeconfig.aws.clusterName }}
-            - name: GRAFANA_URL
-              value: https://{{ include "fleetmanager.grafana.domain" . }}
-            - name: GRAFANA_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: grafana-credentials
-                  key: GF_SECURITY_ADMIN_USER
-                  optional: false
-            - name: GRAFANA_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: grafana-credentials
-                  key: GF_SECURITY_ADMIN_PASSWORD
-                  optional: false
             - name: JWT_SECRET_KEY
               valueFrom:
                 secretKeyRef:
@@ -106,7 +72,13 @@ spec:
           - mountPath: "/opt/config"
             name: fleet-manager-kubeconfig
             readOnly: true
+          - mountPath: "/opt/fm-config"
+            name: fleet-manager-config
+            readOnly: true
       volumes:
         - name: fleet-manager-kubeconfig
           secret:
             secretName: fleet-manager-kubeconfig
+        - name: fleet-manager-config
+          secret:
+            secretName: fleet-manager-config
