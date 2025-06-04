@@ -2,7 +2,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: fm-prod-perf-{{ .name }}-{{ $.Values.benchmarkId }}
+  name: fmproperf-{{ .name }}-{{ $.Values.benchmarkId }}
 spec:
   completions: 1
   parallelism: 1

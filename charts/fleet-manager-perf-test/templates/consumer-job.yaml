@@ -2,7 +2,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: fm-con-perf-{{ .name }}-{{ $.Values.benchmarkId }}
+  name: fmconperf-{{ .name }}-{{ $.Values.benchmarkId }}
 spec:
   completions: 1
   parallelism: 1
