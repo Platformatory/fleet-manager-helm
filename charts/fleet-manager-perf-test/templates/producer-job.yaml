@@ -67,7 +67,7 @@ spec:
                 "recordSize": {{ .recordSize }},
                 "throughputConfig": {{ .throughput }}
               },
-              "results": {
+              "result": {
                 "recordsSent": $RECORDS_SENT,
                 "recordsPerSec": $RECORDS_PER_SEC,
                 "avgLatencyMs": $AVG_LATENCY_MS,

@@ -71,7 +71,7 @@ spec:
                 "numRecords": {{ .numRecords }},
                 "timeoutMs": {{ .timeoutMs }}
               },
-              "results": {
+              "result": {
                 "startTime": "$START_TIME",
                 "endTime": "$END_TIME",
                 "dataConsumedMB": $DATA_CONSUMED_MB,
