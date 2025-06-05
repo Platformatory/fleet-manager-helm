@@ -9,21 +9,15 @@ spec:
   kafka:
     image: platformatorylabs/strimzi-kafka-tiered-storage:{{ .Values.strimzi.version }}-kafka-{{ .Values.kafka.version }}
     template:
-{{- if eq .Values.tenancy "Isolated" }}
+{{- if or (.Values.tolerations) (.Values.nodeAffinity) }}
       pod:
         tolerations:
-        - key: "cluster_name"
-          operator: "Equal"
-          value: "{{ .Release.Namespace }}"
-          effect: "NoSchedule"
+{{ .Values.tolerations | default list | toYaml | indent 8 }}
+{{- if .Values.nodeAffinity }}
         affinity:
           nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-              nodeSelectorTerms:
-                - matchExpressions: 
-                    - key: eks.amazonaws.com/nodegroup
-                      operator: In
-                      values: ["{{ .Release.Namespace }}"]
+{{ .Values.nodeAffinity | default dict | toYaml | indent 12 }}
+{{- end }}
 {{- end }}
 {{- if eq .Values.kafka.tieredStorage.provider "S3" }}
       kafkaContainer:

@@ -8,6 +8,8 @@ oauth:
   jwksEndpoint:
   subClaim: sub
 tenancy: Shared
+tolerations: []
+nodeAffinity:
 domain:
 strimzi:
   version: 0.45.0
