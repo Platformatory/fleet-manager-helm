@@ -24,6 +24,8 @@ tenancy: Shared
 replicas: 3
 domain: 
 ingressClassName: 
+tolerations: []
+nodeAffinity:
 cfk:
   initContainer:
     version:

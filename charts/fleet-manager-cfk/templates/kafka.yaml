@@ -7,21 +7,15 @@ spec:
   license:
     secretRef: cfk-license
 {{- end }}
-{{- if eq .Values.tenancy "Isolated" }}
+{{- if or (.Values.tolerations) (.Values.nodeAffinity) }}
   podTemplate:
     tolerations:
-    - key: "cluster_name"
-      operator: "Equal"
-      value: "{{ .Release.Namespace }}"
-      effect: "NoSchedule"
+{{ .Values.tolerations | default list | toYaml | indent 4 }}
+{{- if .Values.nodeAffinity }}
     affinity:
       nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions: 
-                - key: eks.amazonaws.com/nodegroup
-                  operator: In
-                  values: ["{{ .Release.Namespace }}"]
+{{ .Values.nodeAffinity | default dict | toYaml | indent 6 }}
+{{- end }}
 {{- end }}
   authorization:
     type: rbac
