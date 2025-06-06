@@ -79,7 +79,7 @@ spec:
                   "99thMs": $LATENCY_99TH_MS,
                   "999thMs": $LATENCY_999TH_MS
                 },
-                "throughput": $THROUGHPUT
+                "throughput": "$THROUGHPUT"
               }
             }
             EOF
