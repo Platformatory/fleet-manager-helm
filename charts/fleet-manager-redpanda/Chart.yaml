@@ -4,12 +4,12 @@ description: A Helm chart for Kubernetes
 
 type: application
 
-version: 0.2.0
+version: 0.3.0
 
 appVersion: "0.0.0"
 
 dependencies:
 - name: redpanda
-  version: 5.10.2
+  version: v25.1.1-beta3
   repository: https://charts.redpanda.com
   alias: redpanda

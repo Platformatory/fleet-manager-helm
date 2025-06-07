@@ -46,11 +46,18 @@ redpanda:
         cloud_storage_credentials_source: config_file
         cloud_storage_region: 
         cloud_storage_bucket: 
-  
+
   statefulset:
     replicas: 3
 
   listeners:
+    admin:
+      external:
+        default:
+          tls:
+            enabled: false
+          advertisedPorts:
+          - 443
     kafka:
       port: 9093
       authenticationMethod: sasl
@@ -67,6 +74,23 @@ redpanda:
             enabled: true
             cert: external
           authenticationMethod: sasl
+    schemaRegistry:
+      enabled: true
+      external:
+        default:
+          advertisedPorts:
+          - 443
+          tls:
+            enabled: false
+          authenticationMethod: http_basic
+
+  console:
+    config:
+      authentication:
+        jwtSigningKey: "urufy78437y84ufgt78yhfgf83frth783uifrt34rfiofjccfh08x2bl1hz" 
+        useSecureCookies: true 
+        basic:
+          enabled: true
 
   auth:
     sasl:
@@ -78,3 +102,8 @@ redpanda:
 
   monitoring:
     enabled: true
+
+  config:
+    cluster:
+      admin_api_require_auth: true
+      retention_local_target_ms_default: 720000

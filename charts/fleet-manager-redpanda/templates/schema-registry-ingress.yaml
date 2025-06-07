@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: redpanda-schema-registry
+spec:
+  ingressClassName: {{ .Release.Namespace }}
+  tls:
+  - secretName: tls-kafka-external
+    hosts:
+    - rp-schema-{{ .Release.Namespace }}.{{ .Values.domain }}
+  rules:
+    - host: rp-schema-{{ .Release.Namespace }}.{{ .Values.domain }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: redpanda-external
+                port:
+                  number: 8084
+            pathType: ImplementationSpecific
