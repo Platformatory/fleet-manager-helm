@@ -91,6 +91,17 @@ redpanda:
         useSecureCookies: true 
         basic:
           enabled: true
+      kafka:
+        sasl:
+          impersonateUser: true
+      redpanda:
+        adminApi:
+          authentication:
+            impersonateUser: true
+      schemaRegistry:
+        authentication:
+          enabled: true
+          impersonateUser: true
 
   auth:
     sasl:

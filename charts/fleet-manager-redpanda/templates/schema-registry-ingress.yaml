@@ -7,9 +7,9 @@ spec:
   tls:
   - secretName: tls-kafka-external
     hosts:
-    - rp-schema-{{ .Release.Namespace }}.{{ .Values.domain }}
+    - rp-schema-{{ .Release.Namespace }}.{{ .Values.redpanda.external.domain }}
   rules:
-    - host: rp-schema-{{ .Release.Namespace }}.{{ .Values.domain }}
+    - host: rp-schema-{{ .Release.Namespace }}.{{ .Values.redpanda.external.domain }}
       http:
         paths:
           - backend:
