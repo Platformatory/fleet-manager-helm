@@ -14,7 +14,7 @@ spec:
         paths:
           - backend:
               service:
-                name: {{ .Release.Name }}
+                name: redpanda-external
                 port:
                   number: 8084
             pathType: ImplementationSpecific
