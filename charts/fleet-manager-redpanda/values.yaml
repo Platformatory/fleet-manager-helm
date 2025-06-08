@@ -98,9 +98,14 @@ redpanda:
         adminApi:
           authentication:
             impersonateUser: true
+          startup:
+            establishConnectionEagerly: true
+            maxRetries: 20
+            retryInterval: 5s
+            maxRetryInterval: 300s
+            backoffMultiplier: 2
       schemaRegistry:
         authentication:
-          enabled: true
           impersonateUser: true
 
   auth:
