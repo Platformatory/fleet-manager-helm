@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: redpanda-admin
 spec:
-  ingressClassName: {{ .Values.ingressClassName }}
+  ingressClassName: {{ .Release.Namespace }}
   tls:
   - secretName: redpanda-tls
     hosts:
