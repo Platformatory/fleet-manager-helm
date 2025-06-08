@@ -5,7 +5,7 @@ metadata:
 spec:
   ingressClassName: {{ .Values.ingressClassName }}
   tls:
-  - secretName: tls-kafka-external
+  - secretName: redpanda-tls
     hosts:
     - rp-admin-{{ .Release.Namespace }}.{{ .Values.redpanda.external.domain }}
   rules:
