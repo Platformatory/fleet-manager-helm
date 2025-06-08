@@ -583,6 +583,21 @@ entries:
   fleet-manager-redpanda:
   - apiVersion: v2
     appVersion: 0.0.0
+    created: "2025-06-08T03:59:53.881128673Z"
+    dependencies:
+    - alias: redpanda
+      name: redpanda
+      repository: https://charts.redpanda.com
+      version: v25.1.1-beta3
+    description: A Helm chart for Kubernetes
+    digest: 25dfb1a436be02699eaff8fe83137deb855d1dc916c74cc9af85efdeef6b4899
+    name: fleet-manager-redpanda
+    type: application
+    urls:
+    - https://github.com/Platformatory/fleet-manager-helm/releases/download/fleet-manager-redpanda-0.3.0/fleet-manager-redpanda-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v2
+    appVersion: 0.0.0
     created: "2025-05-25T03:43:38.094577053Z"
     dependencies:
     - alias: redpanda
@@ -792,4 +807,4 @@ entries:
     urls:
     - https://github.com/Platformatory/fleet-manager-helm/releases/download/fleet-manager-warpstream-dashboard-0.1.0/fleet-manager-warpstream-dashboard-0.1.0.tgz
     version: 0.1.0
-generated: "2025-06-06T08:10:21.041865664Z"
+generated: "2025-06-08T03:59:53.881397304Z"
