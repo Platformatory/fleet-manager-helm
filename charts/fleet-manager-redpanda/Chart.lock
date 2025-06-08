@@ -1,6 +1,6 @@
 dependencies:
 - name: redpanda
   repository: https://charts.redpanda.com
-  version: 5.10.2
-digest: sha256:6897696fb88185ad775b2132168549c61922f3538e7e241586ddcbf0b0123365
-generated: "2025-05-22T21:09:49.576573926+05:30"
+  version: 25.1.1-beta3
+digest: sha256:cdbe533c15e747a98c8d393052981ada6bdd1d821c4a448d838a797b514498f4
+generated: "2025-06-08T09:28:35.057641486+05:30"
