@@ -29,13 +29,13 @@ spec:
             {{- if .consumerProperties }}
             printf "\n%s\n" "{{ .consumerProperties | nindent 12 | trim }}" >> /tmp/combined-client.properties
             {{- end }}
-            sleep {{ .startDelayMs }} && \
+            sleep {{ int .startDelayMs }} && \
             kafka-consumer-perf-test \
               --topic {{ $.Values.topic }} \
               --group {{ .name }} \
               --bootstrap-server {{ $.Values.bootstrapServer }} \
-              --messages {{ .numRecords }} \
-              --timeout {{ .timeoutMs }} \
+              --messages {{ int .numRecords }} \
+              --timeout {{ int .timeoutMs }} \
               --consumer.config /tmp/combined-client.properties | tee /tmp/consumer-perf-test-output.txt
 
             LAST_LINE=$(grep -v "^WARNING" /tmp/consumer-perf-test-output.txt | tail -n 1)
@@ -68,8 +68,8 @@ spec:
               "type": "Consumer",
               "name": "{{ .name }}",
               "config": {
-                "numRecords": {{ .numRecords }},
-                "timeoutMs": {{ .timeoutMs }}
+                "numRecords": {{ int .numRecords }},
+                "timeoutMs": {{ int .timeoutMs }}
               },
               "result": {
                 "startTime": "$START_TIME",
