@@ -41,9 +41,9 @@ spec:
               && \
             kafka-producer-perf-test \
               --topic {{ $.Values.topic }} \
-              --num-records {{ .numRecords }} \
-              --record-size {{ .recordSize }} \
-              --throughput {{ .throughput }} \
+              --num-records {{ int .numRecords }} \
+              --record-size {{ int .recordSize }} \
+              --throughput {{ int .throughput }} \
               --producer-props bootstrap.servers={{ $.Values.bootstrapServer }} \
               --producer.config /tmp/combined-client.properties | tee /tmp/perf-test-output.txt
             LAST_LINE=$(tail -n 1 /tmp/perf-test-output.txt)
@@ -64,9 +64,9 @@ spec:
               "type": "Producer",
               "name": "{{ .name }}",
               "config": {
-                "numRecords": {{ .numRecords }},
-                "recordSize": {{ .recordSize }},
-                "throughputConfig": {{ .throughput }}
+                "numRecords": {{ int .numRecords }},
+                "recordSize": {{ int .recordSize }},
+                "throughputConfig": {{ int .throughput }}
               },
               "result": {
                 "recordsSent": $RECORDS_SENT,
