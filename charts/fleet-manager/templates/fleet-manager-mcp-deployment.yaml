@@ -21,7 +21,7 @@ spec:
                 key: JWT_SECRET_KEY
                 optional: false
           - name: FLEET_MANAGER_DOMAIN
-            value: {{ .Values.fleetmanager.domain }}
+            value: http://fleet-manager:8000
           image: {{ .Values.fleetmanager.mcp.image }}
           name: fleet-manager-mcp
           ports:
