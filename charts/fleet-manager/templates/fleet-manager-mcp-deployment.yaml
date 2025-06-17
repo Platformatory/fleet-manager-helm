@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fleet-manager-mcp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: fleet-manager-mcp
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: fleet-manager-mcp
+    spec:
+      containers:
+        - env:
+          - name: JWT_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: temporal-worker
+                  key: JWT_SECRET_KEY
+                  optional: false
+            - name: FLEET_MANAGER_DOMAIN
+              value: {{ .Values.fleetmanager.domain }}
+          image: {{ .Values.fleetmanager.mcp.image }}
+          name: fleet-manager-mcp
+          ports:
+            - containerPort: 4200
+          resources: {}
+      restartPolicy: Always

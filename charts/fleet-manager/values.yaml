@@ -6,6 +6,8 @@ fleetmanager:
     image: platformatorylabs/fleet-manager-api:v0.0.1-main-54331e6
   orchestrator:
     image: platformatorylabs/fleet-manager-temporal-worker:v0.0.1-main-63501dc
+  mcp:
+    image: platformatorylabs/fleet-manager-mcp:v0.0.1-main-82be533
   kubeconfig:
     provider: static # Can be aws. If aws, the aws credentials section must be set accordingly.
     credentials: {}

@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fleet-manager-mcp
+  annotations:
+    konghq.com/plugins: fleetmanager-authz
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    konghq.com/regex-priority: "11"
+spec:
+  ingressClassName: kong
+  tls:
+  - secretName: {{ include "fleetmanager.api.domain" . | replace "." "-" }}
+    hosts:
+    - {{ include "fleetmanager.api.domain" . }}
+  rules:
+    - host: {{ include "fleetmanager.api.domain" . }}
+      http:
+        paths:
+          - path:  /~/organizations/(.*)/mcp
+            backend:
+              service:
+                name: fleet-manager-mcp
+                port:
+                  number: 4200
+            pathType: Prefix
