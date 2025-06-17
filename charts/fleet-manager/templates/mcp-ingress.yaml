@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: fleet-manager-mcp
   annotations:
-    konghq.com/plugins: fleetmanager-authz
+    konghq.com/plugins: fleetmanager-mcp-authz
     cert-manager.io/cluster-issuer: letsencrypt-prod
     konghq.com/regex-priority: "11"
 spec:
