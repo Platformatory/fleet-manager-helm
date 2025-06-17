@@ -15,13 +15,13 @@ spec:
       containers:
         - env:
           - name: JWT_SECRET_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: temporal-worker
-                  key: JWT_SECRET_KEY
-                  optional: false
-            - name: FLEET_MANAGER_DOMAIN
-              value: {{ .Values.fleetmanager.domain }}
+            valueFrom:
+              secretKeyRef:
+                name: temporal-worker
+                key: JWT_SECRET_KEY
+                optional: false
+          - name: FLEET_MANAGER_DOMAIN
+            value: {{ .Values.fleetmanager.domain }}
           image: {{ .Values.fleetmanager.mcp.image }}
           name: fleet-manager-mcp
           ports:
