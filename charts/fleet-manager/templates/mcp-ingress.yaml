@@ -16,7 +16,7 @@ spec:
     - host: {{ include "fleetmanager.api.domain" . }}
       http:
         paths:
-          - path:  /~/organizations/(.*)/mcp
+          - path:  /~/organizations/(.*)/mcp/
             backend:
               service:
                 name: fleet-manager-mcp
