@@ -4,6 +4,19 @@ metadata:
   name: fleetmanager-mcp-authz
 plugin: kong-authz-proxy
 config:
+  authz:
+    authz_listener_path: "/authz"
+    authz_listener_path_validate_consumer: false
+    encryption_key: "super-secret-key"
+    alg: "aes256"
+    salt: "fleet-salt"
+  grafana:
+    route: "grafana"
+    authz_token_source: "cookie"
+    authz_token_key: "fleet-manager-auth"
+    whitelist_path_patterns:
+      - "/api/public/dashboards/.+/panels/.+/query"
+      - "/api/external/readonly/.+"
   backend:
     route: "{{ .Release.Namespace }}.fleet-manager-mcp.fleet-manager-mcp.{{ include "fleetmanager.api.domain" . }}.4200"
     oidc_credentials_url_prefix: http://fleet-manager.{{ .Release.Namespace }}.svc:8000
