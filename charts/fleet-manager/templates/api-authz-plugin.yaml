@@ -18,8 +18,13 @@ config:
       - "/api/public/dashboards/.+/panels/.+/query"
       - "/api/external/readonly/.+"
   backend:
-    route: "kafka-fleet-manager.fleet-manager-apis.fleet-manager.api.fleet-manager.platformatory.io.8000"
+    route: "{{ .Release.Namespace }}.fleet-manager-apis.fleet-manager.{{ include "fleetmanager.api.domain" . }}.8000"
     oidc_credentials_url_prefix: http://fleet-manager.{{ .Release.Namespace }}.svc:8000
     jwks_cache_ttl: 300
     token_source: "header"                       # "header" or "cookie"
     token_pattern: "fleetmanager.org.{orgId}.token"  # Only needed for cookie mode
+  mcp:
+    route: "{{ .Release.Namespace }}.fleet-manager-mcp.fleet-manager-mcp.{{ include "fleetmanager.api.domain" . }}.4200"
+    oidc_credentials_url_prefix: http://fleet-manager.{{ .Release.Namespace }}.svc:8000
+    jwks_cache_ttl: 300
+    token_source: "header"  
