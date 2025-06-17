@@ -3,6 +3,7 @@ kind: KongPlugin
 metadata:
   name: fleetmanager-authz
 plugin: kong-authz-proxy
+instance_name: fleetmanager-authz
 config:
   authz:
     authz_listener_path: "/authz"
