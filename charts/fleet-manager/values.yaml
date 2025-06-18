@@ -17,14 +17,6 @@ fleetmanager:
     #   aws_region: ''
     #   cluster_name: ''
   rootOrg: root
-  auth0:
-    domain: 
-    audience: 
-    apiAudience: 
-    appClientId: 
-    clientId: 
-    clientSecret: 
-    rsaPublicKey: 
   oidc:
     issuer:
     jwksUri:

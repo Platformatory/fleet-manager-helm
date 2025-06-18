@@ -28,22 +28,6 @@ spec:
             value: fm-postgresql
           - name: POSTGRES_PORT
             value: "5432"
-          - name: AUTH0_DOMAIN
-            value: {{ .Values.fleetmanager.auth0.domain }}
-          - name: AUTH0_AUDIENCE
-            value: {{ .Values.fleetmanager.auth0.audience }}
-          - name: AUTH0_APPLICATION_CLIENT_ID
-            value: {{ .Values.fleetmanager.auth0.appClientId }}
-          - name: AUTH0_CLIENT_ID
-            value: {{ .Values.fleetmanager.auth0.clientId }}
-          - name: AUTH0_CLIENT_SECRET
-            valueFrom:
-              secretKeyRef:
-                name: fleet-manager
-                key: auth0-client-secret
-                optional: false
-          - name: AUTH0_API_AUDIENCE
-            value: {{ .Values.fleetmanager.auth0.apiAudience }}
           - name: MINIO_ENDPOINT
             value: fm-minio:9000
           - name: MINIO_PUBLIC_ENDPOINT
@@ -120,22 +104,6 @@ spec:
             value: fm-postgresql
           - name: POSTGRES_PORT
             value: "5432"
-          - name: AUTH0_DOMAIN
-            value: {{ .Values.fleetmanager.auth0.domain }}
-          - name: AUTH0_AUDIENCE
-            value: {{ .Values.fleetmanager.auth0.audience }}
-          - name: AUTH0_APPLICATION_CLIENT_ID
-            value: {{ .Values.fleetmanager.auth0.appClientId }}
-          - name: AUTH0_CLIENT_ID
-            value: {{ .Values.fleetmanager.auth0.clientId }}
-          - name: AUTH0_CLIENT_SECRET
-            valueFrom:
-              secretKeyRef:
-                name: fleet-manager
-                key: auth0-client-secret
-                optional: false
-          - name: AUTH0_API_AUDIENCE
-            value: {{ .Values.fleetmanager.auth0.apiAudience }}
           - name: MINIO_ENDPOINT
             value: fm-minio:9000
           - name: MINIO_PUBLIC_ENDPOINT
