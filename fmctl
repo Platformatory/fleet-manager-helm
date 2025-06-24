@@ -1,0 +1,451 @@
+#!/bin/bash
+
+set -e
+
+FLEET_DIR="$HOME/.fleetmanager/contexts"
+FLEET_MANAGER_HELM_VERSION="0.1.7"
+VERBOSE=0
+
+print_help() {
+    echo "Usage: fmctl <command> [options]"
+    echo "Commands:"
+    echo "  set-context --context <name> --kubeconfig <path> --config <path>  Set a context"
+    echo "  get-context [<name>]                                      Get context info"
+    echo "  init --context <name>                                     Initialize cluster"
+    echo "  list-services --context <name>                            List services"
+    echo "  orchestrator-logs --context <name>                       Show logs"
+    echo "Global Flags:"
+    echo "  -h, --help                                               Show this help message"
+    echo "  -v, --verbose                                            Enable verbose mode"
+    exit 0
+}
+
+echo_verbose() {
+    if [ "$VERBOSE" -eq 1 ]; then
+        echo "$@"
+    fi
+}
+
+error_exit() {
+    echo "Error: $1" >&2
+    exit 1
+}
+
+validate_dependencies() {
+    command -v kubectl >/dev/null 2>&1 || error_exit "kubectl is not installed."
+    command -v helm >/dev/null 2>&1 || error_exit "helm is not installed."
+}
+
+parse_global_flags() {
+    while [[ "$#" -gt 0 ]]; do
+        case "$1" in
+            -h|--help)
+                print_help
+                ;;
+            -v|--verbose)
+                VERBOSE=1
+                shift
+                ;;
+            *)
+                break
+                ;;
+        esac
+    done
+}
+
+set_context() {
+    while [[ "$#" -gt 0 ]]; do
+        case "$1" in
+            --context)
+                CONTEXT_NAME="$2"
+                shift 2
+                ;;
+            --kubeconfig)
+                KUBECONFIG_PATH="$2"
+                shift 2
+                ;;
+            --config)
+                CONFIG_PATH="$2"
+                shift 2
+                ;;
+            *)
+                error_exit "Invalid argument: $1"
+                ;;
+        esac
+    done
+
+    [ -z "$CONTEXT_NAME" ] && error_exit "Context name is required."
+    [ -z "$KUBECONFIG_PATH" ] && error_exit "Kubeconfig file is required."
+    [ -z "$CONFIG_PATH" ] && error_exit "Config file is required."
+
+    CONTEXT_DIR="$FLEET_DIR/$CONTEXT_NAME"
+    mkdir -p "$CONTEXT_DIR"
+    cp "$KUBECONFIG_PATH" "$CONTEXT_DIR/kubeconfig.yaml"
+    cp "$CONFIG_PATH" "$CONTEXT_DIR/config.yaml"
+    echo "Context '$CONTEXT_NAME' set successfully."
+}
+
+get_context() {
+    CONTEXT_NAME="$1"
+    CONTEXT_DIR="$FLEET_DIR/$CONTEXT_NAME"
+    if [ ! -f "$CONTEXT_DIR/kubeconfig.yaml" ]; then
+        echo "Context not found. Use fmctl set-context to set the context."
+        exit 0
+    fi
+    KUBECONFIG="$CONTEXT_DIR/kubeconfig.yaml" kubectl cluster-info
+}
+
+list_contexts() {
+    ls "$FLEET_DIR"
+}
+
+init_cluster() {
+    while [[ "$#" -gt 0 ]]; do
+        case "$1" in
+            --context)
+                CONTEXT_NAME="$2"
+                shift 2
+                ;;
+            *)
+                error_exit "Invalid argument: $1"
+                ;;
+        esac
+    done
+
+    [ -z "$CONTEXT_NAME" ] && error_exit "Context name is required."
+
+    CONTEXT_DIR="$FLEET_DIR/$CONTEXT_NAME"
+    KUBECONFIG="$CONTEXT_DIR/kubeconfig.yaml"
+    CONFIG_FILE="$CONTEXT_DIR/config.yaml"
+    BASE_DOMAIN=$(sed -n -e '/fleetmanager:/,/domain:/ s/.*domain:[ ]*//p' "$CONFIG_FILE")
+
+    kong_values=$(cat << 'EOF'
+ingressController:
+  admissionWebhook:
+    enabled: false
+proxy:
+  nameOverride: fm-proxy
+
+image:
+  repository: platformatorylabs/fleet-manager-gateway
+  tag: "v0.0.1-main-c2b12d8"
+EOF
+)
+
+    postgresql_values=$(cat << 'EOF'
+fullnameOverride: fm-postgresql
+auth:
+  username: fleetmanager
+  postgresPassword: fleetmanager
+  password: fleetmanager
+  database: fleetmanager
+primary:
+  initdb:
+    scripts:
+      init.sh: |
+        #!/bin/bash
+        PGPASSWORD=fleetmanager psql -U postgres <<EOF
+        SELECT 'CREATE USER temporal WITH PASSWORD ''fmtemporal'';' 
+        WHERE NOT EXISTS (SELECT FROM pg_roles WHERE rolname='temporal')\gexec
+        SELECT 'CREATE DATABASE temporal' 
+        WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname='temporal')\gexec
+        SELECT 'CREATE DATABASE temporal_visibility' 
+        WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname='temporal_visibility')\gexec
+        GRANT ALL PRIVILEGES ON DATABASE temporal TO temporal;
+        GRANT ALL PRIVILEGES ON DATABASE temporal_visibility TO temporal;
+        EOF
+  persistence:
+    enabled: true
+EOF
+)
+
+    temporal_values=$(cat << 'EOF'
+fullnameOverride: fm-temporal
+server:
+  config:
+    persistence:
+      default:
+        driver: "sql"
+
+        sql:
+          driver: "postgres12"
+          host: "fm-postgresql"
+          port: 5432
+          database: temporal
+          user: temporal
+          password: fmtemporal
+          maxConns: 20
+          maxConnLifetime: "1h"
+
+      visibility:
+        driver: "sql"
+
+        sql:
+          driver: "postgres12"
+          host: "fm-postgresql"
+          port: 5432
+          database: temporal_visibility
+          user: temporal
+          password: fmtemporal
+          maxConns: 20
+          maxConnLifetime: "1h"
+    namespaces:
+      create: true
+      namespace:
+        - name: default
+
+cassandra:
+  enabled: false
+
+mysql:
+  enabled: false
+
+postgresql:
+  enabled: true
+
+prometheus:
+  enabled: false
+  nodeExporter:
+    enabled: false
+
+grafana:
+  enabled: false
+  
+elasticsearch:
+  enabled: false
+
+schema:
+  createDatabase:
+    enabled: false
+  setup:
+    enabled: true
+  update:
+    enabled: true
+EOF
+)
+
+    minio_values=$(cat << 'EOF'
+fullnameOverride: fm-minio
+replicas: 1
+drivesPerNode: 2
+rootUser: root-user
+rootPassword: supersecretpassword
+users:
+  - accessKey: fleetmanager-config-user
+    secretKey: supersecretpassword
+    policy: readwrite
+  - accessKey: fleetmanager-state-user
+    secretKey: supersecretpassword
+    policy: readwrite
+buckets:
+  - name: ws-fleet-manager-configuration
+    policy: none
+    purge: false
+  - name: ws-fleet-manager-tf-state
+    policy: none
+    purge: false
+persistence:
+  size: 10Gi
+  annotations: {}
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+address: null
+EOF
+)
+    loki_values=$(cat << 'EOF'
+fullnameOverride: fm-loki
+loki:
+  auth_enabled: false
+  schemaConfig:
+    configs:
+      - from: "2024-04-01"
+        store: tsdb
+        object_store: s3
+        schema: v13
+        index:
+          prefix: loki_index_
+          period: 24h
+  ingester:
+    chunk_encoding: snappy
+  querier:
+    # Default is 4, if you have enough memory and CPU you can increase, reduce if OOMing
+    max_concurrent: 4
+  pattern_ingester:
+    enabled: true
+  limits_config:
+    allow_structured_metadata: true
+    volume_enabled: true
+
+deploymentMode: SimpleScalable
+
+backend:
+  replicas: 2
+read:
+  replicas: 2
+write:
+  replicas: 3 # To ensure data durability with replication
+
+# Enable minio for storage
+minio:
+  enabled: true
+  fullnameOverride: fm-loki-minio
+  serviceAccount:
+    name: "loki-minio-sa"
+EOF
+)
+    
+    ollama_values=$(cat << 'EOF'
+ollama:
+  models:
+    pull:
+      - llama3.2
+    run:
+      - llama3.2
+resources:
+  requests:
+    memory: 4096Mi
+    cpu: 2000m
+
+  limits:
+    memory: 8192Mi
+    cpu: 4000m
+EOF
+)
+
+    cert_manager_values=$(cat << 'EOF'
+crds:
+  enabled: true
+EOF
+)
+
+    # Write embedded values to temporary files.
+    tmp_kong_values=$(mktemp)
+    tmp_postgresql_values=$(mktemp)
+    tmp_temporal_values=$(mktemp)
+    tmp_minio_values=$(mktemp)
+    tmp_loki_values=$(mktemp)
+    tmp_ollama_values=$(mktemp)
+    tmp_cert_manager_values=$(mktemp)
+    echo "$kong_values" > "$tmp_kong_values"
+    echo "$postgresql_values" > "$tmp_postgresql_values"
+    echo "$temporal_values" > "$tmp_temporal_values"
+    echo "$minio_values" > "$tmp_minio_values"
+    echo "$loki_values" > "$tmp_loki_values"
+    echo "$ollama_values" > "$tmp_ollama_values"
+    echo "$cert_manager_values" > "$tmp_cert_manager_values"
+
+    helm upgrade --install kong https://github.com/Kong/charts/releases/download/kong-2.48.0/kong-2.48.0.tgz -f "$tmp_kong_values" --namespace "$CONTEXT_NAME" --kubeconfig "$KUBECONFIG" --create-namespace
+    helm upgrade --install postgresql oci://registry-1.docker.io/bitnamicharts/postgresql --version 11.9.13 -f "$tmp_postgresql_values" --namespace "$CONTEXT_NAME" --kubeconfig "$KUBECONFIG"
+    helm upgrade --install temporal https://github.com/temporalio/helm-charts/releases/download/temporal-0.60.0/temporal-0.60.0.tgz -f "$tmp_temporal_values" --namespace "$CONTEXT_NAME" --kubeconfig "$KUBECONFIG"
+    helm upgrade --install minio https://github.com/minio/minio/raw/refs/heads/master/helm-releases/minio-5.4.0.tgz -f "$tmp_minio_values" --namespace "$CONTEXT_NAME" --kubeconfig "$KUBECONFIG"
+    helm upgrade --install loki https://github.com/grafana/helm-charts/releases/download/helm-loki-6.29.0/loki-6.29.0.tgz -f "$tmp_loki_values" --namespace "$CONTEXT_NAME" --kubeconfig "$KUBECONFIG"
+    helm upgrade --install ollama https://github.com/otwld/ollama-helm/releases/download/ollama-1.13.0/ollama-1.13.0.tgz -f "$tmp_ollama_values" --namespace "$CONTEXT_NAME" --kubeconfig "$KUBECONFIG"
+    helm upgrade --install cert-manager https://charts.jetstack.io/charts/cert-manager-v1.16.2.tgz -f "$tmp_cert_manager_values" --namespace "$CONTEXT_NAME" --kubeconfig "$KUBECONFIG"
+    helm upgrade --install grafana-operator oci://ghcr.io/grafana/helm-charts/grafana-operator --version v5.17.0 --namespace "$CONTEXT_NAME" --kubeconfig "$KUBECONFIG"
+
+    # Clean up temporary files.
+    rm "$tmp_kong_values" "$tmp_postgresql_values" "$tmp_temporal_values" "$tmp_minio_values" "$tmp_loki_values" "$tmp_ollama_values" "$tmp_cert_manager_values"
+
+    kubectl create secret generic fleet-manager-kubeconfig --from-file fleet-manager-kubeconfig.yaml="$KUBECONFIG" --namespace "$CONTEXT_NAME" --dry-run=client -o yaml | kubectl create  --kubeconfig "$KUBECONFIG" -f -
+
+    echo "Waiting for LoadBalancer IP..."
+    while true; do
+        LB_IP=$(kubectl get svc --namespace "$CONTEXT_NAME" fm-proxy -o jsonpath='{.status.loadBalancer.ingress[0].ip}' --kubeconfig "$KUBECONFIG" 2>/dev/null || true)
+        LB_HOSTNAME=$(kubectl get svc --namespace "$CONTEXT_NAME" fm-proxy -o jsonpath='{.status.loadBalancer.ingress[0].hostname}' --kubeconfig "$KUBECONFIG" 2>/dev/null || true)
+        if [[ -n "$LB_IP" ]]; then
+            echo "LoadBalancer IP: $LB_IP"
+            break
+        elif [[ -n "$LB_HOSTNAME" ]]; then
+            echo "LoadBalancer Hostname: $LB_HOSTNAME"
+            break
+        fi
+        sleep 5
+    done
+
+    echo "Update DNS: *.$BASE_DOMAIN -> ${LB_IP:-$LB_HOSTNAME}"
+    read -p "Press Enter once DNS is updated..." _
+
+    while true; do
+        dig +short "test.$BASE_DOMAIN" | grep -q "${LB_IP:-$LB_HOSTNAME}" && break
+        echo "DNS update not detected. Retrying..."
+        sleep 5
+    done
+
+    helm upgrade --install kafka-fleet-manager https://github.com/Platformatory/fleet-manager-helm/releases/download/fleet-manager-$FLEET_MANAGER_HELM_VERSION/fleet-manager-$FLEET_MANAGER_HELM_VERSION.tgz -f "$CONFIG_FILE" --namespace "$CONTEXT_NAME" --kubeconfig "$KUBECONFIG"
+    echo "Cluster initialization complete."
+}
+
+list_services() {
+    while [[ "$#" -gt 0 ]]; do
+        case "$1" in
+            --context)
+                CONTEXT_NAME="$2"
+                shift 2
+                ;;
+            *)
+                error_exit "Invalid argument: $1"
+                ;;
+        esac
+    done
+
+    [ -z "$CONTEXT_NAME" ] && error_exit "Context name is required."
+
+    KUBECONFIG="$FLEET_DIR/$CONTEXT_NAME/kubeconfig.yaml"
+    helm list -n "$CONTEXT_NAME" --kubeconfig "$KUBECONFIG"
+}
+
+orchestrator_logs() {
+    while [[ "$#" -gt 0 ]]; do
+        case "$1" in
+            --context)
+                CONTEXT_NAME="$2"
+                shift 2
+                ;;
+            *)
+                error_exit "Invalid argument: $1"
+                ;;
+        esac
+    done
+
+    [ -z "$CONTEXT_NAME" ] && error_exit "Context name is required."
+
+    KUBECONFIG="$FLEET_DIR/$CONTEXT_NAME/kubeconfig.yaml"
+    kubectl logs -f deploy/fleet-manager-temporal-worker -n "$CONTEXT_NAME" --kubeconfig "$KUBECONFIG"
+}
+
+main() {
+    parse_global_flags "$@"
+    case "$1" in
+        set-context)
+            shift
+            set_context "$@"
+            ;;
+        get-context)
+            if [ -z "$2" ]; then
+                list_contexts
+            else
+                get_context "$2"
+            fi
+            ;;
+        init)
+            shift
+            init_cluster "$@"
+            ;;
+        list-services)
+            shift
+            list_services "$@"
+            ;;
+        orchestrator-logs)
+            shift
+            orchestrator_logs "$@"
+            ;;
+        *)
+            print_help
+            ;;
+    esac
+}
+
+main "$@"
+
