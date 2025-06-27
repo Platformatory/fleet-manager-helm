@@ -30,3 +30,5 @@ fleetmanager:
     clientSecret:
     rsaPublicKey:
   superUserEmails:
+keycloak:
+  bootstrap: false
