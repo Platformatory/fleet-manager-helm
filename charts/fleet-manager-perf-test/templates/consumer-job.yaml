@@ -25,7 +25,7 @@ spec:
         {{- if $oauthMatch }}
         env:
         - name: KAFKA_OPTS
-          value: "-Dorg.apache.kafka.sasl.oauthbearer.allowed.urls={{ trimPrefix \"sasl.oauthbearer.token.endpoint.url=\" $oauthMatch }}"
+          value: '-Dorg.apache.kafka.sasl.oauthbearer.allowed.urls={{ trimPrefix "sasl.oauthbearer.token.endpoint.url=" $oauthMatch }}'
         {{- end }}
         command: ["/bin/bash", "-c"]
         args:
