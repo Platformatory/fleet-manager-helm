@@ -21,6 +21,12 @@ spec:
       containers:
       - name: producer
         image: confluentinc/cp-kafka:latest
+        {{- $oauthMatch := regexFind `(?m)^sasl\.oauthbearer\.token\.endpoint\.url=.*$` $.Values.clientProperties }}
+        {{- if $oauthMatch }}
+        env:
+        - name: KAFKA_OPTS
+          value: "-Dorg.apache.kafka.sasl.oauthbearer.allowed.urls={{ trimPrefix \"sasl.oauthbearer.token.endpoint.url=\" $oauthMatch }}"
+        {{- end }}
         command: ["/bin/bash", "-c"]
         args:
           - |
