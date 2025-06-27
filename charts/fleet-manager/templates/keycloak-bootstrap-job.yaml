@@ -1,0 +1,45 @@
+{{- if .Values.keycloak.bootstrap }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: keycloak-bootstrap
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: bootstrap
+          image: curlimages/curl:8.7.1
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              set -e
+              HOST=http://keycloak-fm-identity-headless:8080
+              TOKEN=$(curl -s \
+                -d "client_id=admin-cli" \
+                -d "username=streamtime" \
+                -d "password=streammanager" \
+                -d "grant_type=password" \
+                "$HOST/realms/master/protocol/openid-connect/token" | \
+                grep -o '"access_token":"[^"]*' | cut -d'"' -f4)
+
+              STATUS=$(curl -s -o /dev/null -w "%{http_code}" -X POST "$HOST/admin/realms/master/clients" \
+                -H "Authorization: Bearer $TOKEN" \
+                -H "Content-Type: application/json" \
+                -d '{"clientId":"{{ .Values.fleetmanager.oidc.clientId }}","secret":"{{ .Values.fleetmanager.oidc.clientSecret }}"}')
+              if [ "$STATUS" != "201" ] && [ "$STATUS" != "409" ]; then
+                echo "Failed to create client (status: $STATUS)" >&2
+                exit 1
+              fi
+
+              for email in $(echo "{{ .Values.fleetmanager.superUserEmails }}" | tr ',' ' '); do
+                STATUS=$(curl -s -o /dev/null -w "%{http_code}" -X POST "$HOST/admin/realms/master/users" \
+                  -H "Authorization: Bearer $TOKEN" \
+                  -H "Content-Type: application/json" \
+                  -d "{\"username\":\"$email\",\"email\":\"$email\",\"enabled\":true}")
+                if [ "$STATUS" != "201" ] && [ "$STATUS" != "409" ]; then
+                  echo "Failed to create user $email (status: $STATUS)" >&2
+                  exit 1
+                fi
+              done
+{{- end }}
