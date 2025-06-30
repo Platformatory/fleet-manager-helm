@@ -17,4 +17,5 @@ spec:
           expectedIssuer: {{ .Values.oauth.issuer }}
           jwksEndpointUri: {{ .Values.oauth.jwksEndpoint }}
           subClaimName: {{ .Values.oauth.subClaim }}
+          scope: {{ .Values.oauth.scope }}
       sslClientAuthentication: false

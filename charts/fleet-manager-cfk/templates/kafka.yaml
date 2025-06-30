@@ -117,6 +117,7 @@ spec:
           expectedIssuer: {{ .Values.oauth.issuer }}
           jwksEndpointUri: {{ .Values.oauth.jwksEndpoint }}
           subClaimName: {{ .Values.oauth.subClaim }}
+          scope: {{ .Values.oauth.scope }}
       tls:
         enabled: true
         secretRef: tls-kafka-external
@@ -139,6 +140,7 @@ spec:
           expectedIssuer: {{ .Values.oauth.issuer }}
           jwksEndpointUri: {{ .Values.oauth.jwksEndpoint }}
           subClaimName: {{ .Values.oauth.subClaim }}
+          scope: {{ .Values.oauth.scope }}
 {{- end }}
   metricReporter:
     enabled: true
@@ -173,6 +175,7 @@ spec:
             expectedIssuer: {{ .Values.oauth.issuer }}
             jwksEndpointUri: {{ .Values.oauth.jwksEndpoint }}
             subClaimName: {{ .Values.oauth.subClaim }}
+            scope: {{ .Values.oauth.scope }}
         oidc:
           clientCredentials:
             secretRef: oidccredential
