@@ -42,6 +42,8 @@ cfk:
           enabled: true
     controlCenter:
       diskSize: 30Gi
+    serverConfigOverrides:
+    - confluent.tier.local.hotset.ms=7200000
   license:
   systemAdmin:
     name:

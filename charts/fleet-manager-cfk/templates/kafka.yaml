@@ -22,7 +22,6 @@ spec:
     superUsers:
       - User:kafka
       - User:{{ .Values.oauth.clientId }}
-      - User:c3
   replicas: {{ .Values.replicas }}
   image:
     application: confluentinc/cp-server:{{ .Values.cfk.confluentPlatform.version }}
@@ -64,7 +63,6 @@ spec:
       - confluent.tier.enable=true
       - confluent.tier.cleaner.feature.enable=true
       - confluent.tier.cleaner.enable=true
-      - confluent.tier.local.hotset.ms=7200000
       - confluent.tier.backend={{ .Values.cfk.tieredStorage.provider }}
       - confluent.tier.s3.bucket={{ .Values.cfk.tieredStorage.bucketName }}
       - confluent.tier.s3.prefix=confluent-tiered-storage-dir/
@@ -76,6 +74,9 @@ spec:
 {{- if eq .Values.cfk.tieredStorage.cloud "oci" }}
       - confluent.tier.s3.ssl.endpoint.identification.algorithm=""
       - confluent.tier.s3.force.path.style.access=true
+{{- end }}
+{{- range .Values.cfk.confluentPlatform.kafka.serverConfigOverrides | default list }}
+      - {{ . }}
 {{- end }}
     log4j:
       - log4j.rootLogger=INFO, stdout, stderr
