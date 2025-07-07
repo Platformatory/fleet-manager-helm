@@ -31,6 +31,7 @@ cfk:
     version:
   confluentPlatform:
     version: 
+    authentication: oauth
     kraft:
       diskSize: 50Gi
     kafka:
@@ -40,10 +41,10 @@ cfk:
           enabled: true
         external:
           enabled: true
+      serverConfigOverrides:
+      - confluent.tier.local.hotset.ms=7200000
     controlCenter:
       diskSize: 30Gi
-    serverConfigOverrides:
-    - confluent.tier.local.hotset.ms=7200000
   license:
   systemAdmin:
     name:

@@ -35,7 +35,7 @@ spec:
       - --ssl.truststore.location=/mnt/sslcerts/truststore.p12
       - --ssl.truststore.password=${file:/mnt/sslcerts/jksPassword.txt:jksPassword}
     log4j:
-      - log4j.rootLogger=INFO, stdout, stderr
+      - log4j.rootLogger=DEBUG, stdout, stderr
       - log4j.appender.stdout.Threshold = TRACE
       - log4j.appender.stdout.Target   = System.out
       - log4j.appender.stdout.filter.filter1=org.apache.log4j.varia.LevelRangeFilter
@@ -46,9 +46,12 @@ spec:
       - log4j.appender.stderr.Target   = System.err
       - log4j.appender.stderr.layout=org.apache.log4j.PatternLayout
       - log4j.appender.stderr.layout.ConversionPattern=[%d] %p %m (%c)%n
+{{- if eq .Values.cfk.confluentPlatform.authentication "oauth" }}
   authorization:
     type: rbac
+{{- end }}
   authentication:
+{{- if eq .Values.cfk.confluentPlatform.authentication "oauth" }}
     type: oauth
     oauth:
       configuration:
@@ -57,6 +60,18 @@ spec:
         jwksEndpointUri: {{ .Values.oauth.jwksEndpoint }}
         subClaimName: {{ .Values.oauth.subClaim }}
         scope: {{ .Values.oauth.scope }}
+{{- end }}
+{{- if eq .Values.cfk.confluentPlatform.authentication "plain" }}
+    type: basic
+    basic:
+      debug: true
+      secretRef: sr-basic-credential
+      roles:
+        - admin
+        - developer
+        - user
+        - sr-user
+{{- end }}
   dependencies:
     kafka:
       bootstrapEndpoint: kafka.{{ .Release.Namespace }}.svc.cluster.local:9071
@@ -65,6 +80,7 @@ spec:
         sslClientAuthentication: true
       tls:
         enabled: true
+{{- if eq .Values.cfk.confluentPlatform.authentication "oauth" }}
     mds:
       endpoint: http://kafka.{{ .Release.Namespace }}.svc.cluster.local:9099
       tokenKeyPair:
@@ -83,6 +99,7 @@ spec:
       tls:
         enabled: false
         ignoreTrustStoreConfig: true
+{{- end }}
   metrics:
     prometheus:
       whitelist:

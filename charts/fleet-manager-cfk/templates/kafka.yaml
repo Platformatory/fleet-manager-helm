@@ -79,7 +79,7 @@ spec:
       - {{ . }}
 {{- end }}
     log4j:
-      - log4j.rootLogger=INFO, stdout, stderr
+      - log4j.rootLogger=DEBUG, stdout, stderr
       - log4j.appender.stdout.Threshold = TRACE
       - log4j.appender.stdout.Target   = System.out
       - log4j.appender.stdout.filter.filter1=org.apache.log4j.varia.LevelRangeFilter
@@ -112,6 +112,7 @@ spec:
 {{- if .Values.cfk.confluentPlatform.kafka.listeners.external.enabled }}
     external:
       authentication:
+{{- if eq .Values.cfk.confluentPlatform.authentication "oauth" }}
         type: oauth
         oauthSettings:
           audience: {{ .Values.oauth.audience }}
@@ -119,6 +120,12 @@ spec:
           jwksEndpointUri: {{ .Values.oauth.jwksEndpoint }}
           subClaimName: {{ .Values.oauth.subClaim }}
           scope: {{ .Values.oauth.scope }}
+{{- end }}
+{{- if eq .Values.cfk.confluentPlatform.authentication "plain" }}
+        type: plain
+        jaasConfig:
+          secretRef: kafka-sasl-plain-credential
+{{- end }}
       tls:
         enabled: true
         secretRef: tls-kafka-external
@@ -135,6 +142,7 @@ spec:
     - name: custominternal
       port: 9093
       authentication:
+{{- if eq .Values.cfk.confluentPlatform.authentication "oauth" }}
         type: oauth
         oauthSettings:
           audience: {{ .Values.oauth.audience }}
@@ -142,6 +150,12 @@ spec:
           jwksEndpointUri: {{ .Values.oauth.jwksEndpoint }}
           subClaimName: {{ .Values.oauth.subClaim }}
           scope: {{ .Values.oauth.scope }}
+{{- end }}
+{{- if eq .Values.cfk.confluentPlatform.authentication "plain" }}
+        type: plain
+        jaasConfig:
+          secretRef: kafka-sasl-plain-credential
+{{- end }}
 {{- end }}
   metricReporter:
     enabled: true

@@ -7,3 +7,25 @@ spec:
     type: {{ .Values.cfk.systemAdmin.type }}
     name: {{ .Values.cfk.systemAdmin.name }}
   role: SystemAdmin
+{{- if eq .Values.cfk.confluentPlatform.authentication "plain" }}
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: ConfluentRolebinding
+metadata:
+  name: schemaregistry-topic-owner
+spec:
+  principal:
+    type: user
+    name: schemaregistry
+  resourcePatterns:
+    - name: _confluent-license
+      patternType: LITERAL
+      resourceType: Topic
+    - name: _schemas
+      patternType: PREFIXED
+      resourceType: Topic
+    - name: id_schemaregistry_
+      patternType: PREFIXED
+      resourceType: Group
+  role: ResourceOwner
+{{- end }}
