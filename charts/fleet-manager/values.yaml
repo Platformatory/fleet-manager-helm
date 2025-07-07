@@ -23,7 +23,8 @@ fleetmanager:
     audience:
     scope:
     tokenEndpoint:
-    groupsClaim:
+    emailClaim: email
+    groupsClaim: groups
     authorizeEndpoint:
     refreshToken: false
     clientId:
