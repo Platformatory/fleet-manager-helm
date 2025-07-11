@@ -79,7 +79,7 @@ spec:
       - {{ . }}
 {{- end }}
     log4j:
-      - log4j.rootLogger=DEBUG, stdout, stderr
+      - log4j.rootLogger=INFO, stdout, stderr
       - log4j.appender.stdout.Threshold = TRACE
       - log4j.appender.stdout.Target   = System.out
       - log4j.appender.stdout.filter.filter1=org.apache.log4j.varia.LevelRangeFilter
