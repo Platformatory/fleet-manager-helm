@@ -16,8 +16,9 @@ oauth:
   jwksEndpoint:
   authorizeEndpoint:
   tokenEndpoint: 
-  scope:  
+  scope: 
   subClaim: sub
+  emailClaim: email
   groupsClaim: group
   refreshToken: true
 tenancy: Shared

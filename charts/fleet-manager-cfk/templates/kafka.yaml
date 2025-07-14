@@ -197,7 +197,7 @@ spec:
           configurations:
             groupsClaimName: {{ .Values.oauth.groupsClaim }}
             audience: {{ .Values.oauth.audience }}
-            subClaimName: {{ .Values.oauth.subClaim }}
+            subClaimName: {{ .Values.oauth.emailClaim }}
             issuer: {{ .Values.oauth.issuer }}
             jwksEndpointUri: {{ .Values.oauth.jwksEndpoint }}
             authorizeBaseEndpointUri: {{ .Values.oauth.authorizeEndpoint }}
