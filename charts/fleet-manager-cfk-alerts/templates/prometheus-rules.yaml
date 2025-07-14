@@ -55,12 +55,12 @@ spec:
       annotations:
         summary: "UnderMinIsrPartitionCount for clusterId {{`{{ $labels.clusterId }}`}}"
         description: "UnderMinIsrPartitionCount for clusterId {{`{{ $labels.clusterId }}`}} is {{`{{ $value }}`}}. "
-    - alert: Broker IO Activity < 40%
-      expr: sum by (clusterId) (kafka_server_kafkarequesthandlerpool_controlplanerequesthandleravgidlepercent{namespace="{{ .Release.Namespace }}"}) < 0.4
+    - alert: Broker IO Activity > 90%
+      expr: sum by (clusterId) (kafka_server_kafkarequesthandlerpool_controlplanerequesthandleravgidlepercent{namespace="{{ .Release.Namespace }}"}) > 0.9
       for: 1m
       labels:
         severity: major
         cluster: {{ .Release.Namespace }}
       annotations:
-        summary: "Broker IO Activity < 40% for clusterId {{`{{ $labels.clusterId }}`}}"
+        summary: "Broker IO Activity > 90% for clusterId {{`{{ $labels.clusterId }}`}}"
         description: "Broker IO Activity for clusterId {{`{{ $labels.clusterId }}`}} and broker {{`{{ $labels.instance }}`}} is {{`{{ $value }}`}}. "
