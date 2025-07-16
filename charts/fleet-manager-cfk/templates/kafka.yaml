@@ -22,6 +22,10 @@ spec:
     superUsers:
       - User:kafka
       - User:{{ .Values.oauth.clientId }}
+{{- if eq .Values.cfk.confluentPlatform.authentication "plain" }}
+      - User:kfk
+      - User:c3
+{{- end }}
   replicas: {{ .Values.replicas }}
   image:
     application: confluentinc/cp-server:{{ .Values.cfk.confluentPlatform.version }}
@@ -178,7 +182,9 @@ spec:
       impersonation:
         admins:
           - User:kafka
-          - User:{{ .Values.oauth.clientId }}
+{{- if eq .Values.cfk.confluentPlatform.authentication "plain" }}
+          - User:c3
+{{- end }}
       tls:
         enabled: true
         ignoreTrustStoreConfig: true
