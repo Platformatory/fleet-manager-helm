@@ -87,6 +87,8 @@ spec:
             value: root
           - name: FLEET_MANAGER_COOKIE_DOMAIN
             value: .{{ .Values.fleetmanager.domain }}
+          - name: LOKI_URL
+            value: http://fm-loki-gateway/loki/api/v1/push
           image: {{ .Values.fleetmanager.api.image }}
           command: ['python', 'manage.py', 'migrate']
           name: fleet-manager-migrations
@@ -165,6 +167,8 @@ spec:
             value: root
           - name: FLEET_MANAGER_COOKIE_DOMAIN
             value: .{{ .Values.fleetmanager.domain }}
+          - name: LOKI_URL
+            value: http://fm-loki-gateway/loki/api/v1/push
           image: {{ .Values.fleetmanager.api.image }}
           name: fleet-manager
           ports:
