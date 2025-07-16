@@ -7,6 +7,7 @@ spec:
     name: kafka
     namespace: {{ .Release.Namespace }}
   kafkaRest:
+{{- if eq .Values.cfk.confluentPlatform.authentication "oauth" }}
     endpoint: https://kafka.{{ .Release.Namespace }}.svc.cluster.local:8090
     authentication:
       type: oauth
@@ -19,3 +20,10 @@ spec:
           subClaimName: {{ .Values.oauth.subClaim }}
           scope: {{ .Values.oauth.scope }}
       sslClientAuthentication: false
+{{- end }}
+{{- if eq .Values.cfk.confluentPlatform.authentication "plain" }}
+    authentication:
+      type: bearer
+      bearer:
+        secretRef: rest-mds-credential
+{{- end }}

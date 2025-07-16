@@ -85,6 +85,7 @@ spec:
       endpoint: http://kafka.{{ .Release.Namespace }}.svc.cluster.local:9099
       tokenKeyPair:
         secretRef: mds-token
+{{- if eq .Values.cfk.confluentPlatform.authentication "oauth" }}
       authentication:
         type: oauth
         oauth:
@@ -95,3 +96,10 @@ spec:
             jwksEndpointUri: {{ .Values.oauth.jwksEndpoint }}
             subClaimName: {{ .Values.oauth.subClaim }}
             scope: {{ .Values.oauth.scope }}
+{{- end }}
+{{- if eq .Values.cfk.confluentPlatform.authentication "plain" }}
+      authentication:
+        type: bearer
+        bearer:
+          secretRef: c3-mds-client-credential
+{{- end }}

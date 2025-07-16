@@ -178,12 +178,14 @@ spec:
       impersonation:
         admins:
           - User:kafka
+          - User:{{ .Values.oauth.clientId }}
       tls:
         enabled: true
         ignoreTrustStoreConfig: true
       tokenKeyPair:
         secretRef: mds-token
       provider:
+{{- if eq .Values.cfk.confluentPlatform.authentication "oauth" }}
         oauth:
           configurations:
             audience: {{ .Values.oauth.audience }}
@@ -191,6 +193,12 @@ spec:
             jwksEndpointUri: {{ .Values.oauth.jwksEndpoint }}
             subClaimName: {{ .Values.oauth.subClaim }}
             scope: {{ .Values.oauth.scope }}
+{{- end }}
+{{- if eq .Values.cfk.confluentPlatform.authentication "plain" }}
+        file:
+          secretRef: mds-file-user-credential
+{{- end }}
+
         oidc:
           clientCredentials:
             secretRef: oidccredential
@@ -205,6 +213,7 @@ spec:
             refreshToken: {{ .Values.oauth.refreshToken }}
   dependencies:
     kafkaRest:
+{{- if eq .Values.cfk.confluentPlatform.authentication "oauth" }}
       authentication:
         type: oauth
         jaasConfig:
@@ -216,6 +225,13 @@ spec:
           jwksEndpointUri: {{ .Values.oauth.jwksEndpoint }}
           subClaimName: {{ .Values.oauth.subClaim }}
           scope: {{ .Values.oauth.scope }}
+{{- end }}
+{{- if eq .Values.cfk.confluentPlatform.authentication "plain" }}
+      authentication:
+        type: bearer
+        bearer:
+          secretRef: mds-client-credential
+{{- end }}
     kRaftController:
       controllerListener:
         tls:
