@@ -3,6 +3,7 @@ kind: ControlCenter
 metadata:
   name: controlcenter
 spec:
+  oneReplicaPerNode: true
 {{- if .Values.cfk.license }}
   license:
     secretRef: cfk-license

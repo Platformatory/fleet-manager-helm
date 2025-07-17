@@ -3,6 +3,7 @@ kind: Kafka
 metadata:
   name: kafka
 spec:
+  oneReplicaPerNode: true
 {{- if .Values.cfk.license }}
   license:
     secretRef: cfk-license

@@ -3,6 +3,7 @@ kind: KRaftController
 metadata:
   name: kraftcontroller
 spec:
+  oneReplicaPerNode: true
 {{- if .Values.cfk.license }}
   license:
     secretRef: cfk-license
