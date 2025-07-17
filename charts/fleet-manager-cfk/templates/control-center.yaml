@@ -64,6 +64,7 @@ spec:
         enabled: true
     schemaRegistry:
       url: http://schemaregistry.{{ .Release.Namespace }}.svc.cluster.local:8081
+{{- if eq .Values.cfk.confluentPlatform.authentication "oauth" }}
       authentication:
         type: oauth
         oauth:
@@ -75,6 +76,13 @@ spec:
             subClaimName: {{ .Values.oauth.subClaim }}
             scope: {{ .Values.oauth.scope }}
         sslClientAuthentication: false
+{{- end }}
+{{- if eq .Values.cfk.confluentPlatform.authentication "plain" }}
+      authentication:
+        basic:
+          secretRef: c3-sr-credential
+        type: basic
+{{- end }}
       tls:
         enabled: false
     mds:
