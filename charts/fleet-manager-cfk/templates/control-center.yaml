@@ -63,6 +63,7 @@ spec:
         type: mtls
       tls:
         enabled: true
+{{- if .Values.cfk.confluentPlatform.schemaRegistry.enabled }}
     schemaRegistry:
       url: http://schemaregistry.{{ .Release.Namespace }}.svc.cluster.local:8081
 {{- if eq .Values.cfk.confluentPlatform.authentication "oauth" }}
@@ -86,6 +87,7 @@ spec:
 {{- end }}
       tls:
         enabled: false
+{{- end }}
     mds:
       tls:
         enabled: false

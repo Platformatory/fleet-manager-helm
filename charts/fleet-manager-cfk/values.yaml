@@ -47,6 +47,8 @@ cfk:
       - confluent.tier.local.hotset.ms=7200000
     controlCenter:
       diskSize: 30Gi
+    schemaRegistry:
+      enabled: true
   license:
   systemAdmin:
     name:
