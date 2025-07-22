@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fleet-manager-benchmarks-result
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    konghq.com/methods: "POST"
+    konghq.com/regex-priority: "10"
+    # kubernetes.io/ingress.class: kong
+spec:
+  ingressClassName: kong
+  tls:
+  - secretName: {{ include "fleetmanager.api.domain" . | replace "." "-" }}
+    hosts:
+    - {{ include "fleetmanager.api.domain" . }}
+  rules:
+    - host: {{ include "fleetmanager.api.domain" . }}
+      http:
+        paths:
+          - path: /~/benchmarks/(.*)/results/
+            backend:
+              service:
+                name: fleet-manager
+                port:
+                  number: 8000
+            pathType: ImplementationSpecific
