@@ -1,0 +1,64 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: fm-post-install-check-{{ .Values.benchmarkId }}
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-delete-policy": before-hook-creation
+spec:
+  template:
+    spec:
+      serviceAccountName: perf-test-sa
+      restartPolicy: Never
+      containers:
+      - name: check
+        image: bitnami/kubectl:1.33.3
+        command: ["/bin/bash", "-c"]
+        args:
+          - |
+            set -e
+            NAMESPACE={{ .Release.Namespace }}
+
+            wait_for_running() {
+              job="$1"
+              echo "Waiting for pod of job $job to be running"
+              for i in {1..30}; do
+                phase=$(kubectl get pod -l job-name="$job" -n "$NAMESPACE" -o jsonpath='{.items[0].status.phase}' 2>/dev/null || true)
+                if [ "$phase" = "Running" ] || [ "$phase" = "Succeeded" ]; then
+                  echo "Pod for $job is running"
+                  return 0
+                fi
+                sleep 5
+              done
+              echo "Timed out waiting for pod of job $job"
+              exit 1
+            }
+
+            {{- range .Values.producers }}
+            wait_for_running fmproperf-{{ .name }}-{{ $.Values.benchmarkId }}
+            {{- end }}
+            {{- range .Values.consumers }}
+            wait_for_running fmconperf-{{ .name }}-{{ $.Values.benchmarkId }}
+            {{- end }}
+
+            {{- $firstJob := "" }}
+            {{- if .Values.producers }}
+            {{- $p0 := index .Values.producers 0 }}
+            {{- $firstJob = printf "fmproperf-%s-%s" $p0.name $.Values.benchmarkId }}
+            {{- else if .Values.consumers }}
+            {{- $c0 := index .Values.consumers 0 }}
+            {{- $firstJob = printf "fmconperf-%s-%s" $c0.name $.Values.benchmarkId }}
+            {{- end }}
+
+            if [ -n "$firstJob" ]; then
+              pod=$(kubectl get pod -l job-name="$firstJob" -n "$NAMESPACE" -o jsonpath='{.items[0].metadata.name}')
+              echo "Checking topic {{ .Values.topic }} exists via pod $pod"
+              kubectl exec "$pod" -n "$NAMESPACE" -- kafka-topics --bootstrap-server {{ .Values.bootstrapServer }} --command-config /mnt/kafka/client.properties --topic {{ .Values.topic }} --describe >/tmp/topic.txt || true
+              if grep -q "Topic: {{ .Values.topic }}" /tmp/topic.txt; then
+                echo "Topic {{ .Values.topic }} exists"
+              else
+                echo "Topic {{ .Values.topic }} not found"
+                exit 1
+              fi
+            fi
+

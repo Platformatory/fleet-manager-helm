@@ -20,7 +20,7 @@ spec:
       {{- end }}
       containers:
       - name: producer
-        image: confluentinc/cp-kafka:latest
+        image: confluentinc/cp-kafka:8.0.0
         {{- $oauthMatch := regexFind `(?m)^sasl\.oauthbearer\.token\.endpoint\.url=.*$` $.Values.clientProperties }}
         {{- if $oauthMatch }}
         env:
