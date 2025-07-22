@@ -8,7 +8,7 @@ metadata:
 spec:
   template:
     spec:
-      serviceAccountName: default
+      serviceAccountName: perf-test-sa
       restartPolicy: Never
       containers:
       - name: check
@@ -24,7 +24,7 @@ spec:
               echo "Waiting for pod of job $job to be running"
               for i in {1..30}; do
                 phase=$(kubectl get pod -l job-name="$job" -n "$NAMESPACE" -o jsonpath='{.items[0].status.phase}' 2>/dev/null || true)
-                if [ "$phase" = "Running" ]; then
+                if [ "$phase" = "Running" ] || [ "$phase" = "Succeeded" ]; then
                   echo "Pod for $job is running"
                   return 0
                 fi
