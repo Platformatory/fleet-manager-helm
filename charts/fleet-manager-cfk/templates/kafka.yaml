@@ -8,10 +8,11 @@ spec:
   license:
     secretRef: cfk-license
 {{- end }}
-{{- if or (.Values.tolerations) (.Values.nodeAffinity) }}
   podTemplate:
+{{- if .Values.tolerations }}
     tolerations:
 {{ .Values.tolerations | default list | toYaml | indent 4 }}
+{{- end }}
     affinity:
       podAntiAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -39,7 +40,6 @@ spec:
 {{- if .Values.nodeAffinity }}
       nodeAffinity:
 {{ .Values.nodeAffinity | default dict | toYaml | indent 8 }}
-{{- end }}
 {{- end }}
   authorization:
     type: rbac
