@@ -12,8 +12,32 @@ spec:
   podTemplate:
     tolerations:
 {{ .Values.tolerations | default list | toYaml | indent 4 }}
-{{- if .Values.nodeAffinity }}
     affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+{{- if and (ne .Values.tenancy "Shared") (not .Values.stacked) }}
+            - key: confluent-platform
+              operator: In
+              values:
+              - "true"
+{{- end }}
+            - key: app
+              operator: In
+              values:
+              - kraftcontroller
+{{- if ne .Values.tenancy "Shared" }}
+            - key: alertmanager
+              operator: Exists
+            - key: app.kubernetes.io/instance
+              operator: In
+              values:
+              - "{{ .Release.Namespace }}-ingress-nginx"
+{{- end }}
+          topologyKey: kubernetes.io/hostname
+{{- end }}
+{{- if .Values.nodeAffinity }}
       nodeAffinity:
 {{ .Values.nodeAffinity | default dict | toYaml | indent 8 }}
 {{- end }}

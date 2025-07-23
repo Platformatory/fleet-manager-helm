@@ -13,8 +13,19 @@ spec:
   podTemplate:
     tolerations:
 {{ .Values.tolerations | default list | toYaml | indent 4 }}
-{{- if .Values.nodeAffinity }}
     affinity:
+{{- if not .Values.stacked }}
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+            - key: confluent-platform
+              operator: In
+              values:
+              - "true"
+          topologyKey: kubernetes.io/hostname
+{{- end }}
+{{- if .Values.nodeAffinity }}
       nodeAffinity:
 {{ .Values.nodeAffinity | default dict | toYaml | indent 8 }}
 {{- end }}

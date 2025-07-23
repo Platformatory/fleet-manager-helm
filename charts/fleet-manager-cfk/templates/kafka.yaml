@@ -12,8 +12,31 @@ spec:
   podTemplate:
     tolerations:
 {{ .Values.tolerations | default list | toYaml | indent 4 }}
-{{- if .Values.nodeAffinity }}
     affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+{{- if and (ne .Values.tenancy "Shared") (not .Values.stacked) }}
+            - key: confluent-platform
+              operator: In
+              values:
+              - "true"
+{{- end }}
+            - key: app
+              operator: In
+              values:
+              - kafka
+{{- if ne .Values.tenancy "Shared" }}
+            - key: alertmanager
+              operator: Exists
+            - key: app.kubernetes.io/instance
+              operator: In
+              values:
+              - "{{ .Release.Namespace }}-ingress-nginx"
+{{- end }}
+          topologyKey: kubernetes.io/hostname
+{{- if .Values.nodeAffinity }}
       nodeAffinity:
 {{ .Values.nodeAffinity | default dict | toYaml | indent 8 }}
 {{- end }}
@@ -33,6 +56,14 @@ spec:
     init: confluentinc/confluent-init-container:{{ .Values.cfk.initContainer.version }}
   dataVolumeCapacity: {{ .Values.cfk.confluentPlatform.kafka.diskSize }}
   configOverrides:
+{{- if ne .Values.tenancy "Shared" }}
+    jvm:
+      - "-XX:+UseContainerSupport"
+{{- if .Values.stacked }}
+      - "-XX:MaxRAMPercentage=35.0"
+{{- else }}
+      - "-XX:MaxRAMPercentage=70.0"
+{{- end }}
     server:
 {{ $replicas := (.Values.replicas | int) }}
 {{- if lt $replicas 3 }}

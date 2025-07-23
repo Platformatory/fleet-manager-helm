@@ -28,6 +28,7 @@ domain:
 ingressClassName: 
 tolerations: []
 nodeAffinity:
+stacked: true
 cfk:
   initContainer:
     version:
