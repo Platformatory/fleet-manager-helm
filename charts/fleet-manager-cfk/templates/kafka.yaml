@@ -64,6 +64,7 @@ spec:
 {{- else }}
       - "-XX:MaxRAMPercentage=70.0"
 {{- end }}
+{{- end }}
     server:
 {{ $replicas := (.Values.replicas | int) }}
 {{- if lt $replicas 3 }}
@@ -236,7 +237,6 @@ spec:
         file:
           secretRef: mds-file-user-credential
 {{- end }}
-
         oidc:
           clientCredentials:
             secretRef: oidccredential
