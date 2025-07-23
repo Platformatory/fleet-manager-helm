@@ -21,6 +21,8 @@ spec:
                 key: JWT_SECRET_KEY
                 optional: false
           - name: FLEET_MANAGER_DOMAIN
+            value: {{ .Values.fleetmanager.domain }}
+          - name: FLEET_MANAGER_URL
             value: http://fleet-manager:8000
           image: {{ .Values.fleetmanager.mcp.image }}
           name: fleet-manager-mcp
