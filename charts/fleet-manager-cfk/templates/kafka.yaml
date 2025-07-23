@@ -16,14 +16,17 @@ spec:
     affinity:
       podAntiAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
+{{- if and (ne .Values.tenancy "Shared") (not .Values.stacked) }}
         - labelSelector:
             matchExpressions:
-{{- if and (ne .Values.tenancy "Shared") (not .Values.stacked) }}
             - key: confluent-platform
               operator: In
               values:
               - "true"
+          topologyKey: kubernetes.io/hostname
 {{- end }}
+        - labelSelector:
+            matchExpressions:
             - key: app
               operator: In
               values:
@@ -31,14 +34,22 @@ spec:
 {{- if ne .Values.tenancy "Shared" }}
               - controlcenter
               - schemaregistry
+{{- end }}
+          topologyKey: kubernetes.io/hostname
+{{- if ne .Values.tenancy "Shared" }}
+        - labelSelector:
+            matchExpressions:
             - key: alertmanager
               operator: Exists
+          topologyKey: kubernetes.io/hostname
+        - labelSelector:
+            matchExpressions:
             - key: app.kubernetes.io/instance
               operator: In
               values:
               - "{{ .Release.Namespace }}-ingress-nginx"
-{{- end }}
           topologyKey: kubernetes.io/hostname
+{{- end }}
 {{- if .Values.nodeAffinity }}
       nodeAffinity:
 {{ .Values.nodeAffinity | default dict | toYaml | indent 8 }}
