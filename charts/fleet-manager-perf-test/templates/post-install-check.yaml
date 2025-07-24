@@ -8,7 +8,7 @@ metadata:
 spec:
   template:
     spec:
-      serviceAccountName: perf-test-sa
+      serviceAccountName: perf-test-sa-{{ .Values.benchmarkId }}
       restartPolicy: Never
       containers:
       - name: check
