@@ -8,6 +8,13 @@ certs:
   mds:
     public:
     keyPair:
+certManager:
+  namespace: cert-manager
+  route53:
+    region:
+    hostedZoneID:
+    accessKeyID:
+    secretAccessKey:
 oauth:
   clientId:
   clientSecret: 

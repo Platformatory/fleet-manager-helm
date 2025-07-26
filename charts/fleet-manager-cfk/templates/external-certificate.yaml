@@ -1,0 +1,14 @@
+{{- if and .Values.certManager.route53.hostedZoneID .Values.certManager.route53.region }}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: external-kafka-cert
+spec:
+  commonName: "*.{{ .Values.domain }}"
+  dnsNames:
+  - '*.{{ .Values.domain }}'
+  issuerRef:
+    kind: ClusterIssuer
+    name: kafka-letsencrypt-prod
+  secretName: tls-kafka-external
+{{- end }}

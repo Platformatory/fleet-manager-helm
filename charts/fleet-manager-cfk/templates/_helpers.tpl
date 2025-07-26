@@ -1,3 +1,1 @@
-{{- define "oauth.clientIdSecret" -}}
-{{- printf "%s:%s" .Values.oauth.clientId .Values.oauth.clientSecret -}}
-{{- end -}}
+{* TODO: Check if Values.certs.kafka.cert is set or .Values.certManager.route53.hostedZoneID is set *}
