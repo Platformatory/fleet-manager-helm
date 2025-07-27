@@ -5,9 +5,9 @@ metadata:
   name: opencost-tls-cert
   namespace: {{ .Values.opencost.namespace }}
 spec:
-  commonName: "*.{{ .Values.domain }}"
+  commonName: {{ .Values.opencost.hostname }}
   dnsNames:
-  - '*.{{ .Values.domain }}'
+  - {{ .Values.opencost.hostname }}
   issuerRef:
     kind: ClusterIssuer
     name: {{ .Release.Namespace }}-letsencrypt-prod

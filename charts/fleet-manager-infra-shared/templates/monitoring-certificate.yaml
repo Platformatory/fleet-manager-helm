@@ -5,9 +5,10 @@ metadata:
   name: monitoring-tls-cert
   namespace: {{ .Values.prometheus.namespace }}
 spec:
-  commonName: "*.{{ .Values.domain }}"
+  commonName: {{ .Values.prometheus.hostname }}
   dnsNames:
-  - '*.{{ .Values.domain }}'
+  - {{ .Values.prometheus.hostname }}
+  - {{ .Values.loki.hostname }}
   issuerRef:
     kind: ClusterIssuer
     name: {{ .Release.Namespace }}-letsencrypt-prod
