@@ -18,3 +18,10 @@ loki:
   service: kafka-fleet-manager-loki-gateway
 strimzi:
   namespace: strimzi
+certManager:
+  namespace: cert-manager
+  route53:
+    region:
+    hostedZoneID:
+    accessKeyID:
+    secretAccessKey:
