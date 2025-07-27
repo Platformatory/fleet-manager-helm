@@ -9,6 +9,6 @@ spec:
   - '*.{{ .Values.domain }}'
   issuerRef:
     kind: ClusterIssuer
-    name: kafka-letsencrypt-prod
+    name: {{ .Release.Namespace }}-letsencrypt-prod
   secretName: tls-kafka-external
 {{- end }}
