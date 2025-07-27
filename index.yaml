@@ -818,6 +818,16 @@ entries:
   fleet-manager-infra-shared:
   - apiVersion: v2
     appVersion: 0.0.0
+    created: "2025-07-27T14:36:16.498443991Z"
+    description: A Helm chart for Kubernetes
+    digest: fce59d1e889e90a7bc7da6dbd92df826a55ec2f2bfdb7bace8c1bf26e192086e
+    name: fleet-manager-infra-shared
+    type: application
+    urls:
+    - https://github.com/Platformatory/fleet-manager-helm/releases/download/fleet-manager-infra-shared-0.2.1/fleet-manager-infra-shared-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
+    appVersion: 0.0.0
     created: "2025-07-27T13:52:49.232902653Z"
     description: A Helm chart for Kubernetes
     digest: 80a55355567181077f6b914aaa1bb1d19330ce636f2204b92af62a2a2957ca3c
@@ -1317,4 +1327,4 @@ entries:
     urls:
     - https://github.com/Platformatory/fleet-manager-helm/releases/download/fleet-manager-warpstream-dashboard-0.1.0/fleet-manager-warpstream-dashboard-0.1.0.tgz
     version: 0.1.0
-generated: "2025-07-27T13:52:49.233700038Z"
+generated: "2025-07-27T14:36:16.498866629Z"
