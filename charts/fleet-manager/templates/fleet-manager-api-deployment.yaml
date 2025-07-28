@@ -87,6 +87,8 @@ spec:
             value: root
           - name: FLEET_MANAGER_COOKIE_DOMAIN
             value: .{{ .Values.fleetmanager.domain }}
+          - name: FLEETMANAGER_URL
+            value: http://fleet-manager:8000
           - name: LOKI_URL
             value: http://fm-loki-gateway/loki/api/v1/push
           image: {{ .Values.fleetmanager.api.image }}
@@ -167,6 +169,8 @@ spec:
             value: root
           - name: FLEET_MANAGER_COOKIE_DOMAIN
             value: .{{ .Values.fleetmanager.domain }}
+          - name: FLEETMANAGER_URL
+            value: http://fleet-manager:8000
           - name: LOKI_URL
             value: http://fm-loki-gateway/loki/api/v1/push
           image: {{ .Values.fleetmanager.api.image }}
