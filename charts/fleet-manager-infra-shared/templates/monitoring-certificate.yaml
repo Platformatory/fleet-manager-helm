@@ -5,7 +5,7 @@ metadata:
   name: monitoring-tls-cert
   namespace: {{ .Values.prometheus.namespace }}
 spec:
-  commonName: {{ .Values.prometheus.hostname }}
+  commonName: {{ .Values.domain }}
   dnsNames:
   - {{ .Values.prometheus.hostname }}
   - {{ .Values.loki.hostname }}

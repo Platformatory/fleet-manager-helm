@@ -5,7 +5,7 @@ metadata:
   name: opencost-tls-cert
   namespace: {{ .Values.opencost.namespace }}
 spec:
-  commonName: {{ .Values.opencost.hostname }}
+  commonName: {{ .Values.domain }}
   dnsNames:
   - {{ .Values.opencost.hostname }}
   issuerRef:

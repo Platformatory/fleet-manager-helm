@@ -18,6 +18,7 @@ loki:
   service: kafka-fleet-manager-loki-gateway
 strimzi:
   namespace: strimzi
+domain:
 certManager:
   namespace: cert-manager
   route53:
