@@ -7,12 +7,59 @@ metadata:
 spec:
   route:
     receiver: "webhook"
-    receiver: 'webhook'
+{{- if .Values.alertmanagerConfig.receivers }}
+    routes:
+{{- range .Values.alertmanagerConfig.receivers }}
+      - receiver: {{ .name | quote }}
+        continue: true
+{{- end }}
+{{- end }}
     matchers:
-    - name: cluster
-      value: {{ .Release.Namespace }}
-      matchType: "="
+      - name: cluster
+        value: {{ .Release.Namespace }}
+        matchType: "="
   receivers:
     - name: "webhook"
       webhookConfigs:
         - url: {{ .Values.alertmanagerConfig.webhookUrl | quote }}
+{{- range .Values.alertmanagerConfig.receivers }}
+    - name: {{ .name | quote }}
+{{- if eq .receiver_type "slack" }}
+      slackConfigs:
+        - channel: {{ .channel | quote }}
+          apiURL: {{ .api_url | quote }}
+{{- else if eq .receiver_type "pagerduty" }}
+      pagerdutyConfigs:
+        - routingKey: {{ .routing_key | quote }}
+{{- if .url }}
+          url: {{ .url | quote }}
+{{- end }}
+{{- if .client }}
+          client: {{ .client | quote }}
+{{- end }}
+{{- if .client_url }}
+          clientURL: {{ .client_url | quote }}
+{{- end }}
+{{- else if eq .receiver_type "webhook" }}
+      webhookConfigs:
+        - url: {{ .url | quote }}
+{{- if .http_config }}
+          httpConfig:
+{{- if .http_config.proxy_url }}
+            proxyURL: {{ .http_config.proxy_url | quote }}
+{{- end }}
+{{- if .http_config.basic_auth }}
+            basicAuth:
+{{- if .http_config.basic_auth.username }}
+              username: {{ .http_config.basic_auth.username | quote }}
+{{- end }}
+{{- if .http_config.basic_auth.password }}
+              password: {{ .http_config.basic_auth.password | quote }}
+{{- end }}
+{{- end }}
+{{- if .http_config.bearer_token }}
+            bearerToken: {{ .http_config.bearer_token | quote }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}

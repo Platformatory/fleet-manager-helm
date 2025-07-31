@@ -1,0 +1,171 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "alertmanager": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "replicas": { "type": "integer" }
+      },
+      "required": ["name", "replicas"],
+      "additionalProperties": false
+    },
+    "alertmanagerConfig": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "webhookUrl": { "type": "string" },
+        "receivers": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/receiverConfig" },
+          "description": "Additional alert receivers"
+        }
+      },
+      "required": ["name", "webhookUrl"],
+      "additionalProperties": false
+    }
+  },
+  "definitions": {
+    "receiverConfig": {
+      "title": "Receiver Config",
+      "description": "Configuration for the selected alert receiver.",
+      "type": "object",
+      "oneOf": [
+        {
+          "title": "Slack",
+          "properties": {
+            "name": {
+              "type": "string",
+              "title": "Receiver Name",
+              "description": "Unique name for this receiver"
+            },
+            "receiver_type": {
+              "title": "Receiver Type",
+              "description": "Specifies the receiver implementation.",
+              "type": "string",
+              "enum": ["slack"],
+              "default": "slack"
+            },
+            "channel": {
+              "type": "string",
+              "title": "Channel",
+              "description": "Slack channel name or ID"
+            },
+            "api_url": {
+              "type": "string",
+              "title": "Webhook URL",
+              "description": "Slack incoming webhook URL"
+            }
+          },
+          "required": ["name", "receiver_type", "channel", "api_url"],
+          "additionalProperties": false
+        },
+        {
+          "title": "PagerDuty",
+          "properties": {
+            "name": {
+              "type": "string",
+              "title": "Receiver Name",
+              "description": "Unique name for this receiver"
+            },
+            "receiver_type": {
+              "title": "Receiver Type",
+              "description": "Specifies the receiver implementation.",
+              "type": "string",
+              "enum": ["pagerduty"],
+              "default": "pagerduty"
+            },
+            "routing_key": {
+              "type": "string",
+              "title": "Routing Key",
+              "description": "Integration key for the PagerDuty service"
+            },
+            "url": {
+              "type": "string",
+              "title": "URL",
+              "description": "Optional PagerDuty API URL"
+            },
+            "client": {
+              "type": "string",
+              "title": "Client",
+              "description": "Client identifier shown in incidents"
+            },
+            "client_url": {
+              "type": "string",
+              "title": "Client URL",
+              "description": "URL linked from PagerDuty incidents"
+            }
+          },
+          "required": ["name", "receiver_type", "routing_key"],
+          "additionalProperties": false
+        },
+        {
+          "title": "Webhook",
+          "properties": {
+            "name": {
+              "type": "string",
+              "title": "Receiver Name",
+              "description": "Unique name for this receiver"
+            },
+            "receiver_type": {
+              "title": "Receiver Type",
+              "description": "Specifies the receiver implementation.",
+              "type": "string",
+              "enum": ["webhook"],
+              "default": "webhook"
+            },
+            "url": {
+              "type": "string",
+              "title": "URL",
+              "description": "Target URL for webhook requests"
+            },
+            "http_config": {
+              "type": "object",
+              "title": "HTTP Config",
+              "description": "Optional HTTP settings for the webhook",
+              "properties": {
+                "proxy_url": {
+                  "type": "string",
+                  "title": "Proxy URL",
+                  "description": "Proxy to route requests through"
+                },
+                "basic_auth": {
+                  "type": "object",
+                  "title": "Basic Auth",
+                  "description": "Credentials for HTTP basic authentication",
+                  "properties": {
+                    "username": {
+                      "type": "string",
+                      "title": "Username",
+                      "description": "Basic auth username"
+                    },
+                    "password": {
+                      "type": "string",
+                      "title": "Password",
+                      "description": "Basic auth password"
+                    }
+                  },
+                  "required": [],
+                  "additionalProperties": false
+                },
+                "bearer_token": {
+                  "type": "string",
+                  "title": "Bearer Token",
+                  "description": "Token to include in the Authorization header"
+                }
+              },
+              "required": [],
+              "additionalProperties": false
+            }
+          },
+          "required": ["name", "receiver_type", "url"],
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "additionalProperties": false
+}
+
+
