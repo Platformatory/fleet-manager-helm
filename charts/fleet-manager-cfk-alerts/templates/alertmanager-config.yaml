@@ -22,7 +22,7 @@ spec:
     - name: "webhook"
       webhookConfigs:
         - url: {{ .Values.alertmanagerConfig.webhookUrl | quote }}
-          send_resolved: true
+          sendResolved: true
 {{- range .Values.alertmanagerConfig.receivers }}
     - name: {{ .name | quote }}
 {{- if eq .receiver_type "slack" }}
@@ -31,12 +31,12 @@ spec:
           apiURL:
             name: {{ printf "%s-%s-slack" $.Values.alertmanagerConfig.name .name | quote }}
             key: api-url
-          send_resolved: true
+          sendResolved: true
           username: StreamTime AlertManager for {{ $.Release.Namespace }}
 {{- else if eq .receiver_type "pagerduty" }}
       pagerdutyConfigs:
         - routingKey: {{ .routing_key | quote }}
-          send_resolved: true
+          sendResolved: true
 {{- if .url }}
           url: {{ .url | quote }}
 {{- end }}
@@ -49,7 +49,7 @@ spec:
 {{- else if eq .receiver_type "webhook" }}
       webhookConfigs:
         - url: {{ .url | quote }}
-          send_resolved: true
+          sendResolved: true
 {{- if .http_config }}
           httpConfig:
 {{- if .http_config.proxy_url }}
