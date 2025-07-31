@@ -1,0 +1,8 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: alertmanager-basic-auth
+  namespace: {{ .Release.Namespace }}
+plugin: basic-auth
+config:
+  hide_credentials: true

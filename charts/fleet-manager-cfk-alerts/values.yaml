@@ -5,3 +5,14 @@ alertmanagerConfig:
   name:
   webhookUrl:
   receivers: []
+certs:
+  cert:
+  key:
+domain:
+certManager:
+  namespace: cert-manager
+  route53:
+    region:
+    hostedZoneID:
+    accessKeyID:
+    secretAccessKey:

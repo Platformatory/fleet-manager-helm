@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: alertmanager-ingress
+  annotations:
+    konghq.com/plugins: alertmanager-basic-auth
+spec:
+  ingressClassName: kong
+  tls:
+    - secretName: alertmanager-tls
+      hosts:
+        - {{ printf "%s-alerts.%s" .Release.Namespace .Values.domain }}
+  rules:
+    - host: {{ printf "%s-alerts.%s" .Release.Namespace .Values.domain }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: alertmanager-operated
+                port:
+                  number: 9093
+            pathType: ImplementationSpecific
