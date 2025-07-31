@@ -4,9 +4,9 @@ kind: Certificate
 metadata:
   name: alertmanager-tls-cert
 spec:
-  commonName: {{ printf "%s-alerts.%s" .Release.Namespace .Values.domain }}
+  commonName: {{ printf "alerts-%s.%s" .Release.Namespace .Values.domain }}
   dnsNames:
-    - {{ printf "%s-alerts.%s" .Release.Namespace .Values.domain }}
+    - {{ printf "alerts-%s.%s" .Release.Namespace .Values.domain }}
   issuerRef:
     kind: ClusterIssuer
     name: {{ .Release.Namespace }}-alerts-letsencrypt-prod

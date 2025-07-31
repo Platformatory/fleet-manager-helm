@@ -9,9 +9,9 @@ spec:
   tls:
     - secretName: alertmanager-tls
       hosts:
-        - {{ printf "%s-alerts.%s" .Release.Namespace .Values.domain }}
+        - {{ printf "alerts-%s.%s" .Release.Namespace .Values.domain }}
   rules:
-    - host: {{ printf "%s-alerts.%s" .Release.Namespace .Values.domain }}
+    - host: {{ printf "alerts-%s.%s" .Release.Namespace .Values.domain }}
       http:
         paths:
           - backend:
