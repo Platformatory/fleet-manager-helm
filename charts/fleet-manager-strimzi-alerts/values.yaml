@@ -1,6 +1,7 @@
 alertmanager:
-  name: 
+  name:
   replicas: 1
 alertmanagerConfig:
   name:
   webhookUrl:
+  receivers: []
