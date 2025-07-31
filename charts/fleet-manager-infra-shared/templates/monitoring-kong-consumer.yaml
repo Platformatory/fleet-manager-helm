@@ -5,6 +5,6 @@ metadata:
   namespace: {{ .Values.prometheus.namespace }}
   annotations:
     kubernetes.io/ingress.class: kong
-username: fleetmanager
+username: {{ .Values.prometheus.username }}
 credentials:
 - basic-auth-creds
