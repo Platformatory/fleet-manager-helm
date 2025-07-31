@@ -4,6 +4,7 @@ metadata:
   name: {{ .Values.alertmanager.name }}
 spec:
   replicas: {{ .Values.alertmanager.replicas }}
+  externalUrl: https://{{ printf "%s-alerts.%s" .Release.Namespace .Values.domain }}
   alertmanagerConfigSelector:
     matchLabels:
       alertmanagerConfig: {{ .Values.alertmanagerConfig.name }}

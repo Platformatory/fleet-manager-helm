@@ -1,0 +1,14 @@
+{{- if and .Values.certManager.route53.hostedZoneID .Values.certManager.route53.region }}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: alertmanager-tls-cert
+spec:
+  commonName: {{ printf "%s-alerts.%s" .Release.Namespace .Values.domain }}
+  dnsNames:
+    - {{ printf "%s-alerts.%s" .Release.Namespace .Values.domain }}
+  issuerRef:
+    kind: ClusterIssuer
+    name: {{ .Release.Namespace }}-alerts-letsencrypt-prod
+  secretName: alertmanager-tls
+{{- end }}

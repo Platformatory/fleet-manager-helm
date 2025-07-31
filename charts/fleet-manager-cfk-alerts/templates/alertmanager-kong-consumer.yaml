@@ -1,0 +1,10 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongConsumer
+metadata:
+  name: alertmanager-basic-auth
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    kubernetes.io/ingress.class: kong
+username: fleetmanager
+credentials:
+- alertmanager-basic-auth-creds

@@ -24,6 +24,32 @@
       },
       "required": ["name", "webhookUrl"],
       "additionalProperties": false
+    },
+    "certs": {
+      "type": "object",
+      "properties": {
+        "cert": { "type": "string" },
+        "key": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "domain": { "type": "string" },
+    "certManager": {
+      "type": "object",
+      "properties": {
+        "namespace": { "type": "string" },
+        "route53": {
+          "type": "object",
+          "properties": {
+            "region": { "type": "string" },
+            "hostedZoneID": { "type": "string" },
+            "accessKeyID": { "type": "string" },
+            "secretAccessKey": { "type": "string" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
     }
   },
   "definitions": {
