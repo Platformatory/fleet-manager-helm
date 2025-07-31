@@ -5,6 +5,6 @@ metadata:
   namespace: {{ .Release.Namespace }}
   annotations:
     kubernetes.io/ingress.class: kong
-username: fleetmanager
+username: {{ .Values.alertmanager.username | default "fleet-manager-alerts" }}
 credentials:
 - alertmanager-basic-auth-creds
