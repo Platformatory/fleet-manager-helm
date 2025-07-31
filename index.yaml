@@ -775,6 +775,16 @@ entries:
   fleet-manager-cfk-alerts:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2025-07-31T11:35:59.409640969Z"
+    description: A Helm chart for Kubernetes
+    digest: 48774991e4ad6721873d9671f4fb85b3120f41b84d2fb6b5fe5a214ea5008a39
+    name: fleet-manager-cfk-alerts
+    type: application
+    urls:
+    - https://github.com/Platformatory/fleet-manager-helm/releases/download/fleet-manager-cfk-alerts-0.4.2/fleet-manager-cfk-alerts-0.4.2.tgz
+    version: 0.4.2
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2025-07-31T10:52:18.613402844Z"
     description: A Helm chart for Kubernetes
     digest: d03f9364322493e76194dc6c550f8bf1a9dafe8ed2887d39a346a449e0bbdda8
@@ -1381,6 +1391,16 @@ entries:
   fleet-manager-strimzi-alerts:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2025-07-31T11:35:59.544853972Z"
+    description: A Helm chart for Kubernetes
+    digest: 7af21dd3ec351605c3e643b8cdad484ddd11c37baf445691403c8dfe5c63f50f
+    name: fleet-manager-strimzi-alerts
+    type: application
+    urls:
+    - https://github.com/Platformatory/fleet-manager-helm/releases/download/fleet-manager-strimzi-alerts-0.3.2/fleet-manager-strimzi-alerts-0.3.2.tgz
+    version: 0.3.2
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2025-07-31T10:52:18.758162591Z"
     description: A Helm chart for Kubernetes
     digest: 97c96a773fbc2c16dc5db2d7d63fea79e10ac1a44001e2679b2757cd2a0db2aa
@@ -1467,4 +1487,4 @@ entries:
     urls:
     - https://github.com/Platformatory/fleet-manager-helm/releases/download/fleet-manager-warpstream-dashboard-0.1.0/fleet-manager-warpstream-dashboard-0.1.0.tgz
     version: 0.1.0
-generated: "2025-07-31T10:52:18.758783314Z"
+generated: "2025-07-31T11:35:59.545941568Z"
