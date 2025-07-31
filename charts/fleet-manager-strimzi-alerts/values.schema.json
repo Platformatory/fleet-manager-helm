@@ -6,7 +6,9 @@
       "type": "object",
       "properties": {
         "name": { "type": "string" },
-        "replicas": { "type": "integer" }
+        "replicas": { "type": "integer" },
+        "username": { "type": "string", "default": "fleet-manager-alerts" },
+        "password": { "type": "string" }
       },
       "required": ["name", "replicas"],
       "additionalProperties": false
