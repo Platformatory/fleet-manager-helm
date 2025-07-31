@@ -27,7 +27,9 @@ spec:
 {{- if eq .receiver_type "slack" }}
       slackConfigs:
         - channel: {{ .channel | quote }}
-          apiURL: {{ .api_url | quote }}
+          apiURL:
+            name: {{ printf "%s-%s-slack" $.Values.alertmanagerConfig.name .name | quote }}
+            key: api-url
 {{- else if eq .receiver_type "pagerduty" }}
       pagerdutyConfigs:
         - routingKey: {{ .routing_key | quote }}

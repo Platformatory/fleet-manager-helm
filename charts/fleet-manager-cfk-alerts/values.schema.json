@@ -55,7 +55,7 @@
             "api_url": {
               "type": "string",
               "title": "Webhook URL",
-              "description": "Slack incoming webhook URL"
+              "description": "Slack incoming webhook URL stored in a secret"
             }
           },
           "required": ["name", "receiver_type", "channel", "api_url"],
