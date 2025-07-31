@@ -7,7 +7,7 @@
       "properties": {
         "name": { "type": "string" },
         "replicas": { "type": "integer" },
-        "username": { "type": "string", "default": "fleet-manager-alerts" },
+        "username": { "type": "string", "default": "fleetmanager-alerts" },
         "password": { "type": "string" }
       },
       "required": ["name", "replicas"],

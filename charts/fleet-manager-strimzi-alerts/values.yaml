@@ -1,7 +1,7 @@
 alertmanager:
   name:
   replicas: 1
-  username: fleet-manager-alerts
+  username: fleetmanager-alerts
   password: ""
 alertmanagerConfig:
   name:
