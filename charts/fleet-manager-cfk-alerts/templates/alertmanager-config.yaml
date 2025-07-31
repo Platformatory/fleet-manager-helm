@@ -32,7 +32,7 @@ spec:
             name: {{ printf "%s-%s-slack" $.Values.alertmanagerConfig.name .name | quote }}
             key: api-url
           send_resolved: true
-          username: StreamTime AlertManager for {{ .Release.Namespace }}
+          username: StreamTime AlertManager for {{ $.Release.Namespace }}
 {{- else if eq .receiver_type "pagerduty" }}
       pagerdutyConfigs:
         - routingKey: {{ .routing_key | quote }}
