@@ -1,3 +1,4 @@
+{{- if .Values.alertmanager.enabled }}
 apiVersion: configuration.konghq.com/v1
 kind: KongConsumer
 metadata:
@@ -8,3 +9,4 @@ metadata:
 username: {{ .Values.alertmanager.username | default "fleetmanager-alerts" }}
 credentials:
 - alertmanager-basic-auth-creds
+{{- end }}

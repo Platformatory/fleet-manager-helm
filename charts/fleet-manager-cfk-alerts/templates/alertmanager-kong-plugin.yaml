@@ -1,3 +1,4 @@
+{{- if .Values.alertmanager.enabled }}
 apiVersion: configuration.konghq.com/v1
 kind: KongPlugin
 metadata:
@@ -6,3 +7,4 @@ metadata:
 plugin: basic-auth
 config:
   hide_credentials: true
+{{- end }}
