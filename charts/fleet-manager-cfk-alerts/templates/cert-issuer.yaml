@@ -1,4 +1,4 @@
-{{- if and .Values.certManager.route53.hostedZoneID .Values.certManager.route53.region }}
+{{- if and .Values.alertmanager.enabled (and .Values.certManager.route53.hostedZoneID .Values.certManager.route53.region) }}
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:

@@ -1,3 +1,4 @@
+{{- if .Values.alertmanager.enabled }}
 apiVersion: monitoring.coreos.com/v1alpha1
 kind: AlertmanagerConfig
 metadata:
@@ -66,6 +67,7 @@ spec:
 {{- end }}
 {{- if .http_config.bearer_token }}
             bearerToken: {{ .http_config.bearer_token | quote }}
+{{- end }}
 {{- end }}
 {{- end }}
 {{- end }}

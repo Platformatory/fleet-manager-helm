@@ -1,3 +1,4 @@
+{{- if .Values.alertmanager.enabled }}
 apiVersion: monitoring.coreos.com/v1
 kind: Alertmanager
 metadata:
@@ -8,3 +9,4 @@ spec:
   alertmanagerConfigSelector:
     matchLabels:
       alertmanagerConfig: {{ .Values.alertmanagerConfig.name }}
+{{- end }}
