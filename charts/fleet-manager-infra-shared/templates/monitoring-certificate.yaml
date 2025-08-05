@@ -8,6 +8,7 @@ spec:
   commonName: {{ .Values.domain }}
   dnsNames:
   - {{ .Values.prometheus.hostname }}
+  - {{ .Values.alertmanager.hostname }}
   - {{ .Values.loki.hostname }}
   issuerRef:
     kind: ClusterIssuer

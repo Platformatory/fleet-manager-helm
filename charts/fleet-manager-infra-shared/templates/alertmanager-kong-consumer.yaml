@@ -1,0 +1,11 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongConsumer
+metadata:
+  name: alertmanager-basic-auth
+  namespace: {{ .Values.prometheus.namespace }}
+  annotations:
+    kubernetes.io/ingress.class: kong
+username: {{ .Values.alertmanager.username }}
+credentials:
+- alertmanager-basic-auth-creds
+
