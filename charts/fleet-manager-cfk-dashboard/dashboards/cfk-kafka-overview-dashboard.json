@@ -4083,7 +4083,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "70d07766-fe33-4f4b-ae32-dd39e7767cf9"
+            "uid": "{{ .Values.prometheusUid }}"
           },
           "editorMode": "code",
           "expr": "kafka_log_logflushstats_logflushrateandtimems{job=\"kafka\",namespace=\"estimated-lungfish\",quantile=\"0.95\"}",
