@@ -4086,7 +4086,7 @@
             "uid": "{{ .Values.prometheusUid }}"
           },
           "editorMode": "code",
-          "expr": "kafka_log_logflushstats_logflushrateandtimems{job=\"kafka\",namespace=\"estimated-lungfish\",quantile=\"0.95\"}",
+          "expr": "kafka_log_logflushstats_logflushrateandtimems{job=\"kafka\",namespace=\"{{ .Release.Namespace }}\",quantile=\"0.95\"}",
           "hide": false,
           "legendFormat": "{{pod}} - {{quantile}}",
           "range": true,
