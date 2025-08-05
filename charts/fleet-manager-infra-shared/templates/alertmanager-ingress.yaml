@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: alertmanager-ingress
+  namespace: {{ .Values.prometheus.namespace }}
+  annotations:
+    konghq.com/plugins: monitoring-basic-auth
+spec:
+  ingressClassName: kong
+  tls:
+  - secretName: monitoring-tls
+    hosts:
+    - {{ .Values.alertmanager.hostname }}
+  rules:
+    - host: {{ .Values.alertmanager.hostname }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: {{ .Values.alertmanager.service }}
+                port:
+                  number: 9093
+            pathType: ImplementationSpecific

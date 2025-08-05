@@ -8,13 +8,18 @@ opencost:
   service: kafka-fleet-manager-opencost
   namespace: opencost
 prometheus:
-  hostname: 
-  username: 
-  password: 
+  hostname:
+  username:
+  password:
   service: kafka-fleet-manager-promet-prometheus
   namespace: monitoring
+alertmanager:
+  hostname:
+  username:
+  password:
+  service: kafka-fleet-manager-promet-alertmanager
 loki:
-  hostname: 
+  hostname:
   service: kafka-fleet-manager-loki-gateway
 strimzi:
   namespace: strimzi
