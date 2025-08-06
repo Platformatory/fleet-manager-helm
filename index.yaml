@@ -876,6 +876,16 @@ entries:
   fleet-manager-cfk-dashboard:
   - apiVersion: v2
     appVersion: 0.0.0
+    created: "2025-08-06T09:49:25.262020681Z"
+    description: A Helm chart for Kubernetes
+    digest: f2c16e0920282718552878ea35600ae438ae642c02499e6fb2b80ac371bf686e
+    name: fleet-manager-cfk-dashboard
+    type: application
+    urls:
+    - https://github.com/Platformatory/fleet-manager-helm/releases/download/fleet-manager-cfk-dashboard-0.3.5/fleet-manager-cfk-dashboard-0.3.5.tgz
+    version: 0.3.5
+  - apiVersion: v2
+    appVersion: 0.0.0
     created: "2025-08-06T08:21:16.326736095Z"
     description: A Helm chart for Kubernetes
     digest: 0f964aef8f530ffd651a223a477b309dbd3322d3bff4343ff7a457bfb0c647da
@@ -1567,4 +1577,4 @@ entries:
     urls:
     - https://github.com/Platformatory/fleet-manager-helm/releases/download/fleet-manager-warpstream-dashboard-0.1.0/fleet-manager-warpstream-dashboard-0.1.0.tgz
     version: 0.1.0
-generated: "2025-08-06T08:21:16.327587324Z"
+generated: "2025-08-06T09:49:25.262480462Z"
