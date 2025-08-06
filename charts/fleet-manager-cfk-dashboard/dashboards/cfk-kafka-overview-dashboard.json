@@ -4088,7 +4088,7 @@
           "editorMode": "code",
           "expr": "kafka_log_logflushstats_logflushrateandtimems{job=\"kafka\",namespace=\"{{ .Release.Namespace }}\",quantile=\"0.95\"}",
           "hide": false,
-          "legendFormat": "{{pod}} - {{quantile}}",
+          "legendFormat": "{{`{{pod}}`}} - {{`{{quantile}}`}}",
           "range": true,
           "refId": "A"
         }
