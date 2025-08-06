@@ -1,4 +1,4 @@
 apiVersion: v2
 name: fleet-manager-perf-test
 description: Helm chart to run Kafka producer and consumer performance tests
-version: 0.8.1
+version: 0.8.2

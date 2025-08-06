@@ -23,4 +23,4 @@ subjects:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: perf-test-role
+  name: perf-test-role-{{ .Values.benchmarkId }}
