@@ -1,5 +1,5 @@
 alertmanager:
-  enabled: true
+  enabled: false
   name:
   replicas: 1
   username: fleetmanager-alerts
