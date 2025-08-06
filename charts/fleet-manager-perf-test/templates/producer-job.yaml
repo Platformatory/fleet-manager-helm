@@ -38,8 +38,8 @@ spec:
             kafka-topics --bootstrap-server {{ $.Values.bootstrapServer }} \
               --command-config /tmp/combined-client.properties \
               --create --if-not-exists \
-              --topic {{ $.Values.topic }} \
-              --replication-factor 3 --partitions 12 \
+              --topic {{ $.Values.topic.name }} \
+              --replication-factor {{ $.Values.topic.replicationFactor }} --partitions {{ $.Values.topic.partitions }} \
               {{- if eq $.Values.clusterType "strimzi" }}
               --config remote.storage.enable=true \
               --config local.retention.ms=1000 \

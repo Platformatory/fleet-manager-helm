@@ -4,7 +4,10 @@ clusterType: "cfk"
 clientProperties: |-
   security.protocol=PLAINTEXT
 
-topic: "perf-test-topic"
+topic: 
+  name: "perf-test-topic"
+  replicationFactor: 3
+  partitions: 12
 
 resultsUrl: ""
 benchmarkId: ""
