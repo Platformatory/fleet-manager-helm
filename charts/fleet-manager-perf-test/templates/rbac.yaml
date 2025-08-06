@@ -19,7 +19,7 @@ metadata:
   name: perf-test-binding-{{ .Values.benchmarkId }}
 subjects:
 - kind: ServiceAccount
-  name: perf-test-sa
+  name: perf-test-sa-{{ .Values.benchmarkId }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
