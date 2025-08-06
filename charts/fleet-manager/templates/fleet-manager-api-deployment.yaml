@@ -58,7 +58,7 @@ spec:
             value: {{ .Values.fleetmanager.oidc.scope }}
           - name: ROOT_ORG_OAUTH_TOKEN_ENDPOINT
             value: {{ .Values.fleetmanager.oidc.tokenEndpoint }}
-          - name: ROOT_ORG_OAUTH_SUB_CLAIM
+          - name: ROOT_ORG_OAUTH_EMAIL_CLAIM
             value: {{ .Values.fleetmanager.oidc.emailClaim }}
           - name: ROOT_ORG_OAUTH_GROUPS_CLAIM
             value: {{ .Values.fleetmanager.oidc.groupsClaim }}
@@ -140,7 +140,7 @@ spec:
             value: {{ .Values.fleetmanager.oidc.scope }}
           - name: ROOT_ORG_OAUTH_TOKEN_ENDPOINT
             value: {{ .Values.fleetmanager.oidc.tokenEndpoint }}
-          - name: ROOT_ORG_OAUTH_SUB_CLAIM
+          - name: ROOT_ORG_OAUTH_EMAIL_CLAIM
             value: {{ .Values.fleetmanager.oidc.emailClaim }}
           - name: ROOT_ORG_OAUTH_GROUPS_CLAIM
             value: {{ .Values.fleetmanager.oidc.groupsClaim }}

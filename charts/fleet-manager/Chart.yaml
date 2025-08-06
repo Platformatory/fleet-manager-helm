@@ -4,7 +4,7 @@ description: A Helm chart for Kafka Fleet Manager
 
 type: application
 
-version: 0.14.1
+version: 0.14.2
 
 appVersion: "1.1.0"
 
