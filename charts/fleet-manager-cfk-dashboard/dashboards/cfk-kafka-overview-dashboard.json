@@ -4214,7 +4214,7 @@
             "type": "prometheus",
             "uid": "{{ .Values.prometheusUid }}"
           },
-          "expr": "kafka_network_requestmetrics_requestqueuetimems{job=\"kafka\",namespace=\"{{ .Release.Namespace }}\",request=\"Produce\"}",
+          "expr": "kafka_network_requestmetrics_requestqueuetimems{job=\"kafka\",namespace=\"{{ .Release.Namespace }}\",request=\"Produce\",quantile!=\"\"}",
           "hide": false,
           "legendFormat": "{{`{{pod}}`}} - {{`{{quantile}}`}}",
           "refId": "A"
@@ -4315,7 +4315,7 @@
             "type": "prometheus",
             "uid": "{{ .Values.prometheusUid }}"
           },
-          "expr": "kafka_network_requestmetrics_localtimems{job=\"kafka\",namespace=\"{{ .Release.Namespace }}\",request=\"Produce\"}",
+          "expr": "kafka_network_requestmetrics_localtimems{job=\"kafka\",namespace=\"{{ .Release.Namespace }}\",request=\"Produce\",quantile!=\"\"}",
           "hide": false,
           "legendFormat": "{{`{{pod}}`}} - {{`{{quantile}}`}}",
           "refId": "A"
@@ -4416,7 +4416,7 @@
             "type": "prometheus",
             "uid": "{{ .Values.prometheusUid }}"
           },
-          "expr": "kafka_network_requestmetrics_remotetimems{job=\"kafka\",namespace=\"{{ .Release.Namespace }}\",request=\"Produce\"}",
+          "expr": "kafka_network_requestmetrics_remotetimems{job=\"kafka\",namespace=\"{{ .Release.Namespace }}\",request=\"Produce\",quantile!=\"\"}",
           "hide": false,
           "legendFormat": "{{`{{pod}}`}} - {{`{{quantile}}`}}",
           "refId": "A"
@@ -4517,7 +4517,7 @@
             "type": "prometheus",
             "uid": "{{ .Values.prometheusUid }}"
           },
-          "expr": "kafka_network_requestmetrics_responsequeuetimems{job=\"kafka\",namespace=\"{{ .Release.Namespace }}\",request=\"Produce\"}",
+          "expr": "kafka_network_requestmetrics_responsequeuetimems{job=\"kafka\",namespace=\"{{ .Release.Namespace }}\",request=\"Produce\",quantile!=\"\"}",
           "hide": false,
           "legendFormat": "{{`{{pod}}`}} - {{`{{quantile}}`}}",
           "refId": "A"
@@ -4619,7 +4619,7 @@
             "type": "prometheus",
             "uid": "{{ .Values.prometheusUid }}"
           },
-          "expr": "kafka_network_requestmetrics_responsesendtimems{job=\"kafka\",namespace=\"{{ .Release.Namespace }}\",request=\"Produce\"}",
+          "expr": "kafka_network_requestmetrics_responsesendtimems{job=\"kafka\",namespace=\"{{ .Release.Namespace }}\",request=\"Produce\",quantile!=\"\"}",
           "hide": false,
           "legendFormat": "{{`{{pod}}`}} - {{`{{quantile}}`}}",
           "refId": "A"
@@ -4747,7 +4747,7 @@
             "type": "prometheus",
             "uid": "{{ .Values.prometheusUid }}"
           },
-          "expr": "kafka_network_requestmetrics_requestqueuetimems{job=\"kafka\",namespace=\"{{ .Release.Namespace }}\",request=\"Fetch\"}",
+          "expr": "kafka_network_requestmetrics_requestqueuetimems{job=\"kafka\",namespace=\"{{ .Release.Namespace }}\",request=\"Fetch\",quantile!=\"\"}",
           "hide": false,
           "legendFormat": "{{`{{pod}}`}} - {{`{{quantile}}`}}",
           "refId": "A"
@@ -4848,7 +4848,7 @@
             "type": "prometheus",
             "uid": "{{ .Values.prometheusUid }}"
           },
-          "expr": "kafka_network_requestmetrics_localtimems{job=\"kafka\",namespace=\"{{ .Release.Namespace }}\",request=\"Fetch\"}",
+          "expr": "kafka_network_requestmetrics_localtimems{job=\"kafka\",namespace=\"{{ .Release.Namespace }}\",request=\"Fetch\",quantile!=\"\"}",
           "hide": false,
           "legendFormat": "{{`{{pod}}`}} - {{`{{quantile}}`}}",
           "refId": "A"
@@ -4949,7 +4949,7 @@
             "type": "prometheus",
             "uid": "{{ .Values.prometheusUid }}"
           },
-          "expr": "kafka_network_requestmetrics_remotetimems{job=\"kafka\",namespace=\"{{ .Release.Namespace }}\",request=\"Fetch\"}",
+          "expr": "kafka_network_requestmetrics_remotetimems{job=\"kafka\",namespace=\"{{ .Release.Namespace }}\",request=\"Fetch\",quantile!=\"\"}",
           "hide": false,
           "legendFormat": "{{`{{pod}}`}} - {{`{{quantile}}`}}",
           "refId": "A"
@@ -5051,7 +5051,7 @@
             "type": "prometheus",
             "uid": "{{ .Values.prometheusUid }}"
           },
-          "expr": "kafka_network_requestmetrics_responsequeuetimems{job=\"kafka\",namespace=\"{{ .Release.Namespace }}\",request=\"Fetch\"}",
+          "expr": "kafka_network_requestmetrics_responsequeuetimems{job=\"kafka\",namespace=\"{{ .Release.Namespace }}\",request=\"Fetch\",quantile!=\"\"}",
           "hide": false,
           "legendFormat": "{{`{{pod}}`}} - {{`{{quantile}}`}}",
           "refId": "A"
@@ -5153,7 +5153,7 @@
             "type": "prometheus",
             "uid": "{{ .Values.prometheusUid }}"
           },
-          "expr": "kafka_network_requestmetrics_responsesendtimems{job=\"kafka\",namespace=\"{{ .Release.Namespace }}\",request=\"Fetch\"}",
+          "expr": "kafka_network_requestmetrics_responsesendtimems{job=\"kafka\",namespace=\"{{ .Release.Namespace }}\",request=\"Fetch\",quantile!=\"\"}",
           "hide": false,
           "legendFormat": "{{`{{pod}}`}} - {{`{{quantile}}`}}",
           "refId": "A"
@@ -5281,7 +5281,7 @@
             "type": "prometheus",
             "uid": "{{ .Values.prometheusUid }}"
           },
-          "expr": "kafka_network_requestmetrics_requestqueuetimems{job=\"kafka\",namespace=\"{{ .Release.Namespace }}\",request=\"FetchFollower\"}",
+          "expr": "kafka_network_requestmetrics_requestqueuetimems{job=\"kafka\",namespace=\"{{ .Release.Namespace }}\",request=\"FetchFollower\",quantile!=\"\"}",
           "hide": false,
           "legendFormat": "{{`{{pod}}`}} - {{`{{quantile}}`}}",
           "refId": "A"
@@ -5383,7 +5383,7 @@
             "type": "prometheus",
             "uid": "{{ .Values.prometheusUid }}"
           },
-          "expr": "kafka_network_requestmetrics_localtimems{job=\"kafka\",namespace=\"{{ .Release.Namespace }}\",request=\"FetchFollower\"}",
+          "expr": "kafka_network_requestmetrics_localtimems{job=\"kafka\",namespace=\"{{ .Release.Namespace }}\",request=\"FetchFollower\",quantile!=\"\"}",
           "hide": false,
           "legendFormat": "{{`{{pod}}`}} - {{`{{quantile}}`}}",
           "refId": "A"
@@ -5484,7 +5484,7 @@
             "type": "prometheus",
             "uid": "{{ .Values.prometheusUid }}"
           },
-          "expr": "kafka_network_requestmetrics_remotetimems{job=\"kafka\",namespace=\"{{ .Release.Namespace }}\",request=\"FetchFollower\"}",
+          "expr": "kafka_network_requestmetrics_remotetimems{job=\"kafka\",namespace=\"{{ .Release.Namespace }}\",request=\"FetchFollower\",quantile!=\"\"}",
           "hide": false,
           "legendFormat": "{{`{{pod}}`}} - {{`{{quantile}}`}}",
           "refId": "A"
@@ -5585,7 +5585,7 @@
             "type": "prometheus",
             "uid": "{{ .Values.prometheusUid }}"
           },
-          "expr": "kafka_network_requestmetrics_responsequeuetimems{job=\"kafka\",namespace=\"{{ .Release.Namespace }}\",request=\"FetchFollower\"}",
+          "expr": "kafka_network_requestmetrics_responsequeuetimems{job=\"kafka\",namespace=\"{{ .Release.Namespace }}\",request=\"FetchFollower\",quantile!=\"\"}",
           "hide": false,
           "legendFormat": "{{`{{pod}}`}} - {{`{{quantile}}`}}",
           "refId": "A"
@@ -5687,7 +5687,7 @@
             "type": "prometheus",
             "uid": "{{ .Values.prometheusUid }}"
           },
-          "expr": "kafka_network_requestmetrics_responsesendtimems{job=\"kafka\",namespace=\"{{ .Release.Namespace }}\",request=\"FetchFollower\"}",
+          "expr": "kafka_network_requestmetrics_responsesendtimems{job=\"kafka\",namespace=\"{{ .Release.Namespace }}\",request=\"FetchFollower\",quantile!=\"\"}",
           "hide": false,
           "legendFormat": "{{`{{pod}}`}} - {{`{{quantile}}`}}",
           "refId": "A"
@@ -6024,7 +6024,7 @@
             "uid": "{{ .Values.prometheusUid }}"
           },
           "editorMode": "code",
-          "expr": "kafka_network_requestmetrics_requestqueuetimems{job=\"kafka\",namespace=\"{{ .Release.Namespace }}\",request=\"Metadata\"}",
+          "expr": "kafka_network_requestmetrics_requestqueuetimems{job=\"kafka\",namespace=\"{{ .Release.Namespace }}\",request=\"Metadata\",quantile!=\"\"}",
           "hide": false,
           "legendFormat": "{{`{{pod}}`}} - {{`{{quantile}}`}}",
           "range": true,
@@ -6128,7 +6128,7 @@
             "uid": "{{ .Values.prometheusUid }}"
           },
           "editorMode": "code",
-          "expr": "kafka_network_requestmetrics_totaltimems{job=\"kafka\",namespace=\"{{ .Release.Namespace }}\",request=\"Metadata\"}",
+          "expr": "kafka_network_requestmetrics_totaltimems{job=\"kafka\",namespace=\"{{ .Release.Namespace }}\",request=\"Metadata\",quantile!=\"\"}",
           "hide": false,
           "legendFormat": "{{`{{pod}}`}} - {{`{{quantile}}`}}",
           "range": true,
