@@ -37,7 +37,7 @@ spec:
             {{- end }}
             sleep {{ int .startDelayMs }} && \
             kafka-consumer-perf-test \
-              --topic {{ $.Values.topic }} \
+              --topic {{ $.Values.topic.name }} \
               --group {{ .name }} \
               --bootstrap-server {{ $.Values.bootstrapServer }} \
               --messages {{ int .numRecords }} \

@@ -46,7 +46,7 @@ spec:
               {{- end }} \
               && \
             kafka-producer-perf-test \
-              --topic {{ $.Values.topic }} \
+              --topic {{ $.Values.topic.name }} \
               --num-records {{ int .numRecords }} \
               --record-size {{ int .recordSize }} \
               --throughput {{ int .throughput }} \
