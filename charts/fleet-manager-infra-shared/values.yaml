@@ -18,6 +18,10 @@ alertmanager:
   username:
   password:
   service: kafka-fleet-manager-promet-alertmanager
+alertmanagerConfig:
+  name:
+  webhookUrl:
+  receivers: []
 loki:
   hostname:
   service: kafka-fleet-manager-loki-gateway
