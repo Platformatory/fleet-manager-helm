@@ -19,6 +19,9 @@ spec:
       - name: cluster
         value: {{ .Release.Namespace }}
         matchType: "="
+      - name: alertname
+        matchType: "!="
+        value: "Watchdog"
   receivers:
     - name: "webhook"
       webhookConfigs:
