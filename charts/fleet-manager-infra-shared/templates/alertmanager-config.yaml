@@ -1,0 +1,74 @@
+{{- if .Values.alertmanagerConfig.name }}
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: {{ .Values.alertmanagerConfig.name }}
+  labels:
+    alertmanagerConfig: {{ .Values.alertmanagerConfig.name }}
+spec:
+  route:
+    receiver: "webhook"
+{{- if .Values.alertmanagerConfig.receivers }}
+    routes:
+{{- range .Values.alertmanagerConfig.receivers }}
+      - receiver: {{ .name | quote }}
+        continue: true
+{{- end }}
+{{- end }}
+    matchers:
+      - name: cluster
+        value: {{ .Release.Namespace }}
+        matchType: "="
+  receivers:
+    - name: "webhook"
+      webhookConfigs:
+        - url: {{ .Values.alertmanagerConfig.webhookUrl | quote }}
+          sendResolved: true
+{{- range .Values.alertmanagerConfig.receivers }}
+    - name: {{ .name | quote }}
+{{- if eq .receiver_type "slack" }}
+      slackConfigs:
+        - channel: {{ .channel | quote }}
+          apiURL:
+            name: {{ printf "%s-%s-slack" $.Values.alertmanagerConfig.name .name | quote }}
+            key: api-url
+          sendResolved: true
+          username: StreamTime AlertManager for {{ $.Release.Namespace }}
+{{- else if eq .receiver_type "pagerduty" }}
+      pagerdutyConfigs:
+        - routingKey: {{ .routing_key | quote }}
+          sendResolved: true
+{{- if .url }}
+          url: {{ .url | quote }}
+{{- end }}
+{{- if .client }}
+          client: {{ .client | quote }}
+{{- end }}
+{{- if .client_url }}
+          clientURL: {{ .client_url | quote }}
+{{- end }}
+{{- else if eq .receiver_type "webhook" }}
+      webhookConfigs:
+        - url: {{ .url | quote }}
+          sendResolved: true
+{{- if .http_config }}
+          httpConfig:
+{{- if .http_config.proxy_url }}
+            proxyURL: {{ .http_config.proxy_url | quote }}
+{{- end }}
+{{- if .http_config.basic_auth }}
+            basicAuth:
+{{- if .http_config.basic_auth.username }}
+              username: {{ .http_config.basic_auth.username | quote }}
+{{- end }}
+{{- if .http_config.basic_auth.password }}
+              password: {{ .http_config.basic_auth.password | quote }}
+{{- end }}
+{{- end }}
+{{- if .http_config.bearer_token }}
+            bearerToken: {{ .http_config.bearer_token | quote }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
