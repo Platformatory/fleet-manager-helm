@@ -68,6 +68,9 @@ spec:
       - log4j.appender.stderr.Target   = System.err
       - log4j.appender.stderr.layout=org.apache.log4j.PatternLayout
       - log4j.appender.stderr.layout.ConversionPattern=[%d] %p %m (%c)%n
+    server:
+      - confluent.balancer.enable=true
+      - confluent.balancer.heal.uneven.load.trigger=ANY_UNEVEN_LOAD
   image:
     application: confluentinc/cp-server:{{ .Values.cfk.confluentPlatform.version }}
     init: confluentinc/confluent-init-container:{{ .Values.cfk.initContainer.version }}
