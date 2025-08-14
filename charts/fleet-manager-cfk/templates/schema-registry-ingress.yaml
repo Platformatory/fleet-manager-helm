@@ -3,6 +3,9 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: schema-registry
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: schema-{{ .Release.Namespace }}.{{ .Values.domain }}
+    external-dns.alpha.kubernetes.io/ttl: "300"
 spec:
   ingressClassName: {{ .Release.Namespace }}
   tls:

@@ -2,6 +2,9 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: redpanda-schema-registry
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: rp-schema-{{ .Release.Namespace }}.{{ .Values.redpanda.external.domain }}
+    external-dns.alpha.kubernetes.io/ttl: "300"
 spec:
   ingressClassName: {{ .Release.Namespace }}
   tls:

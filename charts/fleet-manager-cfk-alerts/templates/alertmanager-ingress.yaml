@@ -5,6 +5,8 @@ metadata:
   name: alertmanager-ingress
   annotations:
     konghq.com/plugins: alertmanager-basic-auth
+    external-dns.alpha.kubernetes.io/hostname: {{ printf "alerts-%s.%s" .Release.Namespace .Values.domain }}
+    external-dns.alpha.kubernetes.io/ttl: "300"
 spec:
   ingressClassName: kong
   tls:
