@@ -2,6 +2,9 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: controlcenter
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: cc-{{ .Release.Namespace }}.{{ .Values.domain }}
+    external-dns.alpha.kubernetes.io/ttl: "300"
 spec:
   ingressClassName: {{ .Values.ingressClassName }}
   tls:
