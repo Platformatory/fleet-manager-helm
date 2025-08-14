@@ -51,6 +51,8 @@ cfk:
           enabled: true
         external:
           enabled: true
+          access: Ingress # Or LoadBalancer
+          loadBalancerAnnotations: {}
       serverConfigOverrides:
       - confluent.tier.local.hotset.ms=7200000
     controlCenter:

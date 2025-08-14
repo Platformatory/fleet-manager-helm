@@ -1,4 +1,4 @@
-{{- if .Values.cfk.confluentPlatform.kafka.listeners.external.enabled }}
+{{- if and (eq .Values.cfk.confluentPlatform.kafka.listeners.external.access "Ingress") .Values.cfk.confluentPlatform.kafka.listeners.external.enabled }}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:

@@ -181,11 +181,21 @@ spec:
         secretRef: tls-kafka-external
         ignoreTrustStoreConfig: true
       externalAccess:
+{{- if eq .Values.cfk.confluentPlatform.kafka.listeners.external.access "Ingress" }}
         type: staticForHostBasedRouting
         staticForHostBasedRouting:
           brokerPrefix: {{ .Release.Namespace }}-b
           port: 443
           domain: {{ .Values.domain }}
+{{- else if eq .Values.cfk.confluentPlatform.kafka.listeners.external.access "LoadBalancer" }}
+        loadBalancer:
+          advertisedPort: 9092
+          annotations:
+{{ toYaml .Values.cfk.confluentPlatform.kafka.listeners.external.loadBalancerAnnotations | indent 12 }}
+          bootstrapPrefix: {{ .Release.Namespace }}-kafka
+          brokerPrefix: {{ .Release.Namespace }}-b
+          domain: {{ .Values.domain }}
+{{- end }}
 {{- end }}
 {{- if .Values.cfk.confluentPlatform.kafka.listeners.internal.enabled }}
     custom:
