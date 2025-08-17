@@ -35,3 +35,8 @@ certManager:
     hostedZoneID:
     accessKeyID:
     secretAccessKey:
+externalDns:
+  namespace: external-dns
+  route53:
+    accessKeyID:
+    secretAccessKey:

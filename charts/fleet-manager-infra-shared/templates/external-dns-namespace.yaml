@@ -1,0 +1,6 @@
+{{- if and .Values.externalDns.route53.accessKeyID .Values.externalDns.route53.secretAccessKey }}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ .Values.externalDns.namespace }}
+{{- end }}
