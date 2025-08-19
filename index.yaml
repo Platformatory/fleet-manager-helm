@@ -444,6 +444,16 @@ entries:
   fleet-manager-cfk:
   - apiVersion: v2
     appVersion: 0.0.0
+    created: "2025-08-19T09:40:47.0784932Z"
+    description: A Helm chart for Kubernetes
+    digest: 96831bd8b3d4f8b717e62ee27bdccd7186a87ef695234577f00c31d628bcad2f
+    name: fleet-manager-cfk
+    type: application
+    urls:
+    - https://github.com/Platformatory/fleet-manager-helm/releases/download/fleet-manager-cfk-0.18.1/fleet-manager-cfk-0.18.1.tgz
+    version: 0.18.1
+  - apiVersion: v2
+    appVersion: 0.0.0
     created: "2025-08-14T12:07:55.836806783Z"
     description: A Helm chart for Kubernetes
     digest: 90f206c00fea2d157ce773c646b1c7f5156bdfb2f326e41acfa1b001158d7b4c
@@ -1374,6 +1384,21 @@ entries:
   fleet-manager-redpanda:
   - apiVersion: v2
     appVersion: 0.0.0
+    created: "2025-08-19T09:40:47.299892314Z"
+    dependencies:
+    - alias: redpanda
+      name: redpanda
+      repository: https://charts.redpanda.com
+      version: v25.1.1-beta3
+    description: A Helm chart for Kubernetes
+    digest: 4f0ddc5fee001f16b52ff9a4cc1f483b6f089ed99e78160bac2e71c06af7208e
+    name: fleet-manager-redpanda
+    type: application
+    urls:
+    - https://github.com/Platformatory/fleet-manager-helm/releases/download/fleet-manager-redpanda-0.5.1/fleet-manager-redpanda-0.5.1.tgz
+    version: 0.5.1
+  - apiVersion: v2
+    appVersion: 0.0.0
     created: "2025-08-14T12:07:56.801200341Z"
     dependencies:
     - alias: redpanda
@@ -1759,6 +1784,21 @@ entries:
   fleet-manager-warpstream:
   - apiVersion: v2
     appVersion: 0.0.0
+    created: "2025-08-19T09:40:47.453838131Z"
+    dependencies:
+    - alias: warpstream
+      name: warpstream-agent
+      repository: https://warpstreamlabs.github.io/charts
+      version: 0.14.12
+    description: A Helm chart for Kubernetes
+    digest: 9f7393caf38b52455ffc2d23d7a5bdf4e3ced15e927167e702c214ab396e9157
+    name: fleet-manager-warpstream
+    type: application
+    urls:
+    - https://github.com/Platformatory/fleet-manager-helm/releases/download/fleet-manager-warpstream-0.2.1/fleet-manager-warpstream-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
+    appVersion: 0.0.0
     created: "2025-08-14T12:07:57.19164929Z"
     dependencies:
     - alias: warpstream
@@ -1798,4 +1838,4 @@ entries:
     urls:
     - https://github.com/Platformatory/fleet-manager-helm/releases/download/fleet-manager-warpstream-dashboard-0.1.0/fleet-manager-warpstream-dashboard-0.1.0.tgz
     version: 0.1.0
-generated: "2025-08-17T15:18:51.958876549Z"
+generated: "2025-08-19T09:40:47.454509762Z"
