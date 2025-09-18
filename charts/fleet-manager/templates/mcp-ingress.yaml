@@ -6,6 +6,7 @@ metadata:
     konghq.com/plugins: fleetmanager-mcp-authz
     cert-manager.io/cluster-issuer: letsencrypt-prod
     konghq.com/regex-priority: "11"
+    konghq.com/plugins: cors, secure-response-headers
 spec:
   ingressClassName: kong
   tls:

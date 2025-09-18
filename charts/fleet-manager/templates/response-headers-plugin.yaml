@@ -1,0 +1,13 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: secure-response-headers
+instance_name: secure-response-headers
+config:
+  remove:
+    headers:
+      - Server
+  add:
+    headers:
+      - Strict-Transport-Security:max-age=63072000;includeSubDomains;preload
+plugin: response-transformer
