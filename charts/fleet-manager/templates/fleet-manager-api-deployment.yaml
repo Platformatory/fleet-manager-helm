@@ -165,6 +165,8 @@ spec:
             value: {{ .Values.fleetmanager.superUserEmails }}
           - name: FLEET_MANAGER_DOMAIN
             value: {{ .Values.fleetmanager.domain }}
+          - name: DJANGO_ALLOWED_HOSTS
+            value: {{ .Values.fleetmanager.domain }},{{ include "fleetmanager.ui.domain" . }},{{ include "fleetmanager.api.domain" . }},{{ include "fleetmanager.docs.domain" . }},fleet-manager,fleet-manager.{{.Release.Namespace}}.svc
           - name: ROOT_ORG_IDENTIFIER
             value: root
           - name: FLEET_MANAGER_COOKIE_DOMAIN
