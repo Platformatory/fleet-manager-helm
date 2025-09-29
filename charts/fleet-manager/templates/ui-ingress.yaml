@@ -4,6 +4,7 @@ metadata:
   name: fleet-manager-ui
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
+    konghq.com/plugins: cors, secure-response-headers
     # kubernetes.io/ingress.class: kong
 spec:
   ingressClassName: kong

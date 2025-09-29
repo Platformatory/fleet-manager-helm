@@ -27,3 +27,15 @@
 {{- define "fleetmanager.grafana.domain" -}}
 {{- printf "dashboard.console.%s" .Values.fleetmanager.domain -}}
 {{- end -}}
+
+{{- define "fleetmanager.oidc.idpUrl" -}}
+{{- $tokenEndpoint := default "" .Values.fleetmanager.oidc.tokenEndpoint -}}
+{{- if $tokenEndpoint -}}
+{{- $parsed := urlParse $tokenEndpoint -}}
+{{- if and $parsed.scheme $parsed.host -}}
+{{- printf "%s://%s" $parsed.scheme $parsed.host -}}
+{{- else -}}
+{{- $tokenEndpoint -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
