@@ -12,7 +12,6 @@ metadata:
       {{- $hostnames = append $hostnames (printf "%s-rp-%d.%s" $.Release.Namespace $i $.Values.redpanda.external.domain) -}}
     {{- end }}
     external-dns.alpha.kubernetes.io/hostname: {{ join ", " $hostnames }}
-    external-dns.alpha.kubernetes.io/hostname: {{- range $i, $e := until (.Values.redpanda.statefulset.replicas | int) -}}{{ if $i }},{{ end }}{{ $.Release.Namespace }}-rp-{{ $e }}.{{ $.Values.redpanda.external.domain }}{{- end }}
     external-dns.alpha.kubernetes.io/ttl: "300"
 spec:
   ingressClassName: {{ .Release.Namespace }}
