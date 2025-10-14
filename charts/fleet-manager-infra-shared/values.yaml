@@ -7,17 +7,20 @@ opencost:
   password: 
   service: kafka-fleet-manager-opencost
   namespace: opencost
+  # path: /opencost
 prometheus:
   hostname:
   username:
   password:
   service: kafka-fleet-manager-promet-prometheus
   namespace: monitoring
+  # path: /prometheus
 alertmanager:
   hostname:
   username:
   password:
   service: kafka-fleet-manager-promet-alertmanager
+  # path: /alerts
 alertmanagerConfig:
   name:
   webhookUrl:
@@ -25,6 +28,7 @@ alertmanagerConfig:
 loki:
   hostname:
   service: kafka-fleet-manager-loki-gateway
+  # path: /loki
 strimzi:
   namespace: strimzi
 domain:

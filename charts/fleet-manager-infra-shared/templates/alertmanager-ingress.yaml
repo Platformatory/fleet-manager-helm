@@ -22,4 +22,7 @@ spec:
                 name: {{ .Values.alertmanager.service }}
                 port:
                   number: 9093
+{{- with .Values.alertmanager.path }}
+            path: {{ . }}
+{{- end }}
             pathType: ImplementationSpecific

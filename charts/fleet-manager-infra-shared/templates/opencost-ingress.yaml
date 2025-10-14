@@ -22,4 +22,7 @@ spec:
                 name: {{ .Values.opencost.service }}
                 port:
                   number: 9003
+{{- with .Values.opencost.path }}
+            path: {{ . }}
+{{- end }}
             pathType: ImplementationSpecific

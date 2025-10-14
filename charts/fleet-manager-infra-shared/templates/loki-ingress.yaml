@@ -22,4 +22,7 @@ spec:
                 name: {{ .Values.loki.service }}
                 port:
                   number: 80
+{{- with .Values.loki.path }}
+            path: {{ . }}
+{{- end }}
             pathType: ImplementationSpecific

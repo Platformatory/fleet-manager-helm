@@ -22,4 +22,7 @@ spec:
                 name: {{ .Values.prometheus.service }}
                 port:
                   number: 9090
+{{- with .Values.prometheus.path }}
+            path: {{ . }}
+{{- end }}
             pathType: ImplementationSpecific
