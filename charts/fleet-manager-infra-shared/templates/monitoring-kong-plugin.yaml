@@ -1,3 +1,17 @@
+{{- $hasMonitoringCreds := or (and .Values.prometheus.username .Values.prometheus.password) (and .Values.alertmanager.username .Values.alertmanager.password) }}
+{{- if .Values.oauth_jwks_uri }}
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: monitoring-jwt-auth
+  namespace: {{ .Values.prometheus.namespace }}
+plugin: kong-jwt-auth
+config:
+  jwks_uri: {{ .Values.oauth_jwks_uri }}
+  jwks_cache_ttl: 300
+  token_source: header
+  token_pattern: authorization
+{{- else if $hasMonitoringCreds }}
 apiVersion: configuration.konghq.com/v1
 kind: KongPlugin
 metadata:
@@ -6,3 +20,4 @@ metadata:
 plugin: basic-auth
 config:
   hide_credentials: true
+{{- end }}

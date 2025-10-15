@@ -1,3 +1,4 @@
+{{- if and (not .Values.oauth_jwks_uri) .Values.prometheus.username .Values.prometheus.password }}
 apiVersion: configuration.konghq.com/v1
 kind: KongConsumer
 metadata:
@@ -8,3 +9,4 @@ metadata:
 username: {{ .Values.prometheus.username }}
 credentials:
 - basic-auth-creds
+{{- end }}

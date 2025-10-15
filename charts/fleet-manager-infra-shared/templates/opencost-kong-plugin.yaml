@@ -1,3 +1,16 @@
+{{- if .Values.oauth_jwks_uri }}
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: opencost-jwt-auth
+  namespace: {{ .Values.opencost.namespace }}
+plugin: kong-jwt-auth
+config:
+  jwks_uri: {{ .Values.oauth_jwks_uri }}
+  jwks_cache_ttl: 300
+  token_source: header
+  token_pattern: authorization
+{{- else if and .Values.opencost.username .Values.opencost.password }}
 apiVersion: configuration.konghq.com/v1
 kind: KongPlugin
 metadata:
@@ -6,3 +19,4 @@ metadata:
 plugin: basic-auth
 config:
   hide_credentials: true
+{{- end }}

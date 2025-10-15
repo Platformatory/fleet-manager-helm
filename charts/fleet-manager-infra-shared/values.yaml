@@ -1,6 +1,7 @@
 certs:
   cert:
   key:
+oauth_jwks_uri:
 opencost:
   hostname: 
   username: 
