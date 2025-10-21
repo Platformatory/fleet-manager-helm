@@ -7,6 +7,7 @@ metadata:
 plugin: kong-jwt-auth
 config:
   jwks_uri: {{ .Values.oauth_jwks_uri }}
+  issuer: {{ .Values.oauth_issuer }}
   jwks_cache_ttl: 300
   token_source: header
   token_pattern: authorization
