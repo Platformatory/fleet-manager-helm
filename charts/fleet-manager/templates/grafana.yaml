@@ -43,7 +43,7 @@ spec:
                 - name: GF_AUTH_GENERIC_OAUTH_CLIENT_ID
                   value: {{ .Values.grafana.oidc.clientId }}
                 - name: GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET
-                  value: valueFrom:
+                  valueFrom:
                   secretKeyRef:
                     name: grafana-credentials
                     key: OIDC_CLIENT_SECRET
@@ -100,7 +100,6 @@ spec:
                   value: "true"
                 - name: GF_LOG_MODE
                   value: "console"
-                
               securityContext:
                 allowPrivilegeEscalation: false
                 capabilities:
