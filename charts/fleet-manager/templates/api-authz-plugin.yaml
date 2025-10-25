@@ -24,3 +24,13 @@ config:
     jwks_cache_ttl: 300
     token_source: "header"                       # "header" or "cookie"
     token_pattern: "fleetmanager.org.{orgId}.token"  # Only needed for cookie mode
+  auth_handler:
+    route: "auth-handler"
+    cookie_domain: .{{ .Values.fleetmanager.domain }}
+    frontend_base_url: https://{{ include "fleetmanager.ui.domain" . }}/
+    allowed_redirect_domains:
+      - {{ include "fleetmanager.ui.domain" . }}
+      - {{ include "fleetmanager.grafana.domain" . }}
+    session_cookie_name: "fleetmanager.auth.state"
+    org_cache_ttl: 300
+    oauth_verify_ssl: true

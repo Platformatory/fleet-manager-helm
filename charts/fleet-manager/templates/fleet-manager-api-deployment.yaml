@@ -91,6 +91,54 @@ spec:
             value: http://fleet-manager:8000
           - name: LOKI_URL
             value: http://fm-loki-gateway/loki/api/v1/push
+          - name: STREAMTIME_LICENSE
+            value: {{ .Values.fleetmanager.license }}
+          - name: UVICORN_HOST
+            value: 0.0.0.0
+          - name: UVICORN_PORT
+            value: "8000"
+          - name: UVICORN_WORKERS
+            value: "1"
+          - name: UVICORN_RELOAD
+            value: "false"
+          - name: UVICORN_LOG_LEVEL
+            value: debug
+          - name: UVICORN_TIMEOUT_KEEP_ALIVE
+            value: "5"
+          - name: OAUTH_VERIFY_SSL
+            value: "true"
+          - name: FLEET_SELECTION_PRIMARY_STRATEGY
+            value: best_fit
+          - name: FLEET_SELECTION_FALLBACK_STRATEGY
+            value: first_fit
+          - name: FLEET_SELECTION_ENABLE_FALLBACK
+            value: "true"
+          - name: FLEET_SELECTION_DEBUG_LOGGING
+            value: "false"
+          - name: FLEET_SELECTION_BEST_FIT_UTILIZATION_WEIGHT
+            value: "0.4"
+          - name: FLEET_SELECTION_BEST_FIT_COST_WEIGHT
+            value: "0.3"
+          - name: FLEET_SELECTION_BEST_FIT_PERFORMANCE_WEIGHT
+            value: "0.2"
+          - name: FLEET_SELECTION_BEST_FIT_LOAD_WEIGHT
+            value: "0.1"
+          - name: FLEET_SELECTION_LOAD_1H_WEIGHT
+            value: "0.5"
+          - name: FLEET_SELECTION_LOAD_24H_WEIGHT
+            value: "0.2"
+          - name: FLEET_SELECTION_LOAD_1W_WEIGHT
+            value: "0.1"
+          - name: FLEET_SELECTION_LOAD_TENANT_WEIGHT
+            value: "0.15"
+          - name: FLEET_SELECTION_LOAD_NOISY_WEIGHT
+            value: "0.05"
+{{- if eq .Values.fleetmanager.secrets.provider "vault" }}
+{{- range $key, $value := .Values.fleetmanager.secrets.vault }}
+          - name: STREAMTIME_VAULT_{{ upper $key }}
+            value: {{ $value | quote }}
+{{- end }}
+{{- end }}
           image: {{ .Values.fleetmanager.api.image }}
           command: ['python', 'manage.py', 'migrate']
           name: fleet-manager-migrations
@@ -175,6 +223,54 @@ spec:
             value: http://fleet-manager:8000
           - name: LOKI_URL
             value: http://fm-loki-gateway/loki/api/v1/push
+          - name: STREAMTIME_LICENSE
+            value: {{ .Values.fleetmanager.license }}
+          - name: UVICORN_HOST
+            value: 0.0.0.0
+          - name: UVICORN_PORT
+            value: "8000"
+          - name: UVICORN_WORKERS
+            value: "1"
+          - name: UVICORN_RELOAD
+            value: "false"
+          - name: UVICORN_LOG_LEVEL
+            value: debug
+          - name: UVICORN_TIMEOUT_KEEP_ALIVE
+            value: "5"
+          - name: OAUTH_VERIFY_SSL
+            value: "true"
+          - name: FLEET_SELECTION_PRIMARY_STRATEGY
+            value: best_fit
+          - name: FLEET_SELECTION_FALLBACK_STRATEGY
+            value: first_fit
+          - name: FLEET_SELECTION_ENABLE_FALLBACK
+            value: "true"
+          - name: FLEET_SELECTION_DEBUG_LOGGING
+            value: "false"
+          - name: FLEET_SELECTION_BEST_FIT_UTILIZATION_WEIGHT
+            value: "0.4"
+          - name: FLEET_SELECTION_BEST_FIT_COST_WEIGHT
+            value: "0.3"
+          - name: FLEET_SELECTION_BEST_FIT_PERFORMANCE_WEIGHT
+            value: "0.2"
+          - name: FLEET_SELECTION_BEST_FIT_LOAD_WEIGHT
+            value: "0.1"
+          - name: FLEET_SELECTION_LOAD_1H_WEIGHT
+            value: "0.5"
+          - name: FLEET_SELECTION_LOAD_24H_WEIGHT
+            value: "0.2"
+          - name: FLEET_SELECTION_LOAD_1W_WEIGHT
+            value: "0.1"
+          - name: FLEET_SELECTION_LOAD_TENANT_WEIGHT
+            value: "0.15"
+          - name: FLEET_SELECTION_LOAD_NOISY_WEIGHT
+            value: "0.05"
+{{- if eq .Values.fleetmanager.secrets.provider "vault" }}
+{{- range $key, $value := .Values.fleetmanager.secrets.vault }}
+          - name: STREAMTIME_VAULT_{{ upper $key }}
+            value: {{ $value | quote }}
+{{- end }}
+{{- end }}
           image: {{ .Values.fleetmanager.api.image }}
           name: fleet-manager
           ports:

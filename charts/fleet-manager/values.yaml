@@ -1,13 +1,14 @@
 fleetmanager:
   domain: 
+  license: 
   ui:
-    image: platformatorylabs/fleet-manager-ui:v0.0.1-main-6962716
+    image: ghcr.io/platformatory/fleet-manager-ui:v0.0.1-main-cb160c9
   api:
-    image: platformatorylabs/fleet-manager-api:v0.0.1-main-54331e6
+    image: ghcr.io/platformatory/fleet-manager-api:v0.0.1-main-cb160c9
   orchestrator:
-    image: platformatorylabs/fleet-manager-temporal-worker:v0.0.1-main-63501dc
+    image: ghcr.io/platformatory/fleet-manager-temporal-worker:v0.0.1-main-cb160c9
   mcp:
-    image: platformatorylabs/fleet-manager-mcp:v0.0.1-main-82be533
+    image: ghcr.io/platformatory/fleet-manager-mcp:v0.0.1-main-cb160c9
   kubeconfig:
     provider: static # Can be aws. If aws, the aws credentials section must be set accordingly.
     credentials: {}
@@ -31,8 +32,29 @@ fleetmanager:
     clientSecret:
     rsaPublicKey:
   superUserEmails:
+  secrets:
+    provider: builtin # can be vault
+    vault:
+      url:
+      namespace:
+      mount_path:
+      role_id:
+      secret_id:
+  gateway_image: 
+    repository: ghcr.io/platformatory/fleet-manager-customer-gateway
+    tag: v0.0.2
 keycloak:
   bootstrap: false
+grafana:
+  oidc:
+    scope: 
+    tokenEndpoint: 
+    emailClaim: 
+    authorizeEndpoint: 
+    userInfoEndppint: 
+    logoutRedirectUrl: 
+    clientId: 
+    clientSecret:
 certManager:
   solvers:
   - http01:

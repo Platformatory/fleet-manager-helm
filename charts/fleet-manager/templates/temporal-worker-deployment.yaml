@@ -48,22 +48,6 @@ spec:
                   optional: false
             - name: TF_STATE_S3_BUCKET
               value: ws-fleet-manager-tf-state
-            - name: OLLAMA_URL
-              value: http://ollama:11434/v1
-            - name: OLLAMA_API_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: temporal-worker
-                  key: OLLAMA_API_KEY
-                  optional: false
-            - name: OLLAMA_MODEL
-              value: llama3.2
-            - name: JWT_SECRET_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: temporal-worker
-                  key: JWT_SECRET_KEY
-                  optional: false
             - name: FLEET_MANAGER_DOMAIN
               value: {{ .Values.fleetmanager.domain }}
             - name: FLEET_MANAGER_NAMESPACE

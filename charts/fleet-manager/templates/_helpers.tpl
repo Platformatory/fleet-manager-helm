@@ -25,7 +25,7 @@
 
 
 {{- define "fleetmanager.grafana.domain" -}}
-{{- printf "dashboard.console.%s" .Values.fleetmanager.domain -}}
+{{- printf "dashboard.%s" .Values.fleetmanager.domain -}}
 {{- end -}}
 
 {{- define "fleetmanager.oidc.idpUrl" -}}
