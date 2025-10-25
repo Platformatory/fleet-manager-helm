@@ -29,7 +29,7 @@ spec:
           - name: REACT_APP_IDP_URL
             value: {{ include "fleetmanager.oidc.idpUrl" . }}
           - name: REACT_APP_LICENSE_WARNING_DAYS
-            value: 7
+            value: "7"
           - name: REACT_APP_DASHBOARD_SERVICE_URL
             value: https://{{ include "fleetmanager.grafana.domain" . }}
           - name: REACT_APP_DASHBOARD_QUERY_PARAMS
