@@ -43,6 +43,7 @@ fleetmanager:
   gateway_image: 
     repository: ghcr.io/platformatory/fleet-manager-customer-gateway
     tag: v0.0.2
+  cookie_encryption_key: "your-32-byte-encryption-key-here-123456789012"
 keycloak:
   bootstrap: false
 grafana:

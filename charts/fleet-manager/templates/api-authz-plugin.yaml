@@ -25,8 +25,9 @@ config:
     token_source: "header"                       # "header" or "cookie"
     token_pattern: "fleetmanager.org.{orgId}.token"  # Only needed for cookie mode
   auth_handler:
-    route: "auth-handler"
+    route: "{{ .Release.Namespace }}.fleet-manager-auth-handler-api.fleet-manager.{{ include "fleetmanager.api.domain" . }}.8000"
     cookie_domain: .{{ .Values.fleetmanager.domain }}
+    cookie_encryption_key: {{ .Values.fleetmanager.cookie_encryption_key }}
     frontend_base_url: https://{{ include "fleetmanager.ui.domain" . }}/
     allowed_redirect_domains:
       - {{ include "fleetmanager.ui.domain" . }}
