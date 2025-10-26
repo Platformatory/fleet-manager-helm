@@ -6,7 +6,7 @@ fleetmanager:
   api:
     image: ghcr.io/platformatory/fleet-manager-api:v0.0.1-main-cb160c9
   orchestrator:
-    image: ghcr.io/platformatory/fleet-manager-temporal-worker:v0.0.1-main-cb160c9
+    image: ghcr.io/platformatory/fleet-manager-orchestrator:v0.0.1-main-cb160c9
   mcp:
     image: ghcr.io/platformatory/fleet-manager-mcp:v0.0.1-main-cb160c9
   kubeconfig:
