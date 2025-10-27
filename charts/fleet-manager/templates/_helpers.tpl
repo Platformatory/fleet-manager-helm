@@ -39,3 +39,21 @@
 {{- end -}}
 {{- end -}}
 {{- end -}}
+
+{{- define "fleetmanager.renderConfigValue" -}}
+{{- $value := .value -}}
+{{- $indent := default 0 .indent -}}
+{{- $context := .context -}}
+{{- $kind := kindOf $value -}}
+{{- $isMap := or (kindIs "map" $value) (hasPrefix $kind "map") -}}
+{{- $isSlice := or (kindIs "slice" $value) (hasPrefix $kind "slice") -}}
+{{- if or $isMap $isSlice -}}
+{{ printf "\n%s" (indent $indent (tpl (toYaml $value) $context)) }}
+{{- else if or (kindIs "string" $value) (eq $kind "string") -}}
+{{ printf " %s" (tpl $value $context) }}
+{{- else if kindIs "invalid" $value -}}
+{{ printf " \"\"" }}
+{{- else -}}
+{{ printf " %v" $value }}
+{{- end -}}
+{{- end -}}
