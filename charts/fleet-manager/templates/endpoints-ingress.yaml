@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fleet-manager-endpoints-api
+  annotations:
+    konghq.com/methods: "GET"
+    konghq.com/regex-priority: "10"
+    konghq.com/plugins: fleetmanager-authz, cors, secure-response-headers
+    konghq.com/strip-path: "false"
+spec:
+  ingressClassName: kong
+  rules:
+    # TODO: Should allow only internal Kubernetes traffic instead of all hosts
+    - http:
+        paths:
+          - path: /~/organizations/(.*)/infrastructure/(.*)/endpoints/(.*)
+            backend:
+              service:
+                name: fleet-manager
+                port:
+                  number: 8000
+            pathType: ImplementationSpecific
