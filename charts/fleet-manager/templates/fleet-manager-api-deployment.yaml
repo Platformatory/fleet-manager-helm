@@ -28,6 +28,8 @@ spec:
             value: fm-postgresql
           - name: POSTGRES_PORT
             value: "5432"
+          - name: STREAMTIME_GATEWAY_URL
+            value: http://kong-kong-proxy
           - name: MINIO_ENDPOINT
             value: fm-minio:9000
           - name: MINIO_PUBLIC_ENDPOINT
@@ -105,6 +107,12 @@ spec:
             value: debug
           - name: UVICORN_TIMEOUT_KEEP_ALIVE
             value: "5"
+          - name: UV_CACHE_DIR
+            value: /root/.cache/uv
+          - name: UV_COMPILE_BYTECODE
+            value: "1"
+          - name: UV_SYSTEM_PYTHON
+            value: "1"
           - name: OAUTH_VERIFY_SSL
             value: "true"
           - name: FLEET_SELECTION_PRIMARY_STRATEGY
@@ -158,6 +166,8 @@ spec:
             value: fm-postgresql
           - name: POSTGRES_PORT
             value: "5432"
+          - name: STREAMTIME_GATEWAY_URL
+            value: http://kong-kong-proxy
           - name: MINIO_ENDPOINT
             value: fm-minio:9000
           - name: MINIO_PUBLIC_ENDPOINT
@@ -237,6 +247,12 @@ spec:
             value: debug
           - name: UVICORN_TIMEOUT_KEEP_ALIVE
             value: "5"
+          - name: UV_CACHE_DIR
+            value: /root/.cache/uv
+          - name: UV_COMPILE_BYTECODE
+            value: "1"
+          - name: UV_SYSTEM_PYTHON
+            value: "1"
           - name: OAUTH_VERIFY_SSL
             value: "true"
           - name: FLEET_SELECTION_PRIMARY_STRATEGY
