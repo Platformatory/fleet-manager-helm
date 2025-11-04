@@ -2,13 +2,13 @@ fleetmanager:
   domain: 
   license: 
   ui:
-    image: ghcr.io/platformatory/streamtime-ui:v0.0.1-main-8732030
+    image: ghcr.io/platformatory/streamtime-ui:v0.0.1-main-b420e5b
   api:
-    image: ghcr.io/platformatory/streamtime-api:v0.0.1-main-8732030
+    image: ghcr.io/platformatory/streamtime-api:v0.0.1-main-b420e5b
   orchestrator:
-    image: ghcr.io/platformatory/streamtime-orchestrator:v0.0.1-main-8732030
+    image: ghcr.io/platformatory/streamtime-orchestrator:v0.0.1-main-b420e5b
   mcp:
-    image: ghcr.io/platformatory/streamtime-mcp:v0.0.1-main-8732030
+    image: ghcr.io/platformatory/streamtime-mcp:v0.0.1-main-b420e5b
   kubeconfig:
     provider: static # Can be aws. If aws, the aws credentials section must be set accordingly.
     credentials: {}
