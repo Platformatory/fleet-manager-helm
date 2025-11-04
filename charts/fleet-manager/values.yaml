@@ -2,13 +2,13 @@ fleetmanager:
   domain: 
   license: 
   ui:
-    image: ghcr.io/platformatory/fleet-manager-ui:v0.0.1-main-cb160c9
+    image: ghcr.io/platformatory/fleet-manager-ui:v0.0.1-main-8732030
   api:
-    image: ghcr.io/platformatory/fleet-manager-api:v0.0.1-main-cb160c9
+    image: ghcr.io/platformatory/fleet-manager-api:v0.0.1-main-8732030
   orchestrator:
-    image: ghcr.io/platformatory/fleet-manager-orchestrator:v0.0.1-main-cb160c9
+    image: ghcr.io/platformatory/fleet-manager-orchestrator:v0.0.1-main-8732030
   mcp:
-    image: ghcr.io/platformatory/fleet-manager-mcp:v0.0.1-main-cb160c9
+    image: ghcr.io/platformatory/fleet-manager-mcp:v0.0.1-main-8732030
   kubeconfig:
     provider: static # Can be aws. If aws, the aws credentials section must be set accordingly.
     credentials: {}
