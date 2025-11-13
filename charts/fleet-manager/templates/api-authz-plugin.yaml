@@ -31,6 +31,7 @@ config:
     cookie_domain: .{{ .Values.fleetmanager.domain }}
     cookie_encryption_key: {{ .Values.fleetmanager.cookie_encryption_key }}
     frontend_base_url: https://{{ include "fleetmanager.ui.domain" . }}/
+    redirect_uri: https://{{ include "fleetmanager.api.domain" . }}/authHandler
     allowed_redirect_domains:
       - {{ include "fleetmanager.ui.domain" . }}
       - {{ include "fleetmanager.grafana.domain" . }}
