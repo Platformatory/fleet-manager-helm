@@ -52,3 +52,25 @@ spec:
                 port:
                   number: 8000
             pathType: Prefix
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fleet-manager-forward-proxy
+  annotations:
+    konghq.com/plugins: fleetmanager-authz, cors, secure-response-headers
+    konghq.com/regex-priority: "9"
+    # kubernetes.io/ingress.class: kong
+spec:
+  ingressClassName: kong
+  rules:
+    - host: "kong-kong-proxy"
+      http:
+        paths:
+          - path: /
+            backend:
+              service:
+                name: fleet-manager # Does not matter
+                port:
+                  number: 8000
+            pathType: Prefix
