@@ -1,3 +1,4 @@
+{{- if not .Values.remoteWrite.enabled }}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -31,3 +32,4 @@ spec:
             path: {{ . }}
 {{- end }}
             pathType: ImplementationSpecific
+{{- end }}

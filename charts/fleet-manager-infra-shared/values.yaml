@@ -46,3 +46,8 @@ externalDns:
   route53:
     accessKeyID:
     secretAccessKey:
+remoteWrite:
+  enabled: false
+  credentials:
+    clientId:
+    clientSecret:
