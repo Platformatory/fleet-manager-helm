@@ -6,7 +6,7 @@ metadata:
     cert-manager.io/cluster-issuer: letsencrypt-prod
     konghq.com/methods: "POST"
     konghq.com/regex-priority: "10"
-    konghq.com/plugins: cors, secure-response-headers
+    konghq.com/plugins: cors, secure-response-headers, cache-response-headers
     # kubernetes.io/ingress.class: kong
 spec:
   ingressClassName: kong
