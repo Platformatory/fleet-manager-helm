@@ -6,6 +6,7 @@ metadata:
     konghq.com/read-timeout: "3600"
     konghq.com/write-timeout: "3600"
     konghq.com/headers.Connection: "upgrade"
+    konghq.com/plugins: secure-response-headers
     cert-manager.io/cluster-issuer: letsencrypt-prod
     # kubernetes.io/ingress.class: kong
 spec:
@@ -31,7 +32,7 @@ kind: Ingress
 metadata:
   name: loki-http
   annotations:
-    konghq.com/plugins: cors
+    konghq.com/plugins: cors, secure-response-headers
     cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   ingressClassName: kong
