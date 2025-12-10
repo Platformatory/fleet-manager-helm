@@ -54,6 +54,10 @@ spec:
       nodeAffinity:
 {{ .Values.nodeAffinity | default dict | toYaml | indent 8 }}
 {{- end }}
+{{- if .Values.cfk.confluentPlatform.kraft.resources }}
+    resources:
+{{ .Values.cfk.confluentPlatform.kraft.resources | toYaml | indent 6 }}
+{{- end }}
   dataVolumeCapacity: {{ .Values.cfk.confluentPlatform.kraft.diskSize }}
   configOverrides:
     log4j:

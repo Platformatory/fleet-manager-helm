@@ -19,8 +19,9 @@ spec:
 {{ .Values.nodeAffinity | default dict | toYaml | indent 12 }}
 {{- end }}
 {{- end }}
-{{- if eq .Values.kafka.tieredStorage.provider "S3" }}
+{{- if or (eq .Values.kafka.tieredStorage.provider "S3") (.Values.kafka.resources) }}
       kafkaContainer:
+{{- if eq .Values.kafka.tieredStorage.provider "S3" }}
         env:
         - name: AWS_ACCESS_KEY_ID
           valueFrom:
@@ -34,6 +35,11 @@ spec:
               name: strimzi-tiered-storage-creds
               key: AWS_SECRET_ACCESS_KEY
               optional: false
+{{- end }}
+{{- if .Values.kafka.resources }}
+        resources:
+{{ .Values.kafka.resources | toYaml | indent 10 }}
+{{- end }}
 {{- end }}
     version: {{ .Values.kafka.version }}
     listeners:

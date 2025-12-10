@@ -54,6 +54,10 @@ spec:
       nodeAffinity:
 {{ .Values.nodeAffinity | default dict | toYaml | indent 8 }}
 {{- end }}
+{{- if .Values.cfk.confluentPlatform.kafka.resources }}
+    resources:
+{{ .Values.cfk.confluentPlatform.kafka.resources | toYaml | indent 6 }}
+{{- end }}
   authorization:
     type: rbac
     superUsers:

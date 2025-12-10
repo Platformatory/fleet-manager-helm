@@ -21,6 +21,13 @@ kafka:
       enabled: true
     internal: 
       enabled: true
+  resources:
+    requests:
+      cpu:
+      memory:
+    limits:
+      cpu:
+      memory:
   tieredStorage:
     provider: S3
     cloud: aws

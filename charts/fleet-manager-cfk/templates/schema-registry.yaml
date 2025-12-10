@@ -9,10 +9,12 @@ spec:
   license:
     secretRef: cfk-license
 {{- end }}
-{{- if or (.Values.tolerations) (.Values.nodeAffinity) }}
+{{- if or (.Values.tolerations) (.Values.nodeAffinity) (.Values.cfk.confluentPlatform.schemaRegistry.resources) }}
   podTemplate:
+{{- if .Values.tolerations }}
     tolerations:
 {{ .Values.tolerations | default list | toYaml | indent 4 }}
+{{- end }}
     affinity:
 {{- if not .Values.stacked }}
       podAntiAffinity:
@@ -28,6 +30,10 @@ spec:
 {{- if .Values.nodeAffinity }}
       nodeAffinity:
 {{ .Values.nodeAffinity | default dict | toYaml | indent 8 }}
+{{- end }}
+{{- if .Values.cfk.confluentPlatform.schemaRegistry.resources }}
+    resources:
+{{ .Values.cfk.confluentPlatform.schemaRegistry.resources | toYaml | indent 6 }}
 {{- end }}
 {{- end }}
   replicas: 1

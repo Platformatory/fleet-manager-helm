@@ -44,8 +44,22 @@ cfk:
     authentication: oauth
     kraft:
       diskSize: 50Gi
+      # resources:
+      #   requests:
+      #     cpu: "500m"
+      #     memory: "512Mi"
+      #   limits:
+      #     cpu: "1000m"
+      #     memory: "1Gi"
     kafka:
       diskSize: 100Gi
+      # resources:
+      #   requests:
+      #     cpu: "500m"
+      #     memory: "512Mi"
+      #   limits:
+      #     cpu: "1000m"
+      #     memory: "1Gi"
       listeners:
         internal:
           enabled: true
@@ -57,8 +71,22 @@ cfk:
       - confluent.tier.local.hotset.ms=7200000
     controlCenter:
       diskSize: 30Gi
+      # resources:
+      #   requests:
+      #     cpu: "500m"
+      #     memory: "512Mi"
+      #   limits:
+      #     cpu: "1000m"
+      #     memory: "1Gi"
     schemaRegistry:
       enabled: true
+      # resources:
+      #   requests:
+      #     cpu: "500m"
+      #     memory: "512Mi"
+      #   limits:
+      #     cpu: "1000m"
+      #     memory: "1Gi"
   license:
   systemAdmin:
     name:
