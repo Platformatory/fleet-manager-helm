@@ -11,7 +11,7 @@ fleetmanager:
     image: ghcr.io/platformatory/streamtime-orchestrator:v0.0.1-main-7acf81f
   mcp:
     image: ghcr.io/platformatory/streamtime-mcp:v0.0.1-main-7acf81f
-  streamtime-agent:
+  streamtimeagent:
     registryUrl: ghcr.io
     repository: streamtime-ai
     chartVersion: 0.1.0

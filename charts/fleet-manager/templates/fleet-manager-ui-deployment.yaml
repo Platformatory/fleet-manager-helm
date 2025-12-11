@@ -37,11 +37,11 @@ spec:
           - name: REACT_APP_ENABLE_GOOGLE_ANALYTICS
             value: {{ .Values.fleetmanager.ui.enableGoogleAnalytics }}
           - name: REACT_APP_STREAMTIME_AGENT_REGISTRY_URL
-            value: {{ .Values.fleetmanager.streamtime-agent.registryUrl }}
+            value: {{ .Values.fleetmanager.streamtimeagent.registryUrl }}
           - name: REACT_APP_STREAMTIME_AGENT_REPOSITORY
-            value: {{ .Values.fleetmanager.streamtime-agent.repository }}
+            value: {{ .Values.fleetmanager.streamtimeagent.repository }}
           - name: REACT_APP_STREAMTIME_AGENT_CHART_VERSION
-            value: {{ .Values.fleetmanager.streamtime-agent.chartVersion }}
+            value: {{ .Values.fleetmanager.streamtimeagent.chartVersion }}
           image: {{ .Values.fleetmanager.ui.image }}
           name: fleet-manager
           ports:
