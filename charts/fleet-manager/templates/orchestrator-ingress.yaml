@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fleet-manager-orchestrator
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    konghq.com/plugins: key-auth
+    konghq.com/protocols: grpc
+    konghq.com/read-timeout: "3600000"
+    konghq.com/write-timeout: "3600000"
+    konghq.com/connect-timeout: "60000"
+spec:
+  ingressClassName: kong
+  tls:
+  - secretName: {{ include "fleetmanager.orchestrator.domain" . | replace "." "-" }}
+    hosts:
+    - {{ include "fleetmanager.orchestrator.domain" . }}
+  rules:
+    - host: {{ include "fleetmanager.orchestrator.domain" . }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: fm-temporal-frontend
+                port:
+                  number: 7233
+            pathType: ImplementationSpecific

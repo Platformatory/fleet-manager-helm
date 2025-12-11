@@ -2,13 +2,19 @@ fleetmanager:
   domain: 
   license: 
   ui:
-    image: ghcr.io/platformatory/streamtime-ui:v0.0.1-main-b420e5b
+    image: ghcr.io/platformatory/streamtime-ui:v0.0.1-main-7acf81f
+    trackUiPerformance: true
+    enableGoogleAnalytics: false
   api:
-    image: ghcr.io/platformatory/streamtime-api:v0.0.1-main-b420e5b
+    image: ghcr.io/platformatory/streamtime-api:v0.0.1-main-7acf81f
   orchestrator:
-    image: ghcr.io/platformatory/streamtime-orchestrator:v0.0.1-main-b420e5b
+    image: ghcr.io/platformatory/streamtime-orchestrator:v0.0.1-main-7acf81f
   mcp:
-    image: ghcr.io/platformatory/streamtime-mcp:v0.0.1-main-b420e5b
+    image: ghcr.io/platformatory/streamtime-mcp:v0.0.1-main-7acf81f
+  streamtime-agent:
+    registryUrl: ghcr.io
+    repository: streamtime-ai
+    chartVersion: 0.1.0
   kubeconfig:
     provider: static # Can be aws. If aws, the aws credentials section must be set accordingly.
     credentials: {}
@@ -44,6 +50,15 @@ fleetmanager:
     repository: ghcr.io/platformatory/fleet-manager-customer-gateway
     tag: v0.0.2
   cookie_encryption_key: "your-32-byte-encryption-key-here-123456789012"
+  ghcr:
+    username:
+    token:
+  dockerhub:
+    username:
+    token:
+  quay:
+    username:
+    token:
 keycloak:
   bootstrap: false
 grafana:
@@ -66,3 +81,5 @@ certManager:
                 kuma.io/sidecar-injection: 'false'   # If ingress is running in Kuma/Kong Mesh, disable sidecar injection
                 sidecar.istio.io/inject: 'false'  # If using Istio, disable sidecar injection
         class: kong
+orchestrator:
+  apikey: prod-api-key

@@ -28,6 +28,10 @@
 {{- printf "dashboard.%s" .Values.fleetmanager.domain -}}
 {{- end -}}
 
+{{- define "fleetmanager.orchestrator.domain" -}}
+{{- printf "orchestrator.%s" .Values.fleetmanager.domain -}}
+{{- end -}}
+
 {{- define "fleetmanager.oidc.idpUrl" -}}
 {{- $tokenEndpoint := default "" .Values.fleetmanager.oidc.tokenEndpoint -}}
 {{- if $tokenEndpoint -}}

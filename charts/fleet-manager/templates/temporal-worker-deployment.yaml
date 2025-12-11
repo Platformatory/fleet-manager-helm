@@ -52,6 +52,28 @@ spec:
               value: {{ .Values.fleetmanager.domain }}
             - name: FLEET_MANAGER_NAMESPACE
               value: {{ .Release.Namespace }}
+            - name: STREAMTIME_ADVERTISED_ORCHESTRATOR_ADDRESS
+              value: {{ include "fleetmanager.orchestrator.domain" . }}
+            - name: STREAMTIME_ORCHESTRATOR_TLS_ENABLED
+              value: "true"
+{{- if and .Values.fleetmanager.ghcr.username .Values.fleetmanager.ghcr.token }}
+            - name: GHCR_USERNAME
+              value: {{ .Values.fleetmanager.ghcr.username }}
+            - name: GHCR_TOKEN
+              value: {{ .Values.fleetmanager.ghcr.token }}
+{{- end }}
+{{- if and .Values.fleetmanager.dockerhub.username .Values.fleetmanager.dockerhub.token }}
+            - name: DOCKER_HUB_USERNAME
+              value: {{ .Values.fleetmanager.dockerhub.username }}
+            - name: DOCKER_HUB_TOKEN
+              value: {{ .Values.fleetmanager.dockerhub.token }}
+{{- end }}
+{{- if and .Values.fleetmanager.quay.username .Values.fleetmanager.quay.token }}
+            - name: QUAY_USERNAME
+              value: {{ .Values.fleetmanager.quay.username }}
+            - name: QUAY_TOKEN
+              value: {{ .Values.fleetmanager.quay.token }}
+{{- end }}
           volumeMounts:
           - mountPath: "/opt/config"
             name: fleet-manager-kubeconfig

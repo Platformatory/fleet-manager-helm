@@ -30,24 +30,8 @@ spec:
             value: "5432"
           - name: STREAMTIME_GATEWAY_URL
             value: http://kong-kong-proxy
-          - name: MINIO_ENDPOINT
-            value: fm-minio:9000
-          - name: MINIO_PUBLIC_ENDPOINT
-            value: fm-minio:9000
-          - name: MINIO_BUCKET_NAME
-            value: fleet-manager-agent
-          - name: MINIO_ACCESS_KEY
-            value: fleetmanager-config-user
-          - name: MINIO_SECRET_KEY
-            valueFrom:
-              secretKeyRef:
-                name: fleet-manager
-                key: MINIO_SECRET_KEY
-                optional: false
-          - name: MINIO_SECURE
-            value: "False"
-          - name: CONFIG_STORAGE_BUCKET_NAME
-            value: ws-fleet-manager-configuration
+          - name: STREAMTIME_ADVERTISED_ORCHESTRATOR_ADDRESS
+            value: {{ include "fleetmanager.orchestrator.domain" . }}
           - name: TEMPORAL_SERVER
             value: fm-temporal-frontend:7233
           - name: ROOT_ORG_OAUTH_ISSUER
@@ -141,6 +125,24 @@ spec:
             value: "0.15"
           - name: FLEET_SELECTION_LOAD_NOISY_WEIGHT
             value: "0.05"
+{{- if and .Values.fleetmanager.ghcr.username .Values.fleetmanager.ghcr.token }}
+          - name: GHCR_USERNAME
+            value: {{ .Values.fleetmanager.ghcr.username }}
+          - name: GHCR_TOKEN
+            value: {{ .Values.fleetmanager.ghcr.token }}
+{{- end }}
+{{- if and .Values.fleetmanager.dockerhub.username .Values.fleetmanager.dockerhub.token }}
+          - name: DOCKER_HUB_USERNAME
+            value: {{ .Values.fleetmanager.dockerhub.username }}
+          - name: DOCKER_HUB_TOKEN
+            value: {{ .Values.fleetmanager.dockerhub.token }}
+{{- end }}
+{{- if and .Values.fleetmanager.quay.username .Values.fleetmanager.quay.token }}
+          - name: QUAY_USERNAME
+            value: {{ .Values.fleetmanager.quay.username }}
+          - name: QUAY_TOKEN
+            value: {{ .Values.fleetmanager.quay.token }}
+{{- end }}
 {{- if eq .Values.fleetmanager.secrets.provider "vault" }}
 {{- range $key, $value := .Values.fleetmanager.secrets.vault }}
           - name: STREAMTIME_VAULT_{{ upper $key }}
@@ -168,24 +170,8 @@ spec:
             value: "5432"
           - name: STREAMTIME_GATEWAY_URL
             value: http://kong-kong-proxy
-          - name: MINIO_ENDPOINT
-            value: fm-minio:9000
-          - name: MINIO_PUBLIC_ENDPOINT
-            value: fm-minio:9000
-          - name: MINIO_BUCKET_NAME
-            value: fleet-manager-agent
-          - name: MINIO_ACCESS_KEY
-            value: fleetmanager-config-user
-          - name: MINIO_SECRET_KEY
-            valueFrom:
-              secretKeyRef:
-                name: fleet-manager
-                key: MINIO_SECRET_KEY
-                optional: false
-          - name: MINIO_SECURE
-            value: "False"
-          - name: CONFIG_STORAGE_BUCKET_NAME
-            value: ws-fleet-manager-configuration
+          - name: STREAMTIME_ADVERTISED_ORCHESTRATOR_ADDRESS
+            value: {{ include "fleetmanager.orchestrator.domain" . }}
           - name: TEMPORAL_SERVER
             value: fm-temporal-frontend:7233
           - name: ROOT_ORG_OAUTH_ISSUER
@@ -281,6 +267,24 @@ spec:
             value: "0.15"
           - name: FLEET_SELECTION_LOAD_NOISY_WEIGHT
             value: "0.05"
+{{- if and .Values.fleetmanager.ghcr.username .Values.fleetmanager.ghcr.token }}
+          - name: GHCR_USERNAME
+            value: {{ .Values.fleetmanager.ghcr.username }}
+          - name: GHCR_TOKEN
+            value: {{ .Values.fleetmanager.ghcr.token }}
+{{- end }}
+{{- if and .Values.fleetmanager.dockerhub.username .Values.fleetmanager.dockerhub.token }}
+          - name: DOCKER_HUB_USERNAME
+            value: {{ .Values.fleetmanager.dockerhub.username }}
+          - name: DOCKER_HUB_TOKEN
+            value: {{ .Values.fleetmanager.dockerhub.token }}
+{{- end }}
+{{- if and .Values.fleetmanager.quay.username .Values.fleetmanager.quay.token }}
+          - name: QUAY_USERNAME
+            value: {{ .Values.fleetmanager.quay.username }}
+          - name: QUAY_TOKEN
+            value: {{ .Values.fleetmanager.quay.token }}
+{{- end }}
 {{- if eq .Values.fleetmanager.secrets.provider "vault" }}
 {{- range $key, $value := .Values.fleetmanager.secrets.vault }}
           - name: STREAMTIME_VAULT_{{ upper $key }}
