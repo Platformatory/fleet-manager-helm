@@ -2,6 +2,7 @@ apiVersion: configuration.konghq.com/v1
 kind: KongPlugin
 metadata:
   name: secure-response-headers
+plugin: response-transformer
 instance_name: secure-response-headers
 config:
   remove:
@@ -13,15 +14,3 @@ config:
       - Strict-Transport-Security:max-age=63072000;includeSubDomains;preload
       - X-Frame-Options:DENY
       - X-Content-Type-Options:nosniff
-plugin: response-transformer
----
-apiVersion: configuration.konghq.com/v1
-kind: KongPlugin
-metadata:
-  name: cache-response-headers
-instance_name: cache-response-headers
-config:
-  add:
-    headers:
-      - Cache-Control:nostore, must-revalidate
-plugin: response-transformer
