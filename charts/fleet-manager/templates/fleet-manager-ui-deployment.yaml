@@ -33,9 +33,9 @@ spec:
           - name: REACT_APP_DASHBOARD_SERVICE_URL
             value: https://{{ include "fleetmanager.grafana.domain" . }}
           - name: REACT_APP_TRACK_UI_PERFORMANCE
-            value: {{ .Values.fleetmanager.ui.trackUiPerformance }}
+            value: "{{ .Values.fleetmanager.ui.trackUiPerformance }}"
           - name: REACT_APP_ENABLE_GOOGLE_ANALYTICS
-            value: {{ .Values.fleetmanager.ui.enableGoogleAnalytics }}
+            value: "{{ .Values.fleetmanager.ui.enableGoogleAnalytics }}"
           - name: REACT_APP_STREAMTIME_AGENT_REGISTRY_URL
             value: {{ .Values.fleetmanager.streamtimeagent.registryUrl }}
           - name: REACT_APP_STREAMTIME_AGENT_REPOSITORY
