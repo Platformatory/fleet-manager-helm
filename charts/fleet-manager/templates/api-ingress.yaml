@@ -6,7 +6,7 @@ metadata:
     cert-manager.io/cluster-issuer: letsencrypt-prod
     konghq.com/methods: "GET"
     konghq.com/regex-priority: "10"
-    konghq.com/plugins: fleetmanager-authz, cors, secure-response-headers, cache-response-headers
+    konghq.com/plugins: fleetmanager-authz, cors, secure-response-headers # , cache-response-headers
     # kubernetes.io/ingress.class: kong
 spec:
   ingressClassName: kong
@@ -31,7 +31,7 @@ kind: Ingress
 metadata:
   name: fleet-manager-apis
   annotations:
-    konghq.com/plugins: fleetmanager-authz, cors, secure-response-headers, cache-response-headers
+    konghq.com/plugins: fleetmanager-authz, cors, secure-response-headers # , cache-response-headers
     cert-manager.io/cluster-issuer: letsencrypt-prod
     konghq.com/regex-priority: "9"
     # kubernetes.io/ingress.class: kong
@@ -58,7 +58,7 @@ kind: Ingress
 metadata:
   name: fleet-manager-forward-proxy
   annotations:
-    konghq.com/plugins: fleetmanager-authz, cors, secure-response-headers, cache-response-headers
+    konghq.com/plugins: fleetmanager-authz, cors, secure-response-headers # , cache-response-headers
     konghq.com/regex-priority: "9"
     # kubernetes.io/ingress.class: kong
 spec:

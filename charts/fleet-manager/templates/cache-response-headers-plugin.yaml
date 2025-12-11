@@ -1,10 +1,10 @@
-apiVersion: configuration.konghq.com/v1
-kind: KongPlugin
-metadata:
-  name: cache-response-headers
-plugin: response-transformer
-instance_name: cache-response-headers
-config:
-  add:
-    headers:
-      - Cache-Control:nostore, must-revalidate
+# apiVersion: configuration.konghq.com/v1
+# kind: KongPlugin
+# metadata:
+#   name: cache-response-headers
+# plugin: response-transformer
+# instance_name: cache-response-headers
+# config:
+#   add:
+#     headers:
+#       - Cache-Control:nostore, must-revalidate
