@@ -3,8 +3,8 @@ fleetmanager:
   license: 
   ui:
     image: ghcr.io/platformatory/streamtime-ui:v0.0.1-main-7acf81f
-    trackUiPerformance: true
-    enableGoogleAnalytics: false
+    trackUiPerformance: "true"
+    enableGoogleAnalytics: "false"
   api:
     image: ghcr.io/platformatory/streamtime-api:v0.0.1-main-7acf81f
   orchestrator:
