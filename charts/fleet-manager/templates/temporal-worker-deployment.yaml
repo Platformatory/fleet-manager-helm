@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: fleet-manager-temporal-worker
-          image: {{ .Values.fleetmanager.orchestrator.image }}
+          image: {{ .Values.fleetmanager.orchestrator.repository }}:{{ .Values.fleetmanager.orchestrator.tag }}
           env:
             - name: TEMPORAL_ADDRESS
               value: fm-temporal-frontend:7233

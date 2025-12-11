@@ -149,7 +149,7 @@ spec:
             value: {{ $value | quote }}
 {{- end }}
 {{- end }}
-          image: {{ .Values.fleetmanager.api.image }}
+          image: {{ .Values.fleetmanager.api.repository }}:{{ .Values.fleetmanager.api.tag }}
           command: ['python', 'manage.py', 'migrate']
           name: fleet-manager-migrations
       containers:
@@ -291,7 +291,7 @@ spec:
             value: {{ $value | quote }}
 {{- end }}
 {{- end }}
-          image: {{ .Values.fleetmanager.api.image }}
+          image: {{ .Values.fleetmanager.api.repository }}:{{ .Values.fleetmanager.api.tag }}
           name: fleet-manager
           ports:
             - containerPort: 8000

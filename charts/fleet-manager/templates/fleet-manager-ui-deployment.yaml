@@ -42,7 +42,7 @@ spec:
             value: {{ .Values.fleetmanager.streamtimeagent.repository }}
           - name: REACT_APP_STREAMTIME_AGENT_CHART_VERSION
             value: {{ .Values.fleetmanager.streamtimeagent.chartVersion }}
-          image: {{ .Values.fleetmanager.ui.image }}
+          image: {{ .Values.fleetmanager.ui.repository }}:{{ .Values.fleetmanager.ui.tag }}
           name: fleet-manager
           ports:
             - containerPort: 80

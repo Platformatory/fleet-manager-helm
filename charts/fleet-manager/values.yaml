@@ -2,15 +2,19 @@ fleetmanager:
   domain: 
   license: 
   ui:
-    image: ghcr.io/platformatory/streamtime-ui:v0.0.1-main-7acf81f
+    repository: ghcr.io/platformatory/streamtime-ui
+    tag: v0.0.1-main-7acf81f
     trackUiPerformance: "true"
     enableGoogleAnalytics: "false"
   api:
-    image: ghcr.io/platformatory/streamtime-api:v0.0.1-main-7acf81f
+    repository: ghcr.io/platformatory/streamtime-api
+    tag: v0.0.1-main-7acf81f
   orchestrator:
-    image: ghcr.io/platformatory/streamtime-orchestrator:v0.0.1-main-7acf81f
+    repository: ghcr.io/platformatory/streamtime-orchestrator
+    tag: v0.0.1-main-7acf81f
   mcp:
-    image: ghcr.io/platformatory/streamtime-mcp:v0.0.1-main-7acf81f
+    repository: ghcr.io/platformatory/streamtime-mcp
+    tag: v0.0.1-main-7acf81f
   streamtimeagent:
     registryUrl: ghcr.io
     repository: streamtime-ai

@@ -24,7 +24,7 @@ spec:
             value: {{ .Values.fleetmanager.domain }}
           - name: FLEET_MANAGER_URL
             value: http://fleet-manager:8000
-          image: {{ .Values.fleetmanager.mcp.image }}
+          image: {{ .Values.fleetmanager.mcp.repository }}:{{ .Values.fleetmanager.mcp.tag }}
           name: fleet-manager-mcp
           ports:
             - containerPort: 4200
