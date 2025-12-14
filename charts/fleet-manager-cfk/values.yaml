@@ -44,6 +44,7 @@ cfk:
     authentication: oauth
     kraft:
       diskSize: 50Gi
+      replicas: 3
       # resources:
       #   requests:
       #     cpu: "500m"
