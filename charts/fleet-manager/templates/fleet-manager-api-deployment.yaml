@@ -67,6 +67,8 @@ spec:
                 optional: false
           - name: SUPER_USER_EMAILS
             value: {{ .Values.fleetmanager.superUserEmails }}
+          - name: RBAC_BYPASS_HOSTS
+            value: localhost,127.0.0.1,fleet-manager
           - name: FLEET_MANAGER_DOMAIN
             value: {{ .Values.fleetmanager.domain }}
           - name: ROOT_ORG_IDENTIFIER
@@ -207,6 +209,8 @@ spec:
                 optional: false
           - name: SUPER_USER_EMAILS
             value: {{ .Values.fleetmanager.superUserEmails }}
+          - name: RBAC_BYPASS_HOSTS
+            value: localhost,127.0.0.1,fleet-manager
           - name: FLEET_MANAGER_DOMAIN
             value: {{ .Values.fleetmanager.domain }}
           - name: DJANGO_ALLOWED_HOSTS
