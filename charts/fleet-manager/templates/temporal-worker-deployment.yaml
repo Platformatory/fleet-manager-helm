@@ -53,6 +53,8 @@ spec:
             - name: FLEET_MANAGER_NAMESPACE
               value: {{ .Release.Namespace }}
             - name: STREAMTIME_ADVERTISED_ORCHESTRATOR_ADDRESS
+              value: {{ include "fleetmanager.orchestrator.domain" . }}:443
+            - name: STREAMTIME_ORCHESTRATOR_SERVER_NAME
               value: {{ include "fleetmanager.orchestrator.domain" . }}
             - name: STREAMTIME_ORCHESTRATOR_TLS_ENABLED
               value: "true"

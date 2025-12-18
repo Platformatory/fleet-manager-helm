@@ -22,6 +22,8 @@ config:
     route: "{{ .Release.Namespace }}.fleet-manager-apis.fleet-manager.{{ include "fleetmanager.api.domain" . }}.8000"
     oidc_credentials_url_prefix: http://fleet-manager.{{ .Release.Namespace }}.svc:8000
     jwks_cache_ttl: 300
+    api_key_validation_url_prefix: http://fleet-manager.{{ .Release.Namespace }}.svc:8000
+    api_key_cache_ttl: 300
     token_source: "header"                       # "header" or "cookie"
     token_pattern: "fleetmanager.org.{orgId}.token"  # Only needed for cookie mode
   dashboard:

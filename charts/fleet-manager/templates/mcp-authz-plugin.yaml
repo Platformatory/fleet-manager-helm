@@ -22,4 +22,6 @@ config:
     route: "{{ .Release.Namespace }}.fleet-manager-mcp.fleet-manager-mcp.{{ include "fleetmanager.api.domain" . }}.4200"
     oidc_credentials_url_prefix: http://fleet-manager.{{ .Release.Namespace }}.svc:8000
     jwks_cache_ttl: 300
+    api_key_validation_url_prefix: http://fleet-manager.{{ .Release.Namespace }}.svc:8000
+    api_key_cache_ttl: 300
     token_source: "header"  

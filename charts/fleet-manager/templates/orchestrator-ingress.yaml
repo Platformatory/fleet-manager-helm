@@ -4,8 +4,8 @@ metadata:
   name: fleet-manager-orchestrator
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
-    konghq.com/plugins: key-auth
-    konghq.com/protocols: grpc
+    konghq.com/plugins: fleetmanager-authz
+    konghq.com/protocols: grpc, grpcs
     konghq.com/read-timeout: "3600000"
     konghq.com/write-timeout: "3600000"
     konghq.com/connect-timeout: "60000"
