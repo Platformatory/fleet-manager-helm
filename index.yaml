@@ -2291,4 +2291,16 @@ entries:
     urls:
     - https://github.com/Platformatory/fleet-manager-helm/releases/download/fleet-manager-warpstream-dashboard-0.1.0/fleet-manager-warpstream-dashboard-0.1.0.tgz
     version: 0.1.0
-generated: "2025-12-19T09:25:03.34976403Z"
+  streamtime-clusterlink:
+  - apiVersion: v2
+    appVersion: 0.0.0
+    created: "2025-12-20T07:53:38.128679087Z"
+    description: A Helm chart for Streamtime Clusterlink. Currentlly, only supports
+      Confluent Cloud as source and Confluent Platform as destination.
+    digest: a32516759ed1ba2ca75964561c2f85452b1fe9c32a3e6ef342cacb9421dbb852
+    name: streamtime-clusterlink
+    type: application
+    urls:
+    - https://github.com/Platformatory/fleet-manager-helm/releases/download/streamtime-clusterlink-0.1.0/streamtime-clusterlink-0.1.0.tgz
+    version: 0.1.0
+generated: "2025-12-20T07:53:38.129708224Z"
