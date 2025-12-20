@@ -1,0 +1,16 @@
+certs:
+  ca:
+    cert:
+  kafka:
+    cert:
+source:
+  bootstrapEndpoint: 
+  clusterID: 
+  credentials:
+    type: plain
+    username:
+    password: 
+destination:
+  kafkaRestClass:
+    name: default
+topics: []

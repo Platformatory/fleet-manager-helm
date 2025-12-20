@@ -1,0 +1,27 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: ClusterLink
+metadata:
+  name: clusterlink-{{ .Release.Name }}
+spec:
+  destinationKafkaCluster:
+    kafkaRestClassRef:
+      name: {{ .Values.destination.kafkaRestClass.name }}
+      namespace: {{ .Release.Namespace }}
+  sourceKafkaCluster:
+    tls:
+{{- if and .Values.certs.kafka.cert .Values.certs.ca.cert }}
+      enabled: true
+      secretRef: {{ .Release.Name }}-clusterlink-source-tls
+{{- else }}
+      enabled: false
+{{- end }}
+    bootstrapEndpoint: {{ .Values.source.bootstrapEndpoint }}
+    clusterID: {{ .Values.source.clusterID }}
+    authentication:
+      type: {{ .Values.source.credentials.type }}
+      jaasConfigPassThrough:
+        secretRef: {{ .Release.Name }}-cl-src-cred
+  mirrorTopics:
+{{- range .Values.topics }}
+  - name: {{ . | quote }}
+{{- end }}
