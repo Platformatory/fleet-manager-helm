@@ -1,0 +1,300 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaMirrorMaker2
+metadata:
+  name: {{ include "streamtime-mirrormaker.fullname" . }}
+  labels:
+    {{- include "streamtime-mirrormaker.labels" . | nindent 4 }}
+spec:
+  version: {{ .Values.mirrorMaker2.version }}
+  replicas: {{ .Values.mirrorMaker2.replicas }}
+  connectCluster: {{ .Values.destinationCluster.alias }}
+  clusters:
+    # Source cluster configuration
+    - alias: {{ .Values.sourceCluster.alias }}
+      bootstrapServers: {{ .Values.sourceCluster.bootstrapServers }}
+      tls:
+{{- if .Values.sourceCluster.tls.trustedCertificates }}
+        trustedCertificates:
+{{- range .Values.sourceCluster.tls.trustedCertificates }}
+          - certificate: |
+{{ . | indent 14 }}
+{{- end }}
+{{- else if .Values.sourceCluster.tls.enabled }}
+        trustedCertificates: []
+{{- else }}
+        trustedCertificates: []
+{{- end }}
+{{- if ne .Values.sourceCluster.authentication.type "none" }}
+{{- if eq .Values.sourceCluster.authentication.type "tls" }}
+      authentication:
+        type: tls
+        certificateAndKey:
+          secretName: {{ include "streamtime-mirrormaker.sourceAuthSecretName" . }}
+          certificate: tls.crt
+          key: tls.key
+{{- else if eq .Values.sourceCluster.authentication.type "scram-sha-256" }}
+      authentication:
+        type: scram-sha-256
+        username: {{ .Values.sourceCluster.authentication.scramSha256.username }}
+        passwordSecret:
+          secretName: {{ include "streamtime-mirrormaker.sourceAuthSecretName" . }}
+          password: password
+{{- else if eq .Values.sourceCluster.authentication.type "scram-sha-512" }}
+      authentication:
+        type: scram-sha-512
+        username: {{ .Values.sourceCluster.authentication.scramSha512.username }}
+        passwordSecret:
+          secretName: {{ include "streamtime-mirrormaker.sourceAuthSecretName" . }}
+          password: password
+{{- else if eq .Values.sourceCluster.authentication.type "plain" }}
+      authentication:
+        type: plain
+        username: {{ .Values.sourceCluster.authentication.plain.username }}
+        passwordSecret:
+          secretName: {{ include "streamtime-mirrormaker.sourceAuthSecretName" . }}
+          password: password
+{{- else if eq .Values.sourceCluster.authentication.type "oauth" }}
+      authentication:
+        type: oauth
+        clientId: {{ .Values.sourceCluster.authentication.oauth.clientId }}
+        clientSecret:
+          secretName: {{ include "streamtime-mirrormaker.sourceAuthSecretName" . }}
+          key: clientSecret
+        tokenEndpointUri: {{ .Values.sourceCluster.authentication.oauth.tokenEndpointUri }}
+{{- if .Values.sourceCluster.authentication.oauth.accessTokenIsJwt }}
+        accessTokenIsJwt: {{ .Values.sourceCluster.authentication.oauth.accessTokenIsJwt }}
+{{- end }}
+{{- if .Values.sourceCluster.authentication.oauth.scope }}
+        scope: {{ .Values.sourceCluster.authentication.oauth.scope }}
+{{- end }}
+{{- if .Values.sourceCluster.authentication.oauth.audience }}
+        audience: {{ .Values.sourceCluster.authentication.oauth.audience }}
+{{- end }}
+{{- if .Values.sourceCluster.authentication.oauth.maxSecondsWithoutReauthentication }}
+        maxSecondsWithoutReauthentication: {{ .Values.sourceCluster.authentication.oauth.maxSecondsWithoutReauthentication }}
+{{- end }}
+{{- if .Values.sourceCluster.authentication.oauth.connectTimeoutSeconds }}
+        connectTimeoutSeconds: {{ .Values.sourceCluster.authentication.oauth.connectTimeoutSeconds }}
+{{- end }}
+{{- if .Values.sourceCluster.authentication.oauth.readTimeoutSeconds }}
+        readTimeoutSeconds: {{ .Values.sourceCluster.authentication.oauth.readTimeoutSeconds }}
+{{- end }}
+{{- if .Values.sourceCluster.authentication.oauth.enableMetrics }}
+        enableMetrics: {{ .Values.sourceCluster.authentication.oauth.enableMetrics }}
+{{- end }}
+{{- if .Values.sourceCluster.authentication.oauth.checkAccessTokenType }}
+        checkAccessTokenType: {{ .Values.sourceCluster.authentication.oauth.checkAccessTokenType }}
+{{- end }}
+{{- if .Values.sourceCluster.authentication.oauth.checkIssuer }}
+        checkIssuer: {{ .Values.sourceCluster.authentication.oauth.checkIssuer }}
+{{- end }}
+{{- if .Values.sourceCluster.authentication.oauth.checkAudience }}
+        checkAudience: {{ .Values.sourceCluster.authentication.oauth.checkAudience }}
+{{- end }}
+{{- if .Values.sourceCluster.authentication.oauth.customClaimCheck }}
+        customClaimCheck: {{ .Values.sourceCluster.authentication.oauth.customClaimCheck }}
+{{- end }}
+{{- if .Values.sourceCluster.authentication.oauth.fallbackUserNameClaim }}
+        fallbackUserNameClaim: {{ .Values.sourceCluster.authentication.oauth.fallbackUserNameClaim }}
+{{- end }}
+{{- if .Values.sourceCluster.authentication.oauth.fallbackUserNamePrefix }}
+        fallbackUserNamePrefix: {{ .Values.sourceCluster.authentication.oauth.fallbackUserNamePrefix }}
+{{- end }}
+{{- if .Values.sourceCluster.authentication.oauth.tlsTrustedCertificates }}
+        tlsTrustedCertificates:
+{{- range .Values.sourceCluster.authentication.oauth.tlsTrustedCertificates }}
+          - secretName: {{ .secretName }}
+            certificate: {{ .certificate }}
+{{- end }}
+{{- end }}
+{{- if .Values.sourceCluster.authentication.oauth.disableTlsHostnameVerification }}
+        disableTlsHostnameVerification: {{ .Values.sourceCluster.authentication.oauth.disableTlsHostnameVerification }}
+{{- end }}
+{{- if .Values.sourceCluster.authentication.oauth.httpRetries }}
+        httpRetries: {{ .Values.sourceCluster.authentication.oauth.httpRetries }}
+{{- end }}
+{{- if .Values.sourceCluster.authentication.oauth.httpRetryPauseMs }}
+        httpRetryPauseMs: {{ .Values.sourceCluster.authentication.oauth.httpRetryPauseMs }}
+{{- end }}
+{{- end }}
+{{- end }}
+    # Destination cluster configuration
+    - alias: {{ .Values.destinationCluster.alias }}
+      bootstrapServers: {{ .Values.destinationCluster.bootstrapServers }}
+      tls:
+{{- if .Values.destinationCluster.tls.trustedCertificates }}
+        trustedCertificates:
+{{- range .Values.destinationCluster.tls.trustedCertificates }}
+          - certificate: |
+{{ . | indent 14 }}
+{{- end }}
+{{- else if .Values.destinationCluster.tls.enabled }}
+        trustedCertificates: []
+{{- else }}
+        trustedCertificates: []
+{{- end }}
+{{- if ne .Values.destinationCluster.authentication.type "none" }}
+{{- if eq .Values.destinationCluster.authentication.type "tls" }}
+      authentication:
+        type: tls
+        certificateAndKey:
+          secretName: {{ include "streamtime-mirrormaker.destinationAuthSecretName" . }}
+          certificate: tls.crt
+          key: tls.key
+{{- else if eq .Values.destinationCluster.authentication.type "scram-sha-256" }}
+      authentication:
+        type: scram-sha-256
+        username: {{ .Values.destinationCluster.authentication.scramSha256.username }}
+        passwordSecret:
+          secretName: {{ include "streamtime-mirrormaker.destinationAuthSecretName" . }}
+          password: password
+{{- else if eq .Values.destinationCluster.authentication.type "scram-sha-512" }}
+      authentication:
+        type: scram-sha-512
+        username: {{ .Values.destinationCluster.authentication.scramSha512.username }}
+        passwordSecret:
+          secretName: {{ include "streamtime-mirrormaker.destinationAuthSecretName" . }}
+          password: password
+{{- else if eq .Values.destinationCluster.authentication.type "plain" }}
+      authentication:
+        type: plain
+        username: {{ .Values.destinationCluster.authentication.plain.username }}
+        passwordSecret:
+          secretName: {{ include "streamtime-mirrormaker.destinationAuthSecretName" . }}
+          password: password
+{{- else if eq .Values.destinationCluster.authentication.type "oauth" }}
+      authentication:
+        type: oauth
+        clientId: {{ .Values.destinationCluster.authentication.oauth.clientId }}
+        clientSecret:
+          secretName: {{ include "streamtime-mirrormaker.destinationAuthSecretName" . }}
+          key: clientSecret
+        tokenEndpointUri: {{ .Values.destinationCluster.authentication.oauth.tokenEndpointUri }}
+{{- if .Values.destinationCluster.authentication.oauth.accessTokenIsJwt }}
+        accessTokenIsJwt: {{ .Values.destinationCluster.authentication.oauth.accessTokenIsJwt }}
+{{- end }}
+{{- if .Values.destinationCluster.authentication.oauth.scope }}
+        scope: {{ .Values.destinationCluster.authentication.oauth.scope }}
+{{- end }}
+{{- if .Values.destinationCluster.authentication.oauth.audience }}
+        audience: {{ .Values.destinationCluster.authentication.oauth.audience }}
+{{- end }}
+{{- if .Values.destinationCluster.authentication.oauth.maxSecondsWithoutReauthentication }}
+        maxSecondsWithoutReauthentication: {{ .Values.destinationCluster.authentication.oauth.maxSecondsWithoutReauthentication }}
+{{- end }}
+{{- if .Values.destinationCluster.authentication.oauth.connectTimeoutSeconds }}
+        connectTimeoutSeconds: {{ .Values.destinationCluster.authentication.oauth.connectTimeoutSeconds }}
+{{- end }}
+{{- if .Values.destinationCluster.authentication.oauth.readTimeoutSeconds }}
+        readTimeoutSeconds: {{ .Values.destinationCluster.authentication.oauth.readTimeoutSeconds }}
+{{- end }}
+{{- if .Values.destinationCluster.authentication.oauth.enableMetrics }}
+        enableMetrics: {{ .Values.destinationCluster.authentication.oauth.enableMetrics }}
+{{- end }}
+{{- if .Values.destinationCluster.authentication.oauth.checkAccessTokenType }}
+        checkAccessTokenType: {{ .Values.destinationCluster.authentication.oauth.checkAccessTokenType }}
+{{- end }}
+{{- if .Values.destinationCluster.authentication.oauth.checkIssuer }}
+        checkIssuer: {{ .Values.destinationCluster.authentication.oauth.checkIssuer }}
+{{- end }}
+{{- if .Values.destinationCluster.authentication.oauth.checkAudience }}
+        checkAudience: {{ .Values.destinationCluster.authentication.oauth.checkAudience }}
+{{- end }}
+{{- if .Values.destinationCluster.authentication.oauth.customClaimCheck }}
+        customClaimCheck: {{ .Values.destinationCluster.authentication.oauth.customClaimCheck }}
+{{- end }}
+{{- if .Values.destinationCluster.authentication.oauth.fallbackUserNameClaim }}
+        fallbackUserNameClaim: {{ .Values.destinationCluster.authentication.oauth.fallbackUserNameClaim }}
+{{- end }}
+{{- if .Values.destinationCluster.authentication.oauth.fallbackUserNamePrefix }}
+        fallbackUserNamePrefix: {{ .Values.destinationCluster.authentication.oauth.fallbackUserNamePrefix }}
+{{- end }}
+{{- if .Values.destinationCluster.authentication.oauth.tlsTrustedCertificates }}
+        tlsTrustedCertificates:
+{{- range .Values.destinationCluster.authentication.oauth.tlsTrustedCertificates }}
+          - secretName: {{ .secretName }}
+            certificate: {{ .certificate }}
+{{- end }}
+{{- end }}
+{{- if .Values.destinationCluster.authentication.oauth.disableTlsHostnameVerification }}
+        disableTlsHostnameVerification: {{ .Values.destinationCluster.authentication.oauth.disableTlsHostnameVerification }}
+{{- end }}
+{{- if .Values.destinationCluster.authentication.oauth.httpRetries }}
+        httpRetries: {{ .Values.destinationCluster.authentication.oauth.httpRetries }}
+{{- end }}
+{{- if .Values.destinationCluster.authentication.oauth.httpRetryPauseMs }}
+        httpRetryPauseMs: {{ .Values.destinationCluster.authentication.oauth.httpRetryPauseMs }}
+{{- end }}
+{{- end }}
+{{- end }}
+  mirrors:
+    - sourceCluster: {{ .Values.sourceCluster.alias }}
+      targetCluster: {{ .Values.destinationCluster.alias }}
+      sourceConnector:
+        config:
+          replication.factor: {{ .Values.mirrorMaker2.sourceConnector.replicationFactor }}
+          offset-syncs.topic.replication.factor: {{ .Values.mirrorMaker2.sourceConnector.offsetSyncsTopicReplicationFactor }}
+          sync.topic.acls.enabled: {{ .Values.mirrorMaker2.sourceConnector.syncTopicAclsEnabled | quote }}
+          sync.topic.configs.enabled: {{ .Values.mirrorMaker2.sourceConnector.syncTopicConfigsEnabled | quote }}
+          sync.group.offsets.enabled: {{ .Values.mirrorMaker2.sourceConnector.syncGroupOffsetsEnabled | quote }}
+{{- if .Values.mirrorMaker2.topicsPattern }}
+          topics: {{ .Values.mirrorMaker2.topicsPattern | quote }}
+{{- end }}
+{{- if .Values.mirrorMaker2.topicsExcludePattern }}
+          topics.exclude: {{ .Values.mirrorMaker2.topicsExcludePattern | quote }}
+{{- end }}
+{{- if .Values.mirrorMaker2.groupsPattern }}
+          groups: {{ .Values.mirrorMaker2.groupsPattern | quote }}
+{{- end }}
+{{- if .Values.mirrorMaker2.groupsExcludePattern }}
+          groups.exclude: {{ .Values.mirrorMaker2.groupsExcludePattern | quote }}
+{{- end }}
+{{- if .Values.mirrorMaker2.sourceConnector.syncGroupOffsetsIntervalSeconds }}
+          sync.group.offsets.interval.seconds: {{ .Values.mirrorMaker2.sourceConnector.syncGroupOffsetsIntervalSeconds }}
+{{- end }}
+{{- if .Values.mirrorMaker2.sourceConnector.refreshTopicsIntervalSeconds }}
+          refresh.topics.interval.seconds: {{ .Values.mirrorMaker2.sourceConnector.refreshTopicsIntervalSeconds }}
+{{- end }}
+{{- if .Values.mirrorMaker2.sourceConnector.refreshGroupsIntervalSeconds }}
+          refresh.groups.interval.seconds: {{ .Values.mirrorMaker2.sourceConnector.refreshGroupsIntervalSeconds }}
+{{- end }}
+      heartbeatConnector:
+        config:
+          heartbeats.topic.replication.factor: {{ .Values.mirrorMaker2.sourceConnector.heartbeatsTopicReplicationFactor }}
+{{- if .Values.mirrorMaker2.sourceConnector.emitHeartbeatsEnabled }}
+          emit.heartbeats.enabled: {{ .Values.mirrorMaker2.sourceConnector.emitHeartbeatsEnabled | quote }}
+{{- end }}
+{{- if .Values.mirrorMaker2.sourceConnector.emitHeartbeatsIntervalSeconds }}
+          emit.heartbeats.interval.seconds: {{ .Values.mirrorMaker2.sourceConnector.emitHeartbeatsIntervalSeconds }}
+{{- end }}
+      checkpointConnector:
+        config:
+          checkpoints.topic.replication.factor: {{ .Values.mirrorMaker2.sourceConnector.checkpointsTopicReplicationFactor }}
+{{- if .Values.mirrorMaker2.sourceConnector.refreshTopicsEnabled }}
+          refresh.topics.enabled: {{ .Values.mirrorMaker2.sourceConnector.refreshTopicsEnabled | quote }}
+{{- end }}
+{{- if .Values.mirrorMaker2.sourceConnector.refreshGroupsEnabled }}
+          refresh.groups.enabled: {{ .Values.mirrorMaker2.sourceConnector.refreshGroupsEnabled | quote }}
+{{- end }}
+{{- if or .Values.mirrorMaker2.resources.requests .Values.mirrorMaker2.resources.limits }}
+  resources:
+{{- if .Values.mirrorMaker2.resources.requests }}
+    requests:
+{{- if .Values.mirrorMaker2.resources.requests.cpu }}
+      cpu: {{ .Values.mirrorMaker2.resources.requests.cpu }}
+{{- end }}
+{{- if .Values.mirrorMaker2.resources.requests.memory }}
+      memory: {{ .Values.mirrorMaker2.resources.requests.memory }}
+{{- end }}
+{{- end }}
+{{- if .Values.mirrorMaker2.resources.limits }}
+    limits:
+{{- if .Values.mirrorMaker2.resources.limits.cpu }}
+      cpu: {{ .Values.mirrorMaker2.resources.limits.cpu }}
+{{- end }}
+{{- if .Values.mirrorMaker2.resources.limits.memory }}
+      memory: {{ .Values.mirrorMaker2.resources.limits.memory }}
+{{- end }}
+{{- end }}
+{{- end }}
+

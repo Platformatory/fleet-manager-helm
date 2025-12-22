@@ -1,0 +1,10 @@
+apiVersion: v2
+name: streamtime-mirrormaker
+description: A Helm chart for deploying KafkaMirrorMaker2 and KafkaConnect using Strimzi operator
+
+type: application
+
+version: 0.1.0
+
+appVersion: "0.0.0"
+

@@ -1,0 +1,146 @@
+# Source cluster configuration
+sourceCluster:
+  alias: "source-cluster"
+  bootstrapServers: ""
+  authentication:
+    # Authentication type: tls, scram-sha-256, scram-sha-512, plain, oauth
+    type: "tls"
+    # TLS authentication (mutual TLS)
+    tls:
+      certificateContent: ""  # Certificate content (PEM format, plain text)
+      keyContent: ""  # Key content (PEM format, plain text)
+    # SCRAM-SHA-256 authentication
+    scramSha256:
+      username: ""
+      password: ""
+    # SCRAM-SHA-512 authentication
+    scramSha512:
+      username: ""
+      password: ""
+    # Plain authentication
+    plain:
+      username: ""
+      password: ""
+    # OAuth authentication
+    oauth:
+      clientId: ""
+      clientSecret: ""
+      tokenEndpointUri: ""
+      accessTokenIsJwt: true
+      scope: ""
+      audience: ""
+      maxSecondsWithoutReauthentication: 3600
+      connectTimeoutSeconds: 60
+      readTimeoutSeconds: 60
+      enableMetrics: false
+      checkAccessTokenType: true
+      checkIssuer: true
+      checkAudience: true
+      customClaimCheck: ""
+      fallbackUserNameClaim: ""
+      fallbackUserNamePrefix: ""
+      tlsTrustedCertificates: []
+      disableTlsHostnameVerification: false
+      httpRetries: 0
+      httpRetryPauseMs: 0
+  # TLS trust store configuration
+  tls:
+    enabled: false  # Set to true to enable TLS with custom trusted certificates
+    trustedCertificates: []  # List of certificate content (PEM format)
+    # Example:
+    # trustedCertificates:
+    #   - |
+    #     -----BEGIN CERTIFICATE-----
+    #     MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA...
+    #     -----END CERTIFICATE-----
+
+# Destination cluster configuration
+destinationCluster:
+  alias: "destination-cluster"
+  bootstrapServers: ""
+  authentication:
+    # Authentication type: tls, scram-sha-256, scram-sha-512, plain, oauth
+    type: "tls"
+    # TLS authentication (mutual TLS)
+    tls:
+      certificateContent: ""  # Certificate content (PEM format, plain text)
+      keyContent: ""  # Key content (PEM format, plain text)
+    # SCRAM-SHA-256 authentication
+    scramSha256:
+      username: ""
+      password: ""
+    # SCRAM-SHA-512 authentication
+    scramSha512:
+      username: ""
+      password: ""
+    # Plain authentication
+    plain:
+      username: ""
+      password: ""
+    # OAuth authentication
+    oauth:
+      clientId: ""
+      clientSecret: ""
+      tokenEndpointUri: ""
+      accessTokenIsJwt: true
+      scope: ""
+      audience: ""
+      maxSecondsWithoutReauthentication: 3600
+      connectTimeoutSeconds: 60
+      readTimeoutSeconds: 60
+      enableMetrics: false
+      checkAccessTokenType: true
+      checkIssuer: true
+      checkAudience: true
+      customClaimCheck: ""
+      fallbackUserNameClaim: ""
+      fallbackUserNamePrefix: ""
+      tlsTrustedCertificates: []
+      disableTlsHostnameVerification: false
+      httpRetries: 0
+      httpRetryPauseMs: 0
+  # TLS trust store configuration
+  tls:
+    enabled: false  # Set to true to enable TLS with custom trusted certificates
+    trustedCertificates: []  # List of certificate content (PEM format)
+    # Example:
+    # trustedCertificates:
+    #   - |
+    #     -----BEGIN CERTIFICATE-----
+    #     MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA...
+    #     -----END CERTIFICATE-----
+
+# KafkaMirrorMaker2 configuration
+mirrorMaker2:
+  version: "3.8.0"
+  replicas: 1
+  # Topic filtering patterns
+  topicsPattern: ".*"
+  topicsExcludePattern: ""
+  # Consumer group filtering patterns
+  groupsPattern: ".*"
+  groupsExcludePattern: ""
+  # Source connector configuration
+  sourceConnector:
+    replicationFactor: 3
+    offsetSyncsTopicReplicationFactor: 3
+    syncTopicAclsEnabled: true
+    syncTopicConfigsEnabled: true
+    syncGroupOffsetsEnabled: false
+    syncGroupOffsetsIntervalSeconds: 60
+    emitHeartbeatsEnabled: true
+    emitHeartbeatsIntervalSeconds: 60
+    refreshTopicsEnabled: true
+    refreshTopicsIntervalSeconds: 60
+    refreshGroupsEnabled: true
+    refreshGroupsIntervalSeconds: 60
+    checkpointsTopicReplicationFactor: 3
+    heartbeatsTopicReplicationFactor: 3
+  # Resource limits and requests
+  resources:
+    requests:
+      cpu: ""
+      memory: ""
+    limits:
+      cpu: ""
+      memory: ""
