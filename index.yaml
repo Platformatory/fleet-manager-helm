@@ -2303,4 +2303,16 @@ entries:
     urls:
     - https://github.com/Platformatory/fleet-manager-helm/releases/download/streamtime-clusterlink-0.1.0/streamtime-clusterlink-0.1.0.tgz
     version: 0.1.0
-generated: "2025-12-20T07:53:38.129708224Z"
+  streamtime-mirrormaker:
+  - apiVersion: v2
+    appVersion: 0.0.0
+    created: "2025-12-22T08:38:29.628895092Z"
+    description: A Helm chart for deploying KafkaMirrorMaker2 and KafkaConnect using
+      Strimzi operator
+    digest: f9a7e18502cc0852b3b65c6f2ce2ba9cfabc954a97d361a51913a7cdb086998c
+    name: streamtime-mirrormaker
+    type: application
+    urls:
+    - https://github.com/Platformatory/fleet-manager-helm/releases/download/streamtime-mirrormaker-0.1.0/streamtime-mirrormaker-0.1.0.tgz
+    version: 0.1.0
+generated: "2025-12-22T08:38:29.629892948Z"
