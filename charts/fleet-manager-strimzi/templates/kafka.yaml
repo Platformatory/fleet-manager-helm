@@ -19,9 +19,9 @@ spec:
 {{ .Values.nodeAffinity | default dict | toYaml | indent 12 }}
 {{- end }}
 {{- end }}
-{{- if or (eq .Values.kafka.tieredStorage.provider "S3") (.Values.kafka.resources) }}
+{{- if or (and .Values.kafka.tieredStorage.enabled (eq .Values.kafka.tieredStorage.provider "S3")) (.Values.kafka.resources) }}
       kafkaContainer:
-{{- if eq .Values.kafka.tieredStorage.provider "S3" }}
+{{- if and .Values.kafka.tieredStorage.enabled (eq .Values.kafka.tieredStorage.provider "S3") }}
         env:
         - name: AWS_ACCESS_KEY_ID
           valueFrom:
@@ -113,6 +113,7 @@ spec:
         log4j.appender.stderr.Target: "System.err"
         log4j.appender.stderr.layout: "org.apache.log4j.PatternLayout"
         log4j.appender.stderr.layout.ConversionPattern: "[%d] %p %m (%c)%n"
+{{- if .Values.kafka.tieredStorage.enabled }}
     tieredStorage:
       type: custom
       remoteStorageManager:
@@ -144,6 +145,7 @@ spec:
       remote.log.metadata.manager.class.name: org.apache.kafka.server.log.remote.metadata.storage.TopicBasedRemoteLogMetadataManager
       remote.log.storage.manager.class.name: io.aiven.kafka.tieredstorage.RemoteStorageManager
       remote.log.manager.task.interval.ms: "5000"
+{{- end }}
   entityOperator:
     topicOperator: {}
     userOperator: {}

@@ -29,6 +29,7 @@ kafka:
       cpu:
       memory:
   tieredStorage:
+    enabled: true # Set to true for backwards compatibility
     provider: S3
     cloud: aws
     bucketName: 
