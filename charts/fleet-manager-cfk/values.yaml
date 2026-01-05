@@ -93,6 +93,7 @@ cfk:
     name:
     type:
   tieredStorage:
+    enabled: true
     provider: S3
     cloud: aws
     bucketName: 
