@@ -794,6 +794,16 @@ entries:
   fleet-manager-cfk:
   - apiVersion: v2
     appVersion: 0.0.0
+    created: "2026-01-05T10:41:41.233215946Z"
+    description: A Helm chart for Kubernetes
+    digest: fee26fbd56ef8be7e3839e2012a28e1cc1772ed25364bf68115d45242a2851ee
+    name: fleet-manager-cfk
+    type: application
+    urls:
+    - https://github.com/Platformatory/fleet-manager-helm/releases/download/fleet-manager-cfk-0.21.0/fleet-manager-cfk-0.21.0.tgz
+    version: 0.21.0
+  - apiVersion: v2
+    appVersion: 0.0.0
     created: "2025-12-14T13:07:36.860312401Z"
     description: A Helm chart for Kubernetes
     digest: 1adf2972ada43d643d3fcca7707f57f0db432625a5b0bb2142b342c167754dcd
@@ -2325,4 +2335,4 @@ entries:
     urls:
     - https://github.com/Platformatory/fleet-manager-helm/releases/download/streamtime-mirrormaker-0.1.0/streamtime-mirrormaker-0.1.0.tgz
     version: 0.1.0
-generated: "2025-12-25T17:35:49.665846929Z"
+generated: "2026-01-05T10:41:41.234185084Z"
