@@ -1,9 +1,0 @@
-apiVersion: v2
-name: streamtime-clusterlink
-description: A Helm chart for Streamtime Clusterlink. Currentlly, only supports Confluent Cloud as source and Confluent Platform as destination.
-
-type: application
-
-version: 0.1.0
-
-appVersion: "0.0.0"
