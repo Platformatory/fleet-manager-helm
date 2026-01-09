@@ -6,6 +6,7 @@ fleetmanager:
     tag: v0.0.1-main-7acf81f
     trackUiPerformance: "true"
     enableGoogleAnalytics: "false"
+    enablePreviewFeatures: "false"
   api:
     repository: ghcr.io/platformatory/streamtime-api
     tag: v0.0.1-main-7acf81f
@@ -18,7 +19,11 @@ fleetmanager:
   streamtimeagent:
     registryUrl: ghcr.io
     repository: streamtime-ai
-    chartVersion: 0.1.0
+    chartVersion: latest
+  streamtimeclusterlink:
+    registryUrl: ghcr.io
+    repository: streamtime-ai
+    chartVersion: latest
   kubeconfig:
     provider: static # Can be aws. If aws, the aws credentials section must be set accordingly.
     credentials: {}
