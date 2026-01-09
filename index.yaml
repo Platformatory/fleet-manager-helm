@@ -3,6 +3,16 @@ entries:
   fleet-manager:
   - apiVersion: v2
     appVersion: 1.1.0
+    created: "2026-01-09T11:32:35.70618449Z"
+    description: A Helm chart for Kafka Fleet Manager
+    digest: cbb486a3150a7c4bb9a9692b12b560b34020ed2e350101e8522eb6643fa36717
+    name: fleet-manager
+    type: application
+    urls:
+    - https://github.com/Platformatory/fleet-manager-helm/releases/download/fleet-manager-0.25.0/fleet-manager-0.25.0.tgz
+    version: 0.25.0
+  - apiVersion: v2
+    appVersion: 1.1.0
     created: "2025-12-19T09:25:03.34876206Z"
     description: A Helm chart for Kafka Fleet Manager
     digest: f2156e3d0ce5069b8b14f186efcacdd2cfffc8e9be3b393c38893c5da1b8b273
@@ -2335,4 +2345,4 @@ entries:
     urls:
     - https://github.com/Platformatory/fleet-manager-helm/releases/download/streamtime-mirrormaker-0.1.0/streamtime-mirrormaker-0.1.0.tgz
     version: 0.1.0
-generated: "2026-01-05T10:41:41.234185084Z"
+generated: "2026-01-09T11:32:35.707288602Z"
