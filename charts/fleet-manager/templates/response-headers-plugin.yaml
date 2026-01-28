@@ -14,3 +14,19 @@ config:
       - Strict-Transport-Security:max-age=63072000;includeSubDomains;preload
       - X-Frame-Options:DENY
       - X-Content-Type-Options:nosniff
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: secure-response-headers-grafana
+plugin: response-transformer
+instance_name: secure-response-headers-grafana
+config:
+  remove:
+    headers:
+      - Server
+      - X-Powered-By
+  add:
+    headers:
+      - Strict-Transport-Security:max-age=63072000;includeSubDomains;preload
+      - X-Content-Type-Options:nosniff

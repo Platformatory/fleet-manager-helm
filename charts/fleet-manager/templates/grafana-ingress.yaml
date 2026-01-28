@@ -4,7 +4,7 @@ metadata:
   name: grafana-ingress
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
-    konghq.com/plugins: fleetmanager-authz, secure-response-headers
+    konghq.com/plugins: fleetmanager-authz, secure-response-headers-grafana
 spec:
   ingressClassName: kong
   tls:
