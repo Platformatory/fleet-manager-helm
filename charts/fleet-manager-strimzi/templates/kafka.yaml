@@ -56,7 +56,12 @@ spec:
           maxSecondsWithoutReauthentication: 3600
           enableMetrics: true
           checkAccessTokenType: false
-          disableTlsHostnameVerification: true
+          disableTlsHostnameVerification: {{ .Values.oauth.disableTlsHostnameVerification }}
+{{ if .Values.oauth.tlsTrustedCert }}
+          tlsTrustedCertificates:
+          - secretName: oauth-ca-truststore
+            certificate: ca.crt
+{{- end -}}
 {{- end }}
       - name: tls
         port: 9093
