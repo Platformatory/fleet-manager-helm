@@ -61,7 +61,7 @@ spec:
           tlsTrustedCertificates:
           - secretName: oauth-ca-truststore
             certificate: ca.crt
-{{- end -}}
+{{- end }}
 {{- end }}
       - name: tls
         port: 9093
@@ -85,7 +85,7 @@ spec:
           tlsTrustedCertificates:
           - secretName: oauth-ca-truststore
             certificate: ca.crt
-{{- end -}}
+{{- end }}
         configuration:
           brokerCertChainAndKey:
             secretName: tls-kafka-external
