@@ -2044,6 +2044,16 @@ entries:
   fleet-manager-strimzi:
   - apiVersion: v2
     appVersion: 0.0.0
+    created: "2026-02-05T17:01:24.93803717Z"
+    description: A Helm chart for Kubernetes
+    digest: b2b1bca6dd7bbbf36cc69ae642a12997627c839b13f678f6b5d7f80ede5b2f64
+    name: fleet-manager-strimzi
+    type: application
+    urls:
+    - https://github.com/Platformatory/fleet-manager-helm/releases/download/fleet-manager-strimzi-0.11.2/fleet-manager-strimzi-0.11.2.tgz
+    version: 0.11.2
+  - apiVersion: v2
+    appVersion: 0.0.0
     created: "2026-02-05T11:20:11.756614145Z"
     description: A Helm chart for Kubernetes
     digest: 62c5be3c3d0b9befa4e5befa404cce5762c2dfaa2120191893502d854beea9f2
@@ -2385,4 +2395,4 @@ entries:
     urls:
     - https://github.com/Platformatory/fleet-manager-helm/releases/download/streamtime-mirrormaker-0.1.0/streamtime-mirrormaker-0.1.0.tgz
     version: 0.1.0
-generated: "2026-02-05T11:20:11.757604328Z"
+generated: "2026-02-05T17:01:24.939634388Z"
