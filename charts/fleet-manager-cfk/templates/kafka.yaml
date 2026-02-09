@@ -172,6 +172,8 @@ spec:
       authentication:
 {{- if eq .Values.cfk.confluentPlatform.authentication "oauth" }}
         type: oauth
+        jaasConfig:
+          secretRef: oauth-jaas
         oauthSettings:
           audience: {{ .Values.oauth.audience }}
           expectedIssuer: {{ .Values.oauth.issuer }}
@@ -213,6 +215,8 @@ spec:
       authentication:
 {{- if eq .Values.cfk.confluentPlatform.authentication "oauth" }}
         type: oauth
+        jaasConfig:
+          secretRef: oauth-jaas
         oauthSettings:
           audience: {{ .Values.oauth.audience }}
           expectedIssuer: {{ .Values.oauth.issuer }}
