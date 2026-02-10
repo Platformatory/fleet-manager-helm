@@ -9,7 +9,10 @@ spec:
     matchExpressions:
       - key: "strimzi.io/kind"
         operator: In
-        values: ["Kafka", "KafkaConnect", "KafkaMirrorMaker", "KafkaMirrorMaker2"]
+        values: ["Kafka"]
+      - key: "strimzi.io/cluster"
+        operator: In
+        values: ["kafka-fm"]
   namespaceSelector:
     matchNames:
       - {{ .Release.Namespace }}
